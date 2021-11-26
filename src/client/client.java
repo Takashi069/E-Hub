@@ -37,5 +37,37 @@ public class client {
     public void setPriority(int priority) {
         this.priority = priority;
     }
+}
+
+class Client_Report extends client {
+    private int totalProjectsCompleted;
+    private int totalProjectsPaid;
+
+    public int getTotalProjectsCompleted() {
+        return this.totalProjectsCompleted;
+    }
+
+    public void setTotalProjectsCompleted(int totalProjectsCompleted) {
+        this.totalProjectsCompleted = totalProjectsCompleted;
+    }
+
+    public int getTotalProjectsPaid() {
+        return this.totalProjectsPaid;
+    }
+
+    public void setTotalProjectsPaid(int totalProjectsPaid) {
+        this.totalProjectsPaid = totalProjectsPaid;
+    }
+
+    public String displayReport() {
+        return "{" +
+        " clientID='" + getClientID() + "'" +
+            ", password='" + getPassword() + "'" +
+            ", totalProjectsRequested='" + getTotalProjectsRequested() + "'" +
+            ", priority='" + getPriority() + "'" +
+            " totalProjectsCompleted='" + getTotalProjectsCompleted() + "'" +
+            ", totalProjectsPaid='" + getTotalProjectsPaid() + "'" +
+            "}";
+    }
 
 }
