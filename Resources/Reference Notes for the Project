@@ -1,0 +1,70 @@
+The person class:
+
+Setters and Getter: Inserting into and selecting from database
+
+
+Login Class:
+
+VerifyingUsernamePassword:
+
+First you can select the username from the database and then you get the table and you retrive the password and you check the password.
+
+handleLoginFailure: use a try-catch
+
+
+Employee:
+
+Setters and Getter: Inserting into and selecting from database
+
+
+Client:
+
+setPriority: you can retrive the entire totalProjects with respect to the ClientID and you can assign a priority based on that.
+
+requestProject: when the client fills in the project details, by default the status of software in the DB will be NOT ACCEPTED.
+
+cancelProject:its just removing a project tuple.
+
+Project:
+
+setProjectMembers: 4 Members + 1 Head
+The members should have same domain as the project and is not engaged in a project currently.
+To get the head:
+Arrange the employees of a particular domain in descending order of experience and check if they are free. If an employee is free,add them as the project head.
+
+To get the members:
+Select 4 members such that they are in the same domain and they are free.
+
+Once a project's status is set to completed, the head and member's status should change to NOT ENGAGED
+
+THIS SHOULD HAPPEN WHEN THE ADMIN APPROVES THE PROJECT.
+
+
+REPORTS:
+
+Client Report:
+totalProjectsPaid: find the projects with a status of paid for a ClientID.
+
+When you display th report:
+display
+Client ID
+Client Name
+Company Name
+Total Projects Completed
+Total Projects Paid
+
+
+Employee Report:
+
+Employee ID
+Employee Name
+Projects Assigned
+Projects Led
+
+Project Report:
+
+Project ID
+Project Name
+Client ID
+Date of Commencement
+Status
