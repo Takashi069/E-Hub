@@ -58,6 +58,18 @@ create table Expertise
 )
 
 /*=====================Mohak=============================*/
+create table Project
+(
+	Project_ID varchar(6),
+	Client_ID varchar(20),
+	Project_Name varchar(20),
+	Date_of_Commencement varchar(20),
+	Date_of_Release varchar(20),
+	Status_of_Software varchar(30),
+	Domain varchar(20),
+	Project_leader varchar(20),
+	primary key(Project_ID)
+);
 
 
 /*=====================Aditya=============================*/
