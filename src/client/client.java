@@ -1,23 +1,26 @@
+
 package client;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import person.Person;
 
-public class client extends Person {
-    
-
+    public class client extends Person {
     client(){
         super();
     }
-
     private String clientID;
     private String password;
     private int totalProjectsRequested;
     private int priority;
 
-    public String getClientID() {
+    public String getID() {
         return this.clientID;
     }
 
-    public void setClientID(String clientID) {
+    public void setID(String clientID) {
         this.clientID = clientID;
     }
 
@@ -68,8 +71,7 @@ class Client_Report extends client {
 
     public String displayReport() {
         return "{" +
-        " clientID='" + getClientID() + "'" +
-            ", password='" + getPassword() + "'" +
+        " clientID='" + getID() + "'" +
             ", totalProjectsRequested='" + getTotalProjectsRequested() + "'" +
             ", priority='" + getPriority() + "'" +
             " totalProjectsCompleted='" + getTotalProjectsCompleted() + "'" +
