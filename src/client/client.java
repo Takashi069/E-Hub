@@ -1,6 +1,13 @@
 package client;
+import person.Person;
 
-public class client {
+public class client extends Person {
+    
+
+    client(){
+        super();
+    }
+
     private String clientID;
     private String password;
     private int totalProjectsRequested;

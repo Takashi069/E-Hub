@@ -1,3 +1,4 @@
+package person;
 public abstract class Person {
     private String name;
     private String DOB;
@@ -6,8 +7,8 @@ public abstract class Person {
     private String Nationality;
     private String PhoneNumber;
 
-    
-    Person(){
+    //Why does this work ?
+    public Person(){
 
         name = "John Doe";
         DOB = "01/01/1950";
