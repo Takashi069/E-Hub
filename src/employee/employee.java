@@ -1,16 +1,18 @@
 package employee;
 
-public class employee {
+import person.Person;
+
+public class employee extends Person {
     private String Employee_ID;
     private String Employee_join_date;
     private String Domain;
     private int Experience;
 
-    public String getEmployee_ID() {
+    public String getID() {
         return this.Employee_ID;
     }
 
-    public void setEmployee_ID(String Employee_ID) {
+    public void setID(String Employee_ID) {
         this.Employee_ID = Employee_ID;
     }
 

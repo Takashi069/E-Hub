@@ -7,8 +7,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import person.Person;
 
-    public class client extends Person {
-    client(){
+public class client extends Person {
+    public client(){
         super();
     }
     private String clientID;
