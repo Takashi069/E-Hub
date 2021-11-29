@@ -1,6 +1,7 @@
 
 /*=====================Akash=============================*/
 
+
 create table Login
 (
 	ID varchar(6),
@@ -33,7 +34,7 @@ create table Employee
 	Engaged_In_Project char,
 	Emp_Join_Date date,
 	primary key(Emp_ID),
-	foreign key (Emp_ID) references Person(ID)
+	foreign key (Emp_ID) references Person(ID) on delete cascade
 );
 
 create table Programming_Languages
@@ -47,7 +48,7 @@ create table Client
 	Client_ID varchar(6) primary key,
 	Company varchar(30),
 	Total_Orders int default 0,
-	foreign key(Client_ID) references Person(ID)
+	foreign key(Client_ID) references Person(ID) on delete cascade
 );
 
 /* Need more thinking */
@@ -57,7 +58,24 @@ create table Expertise
 	Qualification varchar(30), 
 )
 
-select * from login;
+/* For Testing, Need not execute */
+select * from person ;
+select * from employee e ;
+select * from client c ;
+insert into person values
+('EMP001','Akash','Harikumar','Gokulam','Edavanassery', 'Kollam','Kerala','690519','Indian','07/08/2001');
+insert into employee values
+('EMP001', 'University Degree', 'WEB', 'N','07/08/2021');
+
+insert into employee values
+('EMP001','University Degree','WEB','N','07/08/2021' );
+
+delete from employee ;
+delete from client;
+delete from person;
+
+drop table client;
+drop table employee ;
 /*=====================Mohak=============================*/
 create table Project
 (
