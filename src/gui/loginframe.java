@@ -1,9 +1,14 @@
 package gui;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.Dimension;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.Statement;
 
 public class loginframe extends JFrame implements ActionListener {
     Container container = getContentPane();
@@ -14,7 +19,6 @@ public class loginframe extends JFrame implements ActionListener {
     JButton loginButton = new JButton("LOGIN");
     JButton resetButton = new JButton("RESET");
     JCheckBox showPassword = new JCheckBox("Show Password");
-
 
     loginframe() {
         setLayoutManager();
@@ -36,7 +40,6 @@ public class loginframe extends JFrame implements ActionListener {
         loginButton.setBounds(400, 420, 150, 30);
         resetButton.setBounds(580, 420, 150, 30);
 
-
     }
 
     public void addComponentsToContainer() {
@@ -50,26 +53,58 @@ public class loginframe extends JFrame implements ActionListener {
     }
 
     public void addActionEvent() {
-        loginButton.addActionListener(this);
+        loginButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent ex) {
+                Connection c = null;
+                Statement stmt = null;
+                try {
+                    Class.forName("org.postgresql.Driver");
+                    secret obj = new secret();
+                    c = DriverManager
+                            .getConnection(obj.url,
+                                    obj.dbUser, obj.dbPass);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    System.err.println(e.getClass().getName() + ": " + e.getMessage());
+                    System.exit(0);
+                }
+                try {
+                    System.out.println("Opened database successfully");
+                    stmt = c.createStatement();
+                    String userText;
+                    String pwdText;
+                    userText = userTextField.getText();
+                    pwdText = passwordField.getText();
+                    String sql = String.format("select Substring(ID,1,3) as id,Password from Login where username='%s';", userText);
+                    ResultSet rs = stmt.executeQuery(sql);
+                    if(rs.next()){
+                        if(rs.getString("password").equals(pwdText)){
+                            if(rs.getString("id").equals("ADM")){
+                                //redirect to admin dashboard
+                                System.out.println("Welcome admin");
+                            }
+                            if(rs.getString("id").equals("EMP")){
+                                System.out.println("Welcome employee");
+                                //redirect to employee dashboard
+                            }
+                            if(rs.getString("id").equals("CLE")){
+                                System.out.println("Welcome Client");
+                                //redirect to client dashboard
+                            }
+                        }
+                        rs.close();
+                        stmt.close();
+                    }
+                } catch (Exception e) {
+                    System.out.println(e.toString());
+                }
+            }
+        });
         resetButton.addActionListener(this);
         showPassword.addActionListener(this);
     }
 
-
-   
     public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == loginButton) {
-            String userText;
-            String pwdText;
-            userText = userTextField.getText();
-            pwdText = passwordField.getText();
-            if (userText.equalsIgnoreCase("Rahul") && pwdText.equalsIgnoreCase("rahul@12345")) {
-                JOptionPane.showMessageDialog(this, "Login Successful");
-            } else {
-                JOptionPane.showMessageDialog(this, "Invalid Username or Password");
-            }
-
-        }
         if (e.getSource() == resetButton) {
             userTextField.setText("");
             passwordField.setText("");
