@@ -1,4 +1,4 @@
-public class Person {
+public abstract class Person {
     private String name;
     private String DOB;
     private String[] Address;
@@ -16,6 +16,9 @@ public class Person {
         Nationality = "Indian";
         PhoneNumber = "+910000000000";
     }
+
+    public abstract String getID();
+    public abstract void setID(String ID);
 
     public String getName() {
         return name;
