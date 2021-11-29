@@ -57,6 +57,7 @@ create table Expertise
 	Qualification varchar(30), 
 )
 
+select * from login;
 /*=====================Mohak=============================*/
 create table Project
 (
