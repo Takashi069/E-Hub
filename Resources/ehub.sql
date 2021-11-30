@@ -86,7 +86,8 @@ create table Project
 	Date_of_Release varchar(20),
 	Status_of_Software varchar(30),
 	Domain varchar(20),
-	Project_leader varchar(20),
+	Project_leader varchar(6),
+	FOREIGN KEY (Project_leader) references Employee(Emp_ID),
 	primary key(Project_ID)
 );
 

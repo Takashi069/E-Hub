@@ -2,9 +2,11 @@ package Project;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import gui.secret;
 
 public class project {
 
@@ -61,9 +63,48 @@ public class project {
         return this.ProjectHead;
     }
 
-    public void setProjectHead(String ProjectHead) {
-        this.ProjectHead = ProjectHead;
+    public void setProjectHead(){
+        Connection c = null;
+        Statement stmt = null;
+        try {
+            Class.forName("org.postgresql.Driver");
+            secret obj = new secret();
+            c = DriverManager.getConnection(obj.url,obj.dbUser, obj.dbPass);
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.err.println(e.getClass().getName() + ": " + e.getMessage());
+            System.exit(0);
+        }
+
+        try {
+            System.out.println("Opened database successfully");
+            stmt = c.createStatement();
+            String sql = String.format(
+                    "select Emp_ID from employee where Specialisation_ID = '%s' and Engaged_In_Project = 'N' order by Emp_Join_Date;","WEB001");
+            ResultSet rs = stmt.executeQuery(sql);
+            if (rs.next()) {
+                String Emp_ID = rs.getString("Emp_ID");
+                stmt = c.createStatement();
+                String sql2 = String.format(
+                "update Project set project_leader = '%s' where Project_ID = '%s';", Emp_ID,"PRO001");
+                PreparedStatement ps = c.prepareStatement(sql2);
+                int output = 0;
+                output = ps.executeUpdate();
+                System.out.println(output + " Row(s) Updated");
+                String sql3 = String.format(
+                "UPDATE employee set Engaged_In_Project = 'Y' where Emp_ID = '%s';",Emp_ID);
+                ps = c.prepareStatement(sql3);
+                output = ps.executeUpdate();
+                System.out.println(output + " Row(s) Updated");
+            }
+                rs.close();
+                stmt.close();
+        }catch(Exception e)
+    {
+        System.out.println(e.toString());
     }
+}
+    
 
     public String getProjectStatus() {
         return this.ProjectStatus;
@@ -109,4 +150,12 @@ class Project_report extends project {
                 "}";
     }
 
+}
+
+class driver{
+    public static void main(String[] args) {
+        project obj = new project();
+        obj.setProjectHead();
+        
+    }
 }

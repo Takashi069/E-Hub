@@ -94,7 +94,6 @@ public class client extends Person {
             // ps.setDate(1, new java.sql.Date(date.getTime()));
 
             int output = 0;
-
             output = ps.executeUpdate();
             System.out.println(output + " Row(s) Updated");
             stmt.close();
