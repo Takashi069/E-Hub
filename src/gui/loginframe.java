@@ -36,7 +36,7 @@ public class loginframe extends JFrame implements ActionListener {
         passwordLabel.setBounds(330, 280, 193, 52);
         userTextField.setBounds(450, 170, 281, 40);
         passwordField.setBounds(450, 286, 281, 40);
-        showPassword.setBounds(520, 350 , 162, 30);
+        showPassword.setBounds(520, 350, 162, 30);
         loginButton.setBounds(400, 420, 150, 30);
         resetButton.setBounds(580, 420, 150, 30);
 
@@ -73,21 +73,25 @@ public class loginframe extends JFrame implements ActionListener {
                     String pwdText;
                     userText = userTextField.getText();
                     pwdText = passwordField.getText();
-                    String sql = String.format("select Substring(ID,1,3) as id,Password from Login where username='%s';", userText);
+                    String sql = String.format(
+                            "select Substring(ID,1,3) as id,id as full_id, Password from Login where username='%s';",
+                            userText);
                     ResultSet rs = stmt.executeQuery(sql);
-                    if(rs.next()){
-                        if(rs.getString("password").equals(pwdText)){
-                            if(rs.getString("id").equals("ADM")){
-                                //redirect to admin dashboard
+                    if (rs.next()) {
+                        if (rs.getString("password").equals(pwdText)) {
+                            if (rs.getString("id").equals("ADM")) {
+                                // redirect to admin dashboard
                                 System.out.println("Welcome admin");
                             }
-                            if(rs.getString("id").equals("EMP")){
+                            if (rs.getString("id").equals("EMP")) {
                                 System.out.println("Welcome employee");
-                                //redirect to employee dashboard
+                                // redirect to employee dashboard
                             }
-                            if(rs.getString("id").equals("CLE")){
+                            if (rs.getString("id").equals("CLE")) {
                                 System.out.println("Welcome Client");
-                                //redirect to client dashboard
+                                clientgui cli = new clientgui(rs.getString("full_id"));
+                                dispose();
+                                cli.setVisible(true);
                             }
                         }
                         rs.close();
@@ -114,18 +118,15 @@ public class loginframe extends JFrame implements ActionListener {
                 passwordField.setEchoChar('*');
             }
 
-
         }
     }
 
-
     public static void main(String[] a) {
         loginframe frame = new loginframe();
+        frame.setSize(new Dimension(1280, 1024));
         frame.setTitle("Login Form");
         frame.setVisible(true);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setResizable(false);
-        frame.setSize(new Dimension(1280, 1024));
 
     }
 }
