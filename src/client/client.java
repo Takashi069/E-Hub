@@ -232,13 +232,13 @@ class Client_Report extends client {
 
     public void ClientPriority() {
         Connection c = null;
-        String query = "select client_id,count(Project_ID) as Totalprojcount from Project where Status_of_Software='PAID' group by client_id order by Totalprojcount ";
-        // The following lines of code are temporary:
-        Statement ps = null;
-        // String client_id = "CLI001";
-        Vector<String> Clientvec = new Vector<String>();
-        Vector<Integer> Tprojvec = new Vector<Integer>();
-        Vector<Integer> Prionum = new Vector<Integer>();
+        String query = "select client_id,count(Project_ID) as Totalprojcount from Project where Status_of_Software='PAID' group by client_id order by Totalprojcount desc;";
+        //The following lines of code are temporary:
+Statement ps = null;
+//String client_id = "CLI001";
+Vector<String> Clientvec = new Vector<String>();
+Vector<Integer> Tprojvec = new Vector<Integer>();
+     Vector<Integer> Prionum = new Vector<Integer>();
         try {
             String x = "asd";
             int y = 0;
