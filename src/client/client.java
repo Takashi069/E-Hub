@@ -9,6 +9,7 @@ import java.sql.PreparedStatement;
 import person.Person;
 import gui.secret;
 import Project.project;
+import java.util.Vector;
 
 public class client extends Person {
     secret s = new secret();
@@ -19,6 +20,7 @@ public class client extends Person {
     private String password;
     private int totalProjectsRequested;
     private int priority;
+    private int Total_Orders;
 
     public String getID() {
         return this.clientID;
@@ -51,6 +53,13 @@ public class client extends Person {
     public void setPriority(int priority) {
         this.priority = priority;
     }
+    public int getTotal_Orders() {
+        return this.Total_Orders;
+    }
+
+    public void setTotal_Orders(int Total_Orders) {
+        this.Total_Orders = 0;
+    }
 
     public void AddProject(project P) {
         Connection c = null;
@@ -58,14 +67,14 @@ public class client extends Person {
 
         //We need to add the data in the Project table first
         String ProjectQuery = "insert into Project values" + "(" +
-                "'PRO001'" + "," +
-                "'CLI001'" + "," +
+                "'PRO006'" + "," +
+                "'CLI003'" + "," +
                 "'Doofinshmertz evil'" + "," +
                 "'12/12/2021'"  + "," +
                 "'12/12/2022'" + "," +
-                "'NOT APPROVED'" + "," +
+                "'PAID'" + "," +
                 "'WEB'" + "," +
-                "'EMP001'" + ")";
+                "'EMP004'" + ")";
 
 
         try {
@@ -87,26 +96,53 @@ public class client extends Person {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        Total_Orders += 1;
     }
     
-    public void removeProject(project P){
+    public void removeProject(project P) {
         Connection c = null;
         String query = "delete from Project where Project_ID = ?";
         //The following lines of code are temporary:
-       
+
         String client_id = "PRO001";
 
-        try{
+        try {
             Class.forName("org.postgresql.Driver");
             c = DriverManager.getConnection(s.url, s.dbUser, s.dbPass);
             PreparedStatement ps = c.prepareStatement(query);
             ps.setString(1, client_id);
             int output = ps.executeUpdate();
             System.out.println(output + " Row(s) Removed");
-        }catch(Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
+    //something under work
+    /*
+    public void ClientPriority(){
+        Connection c = null;
+        String query = "select Total_Orders from client;";
+        //The following lines of code are temporary:
+       
+       // String client_id = "CLI001";
+
+        try{
+            Class.forName("org.postgresql.Driver");
+            c = DriverManager.getConnection(s.url, s.dbUser, s.dbPass);
+            PreparedStatement ps = c.prepareStatement(query);
+          //  ps.setString(1, client_id);
+         //   ps.executeUpdate();
+            ResultSet rs = ps.executeQuery(query);
+            while (rs.next())    
+            {
+                int x = rs.getInt("Total_Orders");
+                System.out.println(x + " is the count");
+            }
+            
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+    }*/
 }
 
 class Client_Report extends client {
@@ -131,12 +167,102 @@ class Client_Report extends client {
 
     public String displayReport() {
         return "{" +
-        " clientID='" + getID() + "'" +
-            ", totalProjectsRequested='" + getTotalProjectsRequested() + "'" +
-            ", priority='" + getPriority() + "'" +
-            " totalProjectsCompleted='" + getTotalProjectsCompleted() + "'" +
-            ", totalProjectsPaid='" + getTotalProjectsPaid() + "'" +
-            "}";
+                " clientID='" + getID() + "'" +
+                ", totalProjectsRequested='" + getTotalProjectsRequested() + "'" +
+                ", priority='" + getPriority() + "'" +
+                " totalProjectsCompleted='" + getTotalProjectsCompleted() + "'" +
+                ", totalProjectsPaid='" + getTotalProjectsPaid() + "'" +
+                "}";
+    }
+
+    public void TotalProjectsCompleted() {
+        Connection c = null;
+        String query = "select count(Project_ID) as Totalprojcount from Project where Client_ID = ? and Status_of_Software='COMPLETED'";
+        //The following lines of code are temporary:
+
+        String client_id = "CLI001";
+        try {
+            int x = 0;
+            Class.forName("org.postgresql.Driver");
+            c = DriverManager.getConnection(s.url, s.dbUser, s.dbPass);
+            PreparedStatement ps = c.prepareStatement(query);
+            ps.setString(1, client_id);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                x = rs.getInt("Totalprojcount");
+            }
+            rs.close();
+            System.out.println(x + " is the count");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void TotalProjectsPaid() {
+        Connection c = null;
+        String query = "select count(Project_ID) as Totalprojcount from Project where Client_ID = ? and Status_of_Software='PAID'";
+        //The following lines of code are temporary:
+
+        String client_id = "CLI001";
+        try {
+            int x = 0;
+            Class.forName("org.postgresql.Driver");
+            c = DriverManager.getConnection(s.url, s.dbUser, s.dbPass);
+            PreparedStatement ps = c.prepareStatement(query);
+            ps.setString(1, client_id);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                x = rs.getInt("Totalprojcount");
+            }
+            rs.close();
+            System.out.println(x + " is the count");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void ClientPriority() {
+        Connection c = null;
+        String query = "select client_id,count(Project_ID) as Totalprojcount from Project where Status_of_Software='PAID' group by client_id order by Totalprojcount ";
+        //The following lines of code are temporary:
+Statement ps = null;
+//String client_id = "CLI001";
+Vector<String> Clientvec = new Vector<String>();
+Vector<Integer> Tprojvec = new Vector<Integer>();
+     Vector<Integer> Prionum = new Vector<Integer>();
+        try {
+            String x="asd"  ;
+            int y = 0;
+            Class.forName("org.postgresql.Driver");
+            c = DriverManager.getConnection(s.url, s.dbUser, s.dbPass);
+            ps = c.createStatement();
+         
+          //  ps.setString(1, client_id);
+            ResultSet rs = ps.executeQuery(query);
+            while (rs.next()) {
+                x = rs.getString("client_id");
+                y = rs.getInt("Totalprojcount");
+               // for (int i = 0; i < Clientvec.size(); i++) {
+               Clientvec.add(x);
+               Tprojvec.add(y);
+                //}
+
+                //System.out.println(x);
+
+                //  System.out.println(y);
+            }
+            System.out.print(Clientvec);
+            System.out.print(Tprojvec);
+                //For prioirity thingy
+//update project set priority=? where ID= 
+//(1,i)
+            
+
+            rs.close();
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
 }
@@ -144,8 +270,13 @@ class Driver{
     public static void main(String[] args) {
         client Cli = new client();
         project pro = new project();
-        //Cli.AddProject(pro);
-        Cli.removeProject(pro);
+        Client_Report clire = new Client_Report();
+        clire.ClientPriority();
+       // Cli.AddProject(pro);
+         //Cli.removeProject(pro);
+        // Cli.ClientPriority();
+       // clire.TotalProjectsCompleted();
+        //clire.TotalProjectsPaid();
     
  
     }
