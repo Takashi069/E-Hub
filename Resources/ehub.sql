@@ -14,8 +14,7 @@ create table Login
 create table Person
 (
 	ID varchar(6),
-	fname varchar(20),
-	lname varchar(20),
+	name varchar(40),
 	Street_Name varchar(30),
 	Locality varchar(30),
 	District varchar(30),
@@ -29,8 +28,8 @@ create table Person
 create table Employee
 (
 	Emp_ID varchar(6),
-	Qualification varchar(30),
-	Specialisation_ID varchar(6) not null,
+	Experience int,
+	Specialisation_ID varchar(30) not null,
 	Engaged_In_Project char,
 	Emp_Join_Date date,
 	primary key(Emp_ID),
@@ -62,10 +61,13 @@ create table Expertise
 select * from person ;
 select * from employee e ;
 select * from client c ;
+
+select count(distinct(emp_id)) as total_employees from employee;
+
 insert into person values
-('EMP001','Akash','Harikumar','Gokulam','Edavanassery', 'Kollam','Kerala','690519','Indian','07/08/2001');
+('EMP001','Akash Harikumar','Gokulam','Edavanassery', 'Kollam','Kerala','690519','Indian','07/08/2001');
 insert into employee values
-('EMP001', 'University Degree', 'WEB', 'N','07/08/2021');
+('EMP001', 6, 'WEB', 'N','07/08/2021');
 
 insert into employee values
 ('EMP001','University Degree','WEB','N','07/08/2021' );
@@ -76,6 +78,7 @@ delete from person;
 
 drop table client;
 drop table employee ;
+DROP TABLE person;
 /*=====================Mohak=============================*/
 create table Project
 (
