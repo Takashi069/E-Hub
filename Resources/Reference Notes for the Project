@@ -50,8 +50,8 @@ display
 Client ID
 Client Name
 Company Name
-Total Projects Completed
-Total Projects Paid
+Total Projects Completed -> Derived from project
+Total Projects Paid -> Derived from projects
 
 
 Employee Report:
