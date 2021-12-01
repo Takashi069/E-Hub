@@ -1,3 +1,4 @@
+
 package client;
 
 import java.sql.Connection;
@@ -22,6 +23,7 @@ public class client extends Person {
     private int totalProjectsRequested;
     private int priority;
     private int Total_Orders;
+    private String Company;
 
     public String getID() {
         return this.clientID;
@@ -62,13 +64,20 @@ public class client extends Person {
     public void setTotal_Orders(int Total_Orders) {
         this.Total_Orders = 0;
     }
+    public String getCompany() {
+        return this.Company;
+    }
+
+    public void setCompany(String Company) {
+        this.Company = Company;
+    }
 
     public void AddProject(project p) {
         Connection c = null;
         Statement stmt = null;
 
         // We need to add the data in the Project table first
-
+String client_id = "CLE001";
         String count = "select count(Project_ID) as id from Project;";
         try {
             Class.forName("org.postgresql.Driver");
@@ -98,12 +107,22 @@ public class client extends Person {
             output = ps.executeUpdate();
             System.out.println(output + " Row(s) Updated");
             stmt.close();
+            //Total Orders try
+            Total_Orders += 1;
+            PreparedStatement ps2 = c.prepareStatement("update Client set Total_Orders=? where client_id=?");
+        ps2.setInt(1,Total_Orders);//1 specifies the first parameter in the query i.e. name  
+ps2.setString(2,client_id);  
+  
+int i=ps2.executeUpdate();  
+System.out.println(i + " records updated");
+//Total Orders
             c.close();
 
         } catch (Exception e) {
             e.printStackTrace();
         }
-        Total_Orders += 1;
+        
+
     }
 
     public void removeProject(project P) {
@@ -237,7 +256,7 @@ Statement ps = null;
 //String client_id = "CLI001";
 Vector<String> Clientvec = new Vector<String>();
 Vector<Integer> Tprojvec = new Vector<Integer>();
-     Vector<Integer> Prionum = new Vector<Integer>();
+     Vector<String> Prionum = new Vector<String>();
         try {
             String x = "asd";
             int y = 0;
@@ -259,8 +278,10 @@ Vector<Integer> Tprojvec = new Vector<Integer>();
 
                 // System.out.println(y);
             }
-            System.out.print(Clientvec);
-            System.out.print(Tprojvec);
+            // priority= Clientvec.indexOf(x);
+          setPriority(Clientvec.indexOf(x)+1);
+           // System.out.print(Clientvec);
+            //System.out.print(Tprojvec);
             // For prioirity thingy
             // update project set priority=? where ID=
             // (1,i)
@@ -279,15 +300,14 @@ class Driver {
         client Cli = new client();
         project pro = new project();
         Client_Report clire = new Client_Report();
-        clire.ClientPriority();
+        //clire.ClientPriority();
         // Cli.AddProject(pro);
         // Cli.removeProject(pro);
         // Cli.ClientPriority();
         // clire.TotalProjectsCompleted();
         // clire.TotalProjectsPaid();
 
-        // Cli.AddProject(pro);
-        Cli.removeProject(pro);
+     
 
     }
 }
