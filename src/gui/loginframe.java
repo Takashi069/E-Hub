@@ -60,9 +60,7 @@ public class loginframe extends JFrame implements ActionListener {
                 try {
                     Class.forName("org.postgresql.Driver");
                     secret obj = new secret();
-                    c = DriverManager
-                            .getConnection(obj.url,
-                                    obj.dbUser, obj.dbPass);
+                    c = DriverManager.getConnection(obj.url,obj.dbUser, obj.dbPass);
                 } catch (Exception e) {
                     e.printStackTrace();
                     System.err.println(e.getClass().getName() + ": " + e.getMessage());
