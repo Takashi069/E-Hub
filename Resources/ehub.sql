@@ -8,8 +8,8 @@ create table Login
 	Username varchar(30),
 	Password varchar(30),
 	Password_Hint varchar(60),
-	primary key(ID)
-	foreign key (ID) references Person(ID) on delete cascade;
+	primary key(ID),
+	foreign key (ID) references Person(ID) on delete cascade
 );
 
 create table Person
@@ -82,6 +82,7 @@ delete from project;
 drop table client;
 drop table employee ;
 DROP TABLE person;
+drop table login;
 /*=====================Mohak=============================*/
 create table Project
 (
