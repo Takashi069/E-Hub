@@ -9,6 +9,7 @@ create table Login
 	Password varchar(30),
 	Password_Hint varchar(60),
 	primary key(ID)
+	foreign key (ID) references Person(ID) on delete cascade;
 );
 
 create table Person
@@ -61,6 +62,7 @@ create table Expertise
 select * from person ;
 select * from employee e ;
 select * from client c ;
+select * from project;
 
 select count(distinct(emp_id)) as total_employees from employee;
 
@@ -75,6 +77,7 @@ insert into employee values
 delete from employee ;
 delete from client;
 delete from person;
+delete from project;
 
 drop table client;
 drop table employee ;
@@ -96,7 +99,8 @@ create table Project
 
 /*=====================Aditya=============================*/
 
-
+insert into Login Values ('ADM001','frontman', 'ehub', 'projname');
+insert into Login Values ('CLE001','moneyman', 'ehub', 'idk'), ('EMP001', 'avgworker', 'ehub', 'you know it');
 
 /*=====================Uday=============================*/
 
