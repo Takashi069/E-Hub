@@ -8,14 +8,14 @@ create table Login
 	Username varchar(30),
 	Password varchar(30),
 	Password_Hint varchar(60),
-	primary key(ID)
+	primary key(ID),
+	foreign key (ID) references Person(ID) on delete cascade
 );
 
 create table Person
 (
 	ID varchar(6),
-	fname varchar(20),
-	lname varchar(20),
+	name varchar(40),
 	Street_Name varchar(30),
 	Locality varchar(30),
 	District varchar(30),
@@ -29,8 +29,8 @@ create table Person
 create table Employee
 (
 	Emp_ID varchar(6),
-	Qualification varchar(30),
-	Specialisation_ID varchar(6) not null,
+	Experience int,
+	Specialisation_ID varchar(30) not null,
 	Engaged_In_Project char,
 	Emp_Join_Date date,
 	primary key(Emp_ID),
@@ -62,10 +62,31 @@ create table Expertise
 select * from person ;
 select * from employee e ;
 select * from client c ;
+select * from project;
+select * from login l ;
+select * from project;
+
+select p.id, p.name, p.dob, c.company ,c.total_orders 
+from person p, client c
+where p.id = c.client_id and c.client_id = 'CLI001';
+
+select substring(client_id,4,6) from client order by client_id desc;
+
+select p.id, p.name, p.dob, e.experience ,e.specialisation_id 
+from person p, employee e 
+where p.id = e.emp_id and e.emp_id = 'EMP002';
+
+select p.id, p.name, p.dob, c.company ,c.total_orders  
+                         from person p, client c
+                         where p.id = c.client_id and c.client_id = 'CLI001';
+
+select count(distinct(client_id))  from client c ;
+select client_id from client;
+
 insert into person values
-('EMP001','Akash','Harikumar','Gokulam','Edavanassery', 'Kollam','Kerala','690519','Indian','07/08/2001');
+('EMP001','Akash Harikumar','Gokulam','Edavanassery', 'Kollam','Kerala','690519','Indian','07/08/2001');
 insert into employee values
-('EMP001', 'University Degree', 'WEB', 'N','07/08/2021');
+('EMP001', 6, 'WEB', 'N','07/08/2021');
 
 insert into employee values
 ('EMP001','University Degree','WEB','N','07/08/2021' );
@@ -73,9 +94,12 @@ insert into employee values
 delete from employee ;
 delete from client;
 delete from person;
+delete from project;
 
 drop table client;
 drop table employee ;
+DROP TABLE person;
+drop table login;
 /*=====================Mohak=============================*/
 create table Project
 (
@@ -94,7 +118,8 @@ create table Project
 
 /*=====================Aditya=============================*/
 
-
+insert into Login Values ('ADM001','frontman', 'ehub', 'projname');
+insert into Login Values ('CLI001','moneyman', 'ehub', 'idk'), ('EMP001', 'avgworker', 'ehub', 'you know it');
 
 /*=====================Uday=============================*/
 
