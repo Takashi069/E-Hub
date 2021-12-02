@@ -70,6 +70,7 @@ select p.id, p.name, p.dob, c.company ,c.total_orders
 from person p, client c
 where p.id = c.client_id and c.client_id = 'CLI001';
 
+select substring(client_id,4,6) from client order by client_id desc;
 
 select p.id, p.name, p.dob, e.experience ,e.specialisation_id 
 from person p, employee e 
@@ -79,7 +80,7 @@ select p.id, p.name, p.dob, c.company ,c.total_orders
                          from person p, client c
                          where p.id = c.client_id and c.client_id = 'CLI001';
 
-select count(distinct(emp_id)) as total_employees from employee;
+select count(distinct(client_id))  from client c ;
 select client_id from client;
 
 insert into person values

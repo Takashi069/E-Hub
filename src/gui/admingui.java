@@ -125,6 +125,9 @@ public class admingui{
         removeEmpButton.addActionListener(new handleRemoveEmployee());
         submit1.addActionListener(new handleEmployeeData());
         submit2.addActionListener(new handleClientData());
+        remove1.addActionListener(new handleRemovePerson("client"));
+        remove2.addActionListener(new handleRemovePerson("employee"));
+
        
 
         frame.add(mainMenu,BorderLayout.CENTER);
@@ -417,14 +420,21 @@ public class admingui{
         gbc.gridy = 5;
         gbc.fill = GridBagConstraints.HORIZONTAL;
         remClient.add(remove1,gbc);
-        allID.addActionListener(new handleShowDetails());
+        allID.addActionListener(new handleShowDetails("client"));
     }
 
-    private void updateRemClientGUI(client C){
+    private void updateRemGUI(client C){
         dynamicName.setText(C.getName());
         dynamicDOB.setText(C.getDOB());
         dynamicCompany.setText(C.getCompany());
         dynamicTotalOrder.setText((String.format("%d", C.getTotal_Orders())));
+    }
+
+    private void updateRemGUI( employee E){
+        dynamicName.setText(E.getName());
+        dynamicDOB.setText(E.getDOB());
+        dynamicExperience.setText(String.format("%d", E.getExperience()));
+        dynamicDomain.setText(E.getDomain());
     }
 
     private void remEmpGUI(){
@@ -444,14 +454,55 @@ public class admingui{
         gbc.gridx = 1;
         gbc.gridy = 0;
         gbc.fill = GridBagConstraints.HORIZONTAL;
+        allID.setBackground(Color.white);
         remEmp.add(allID,gbc);
 
         gbc.gridx = 0;
         gbc.gridy = 1;
         gbc.fill = GridBagConstraints.HORIZONTAL;
+        remEmp.add(name,gbc);
+
+        gbc.gridx = 1;
+        gbc.gridy = 1;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        remEmp.add(dynamicName,gbc);
+
+        gbc.gridx = 0;
+        gbc.gridy = 2;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        remEmp.add(dob,gbc);
+
+        gbc.gridx = 1;
+        gbc.gridy = 2;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        remEmp.add(dynamicDOB,gbc);
+
+        gbc.gridx = 0;
+        gbc.gridy = 3;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        remEmp.add(experience,gbc);
+
+        gbc.gridx = 1;
+        gbc.gridy = 3;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        remEmp.add(dynamicExperience,gbc);
+
+        gbc.gridx = 0;
+        gbc.gridy = 4;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        remEmp.add(domain,gbc);
+
+        gbc.gridx = 1;
+        gbc.gridy = 4;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        remEmp.add(dynamicDomain,gbc);
+
+        gbc.gridx = 0;
+        gbc.gridy = 5;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
         remEmp.add(remove2,gbc);
         System.out.println("Checking");
-        allID.addActionListener(new handleShowDetails());
+        allID.addActionListener(new handleShowDetails("employee"));
     }
     class manageClientListener implements ActionListener{
 
@@ -594,8 +645,6 @@ public class admingui{
 
     class handleRemoveClient implements ActionListener{
         public void actionPerformed(ActionEvent a){
-            admin ad = new admin();
-            client cli = new client();
             frame.remove(cliMenu);
             heading.setText("Remove Client");
             remClientGUI();
@@ -603,13 +652,60 @@ public class admingui{
         }
     }
     
-    class handleShowDetails implements ActionListener{
+    class handleRemovePerson implements ActionListener{
+        private String type;
+        
+        handleRemovePerson(){
+            type = "null";
+        }
+        handleRemovePerson(String type){
+            this.type = type;
+        }
+
         public void actionPerformed(ActionEvent a){
             admin ad = new admin();
-            client cli = new client();
-            cli.setID((String)allID.getSelectedItem());
-            cli = ad.showPrimaryDetails(cli);
-            updateRemClientGUI(cli);
+            int input = JOptionPane.showConfirmDialog(frame, "Confirm Deletion of Person", "WARNING", JOptionPane.YES_NO_OPTION);
+            //0->Yes, 1->No
+            if(type.compareToIgnoreCase("client") == 0 && input == 0){
+                client cli = new client();
+                cli.setID((String)allID.getSelectedItem());
+                ad.removePerson(cli);
+                JOptionPane.showMessageDialog(frame, "Data Deleted", "Info", JOptionPane.PLAIN_MESSAGE);
+            }else if(type.compareToIgnoreCase("employee") == 0 && input == 0){
+                employee emp = new employee();
+                emp.setID((String)allID.getSelectedItem());
+                ad.removePerson(emp);
+                JOptionPane.showMessageDialog(frame, "Data Deleted", "Info", JOptionPane.PLAIN_MESSAGE);
+            }
+            if(input == 0){
+                frame.dispose();
+                new admingui();
+            }
+        }
+
+    }
+
+    class handleShowDetails implements ActionListener{
+        private String type;
+        handleShowDetails(){
+            type = "NULL";
+        }
+        handleShowDetails(String type){
+            this.type = type;
+        }
+        public void actionPerformed(ActionEvent a){
+            admin ad = new admin();
+            if(type.compareToIgnoreCase("client") == 0){
+                client cli = new client();
+                cli.setID((String)allID.getSelectedItem());
+                cli = ad.showPrimaryDetails(cli);
+                updateRemGUI(cli);
+            }else if(type.compareToIgnoreCase("employee") == 0){
+                employee emp = new employee();
+                emp.setID((String)allID.getSelectedItem());
+                emp = ad.showPrimaryDetails(emp);
+                updateRemGUI(emp);
+            }
         
         }
     }

@@ -41,33 +41,72 @@ public class admin extends Person {
         this.password = password;
     }
 
-    private String assignID(String type){
+    /*
+
+    This function takes a sorted array as input and finds first missing
+    number in the array. In this function, there is a loop whose iterant's
+    value starts from 1. It checks whether the iterant's value is equal to
+    the array at the i-1th location. If it is different, it will return the
+    value of i, which is the missing number.
+    If there is no missing number, it will return the next number after all
+    the numbers in the array.
+
+    */
+    private int findMissingNumber(int[] arr){
+        System.out.println("\n\nFinding the missing number");
+        int i;
+        for (i = 1; i <= arr.length; i++) {
+            System.out.println(arr[i-1] +"\t"+i);
+            if(i!=arr[i-1]){
+                return i;
+            }
+        }
+        return i;
+    }
+
+    String assignID(String type){
         int count = 0;
         String ogtype = type.toLowerCase();
         String queryid = ogtype;
-        if(type == "employee"){
+        if(type.compareToIgnoreCase("employee")==0){
             queryid = "emp_id";
-        }else if(type == "client"){
+        }else if(type.compareToIgnoreCase("client")==0){
             queryid = "client_id";
         }else if(type=="project"){
             queryid = "project_id";
         }
         String countString;
         String query = "select count(distinct(" +queryid+")) from " + ogtype;
+        String query2 = "select substring(" + queryid +",4,6) from " + ogtype + " order by "+queryid +" desc";
+        System.out.println(query+"\n"+query2);
         Statement stmt = null;
         Connection c = null;
         ResultSet rs = null;
+        int missingID = 0;
         try{
             c = DriverManager.getConnection(s.url, s.dbUser, s.dbPass);
             stmt = c.createStatement();
             rs = stmt.executeQuery(query);
             rs.next();
             count = rs.getInt("count");
+            int[] sortedArray = new int[count];
+            rs = stmt.executeQuery(query2);
+            int i = count-1;
+            /*
+                This while loop creates an array from the list of 
+                data entries we recieved. The array is sorted in ascending 
+                order.
+            */
+            while(rs.next()){
+                sortedArray[i] = Integer.parseInt(rs.getString(1));
+                i--;
+            }
+            missingID = findMissingNumber(sortedArray);
         }catch(Exception e){
             e.printStackTrace();
         }
-        count++;
-        countString = String.format("%d", count);
+        
+        countString = String.format("%d", missingID);
         if(countString.length()<3){
             for (int i = countString.length(); i < 3; i++){
                 countString = "0"+countString;
@@ -90,7 +129,7 @@ public class admin extends Person {
         Connection con = null;
         Statement stmt = null;
         ResultSet rs = null;
-        String query  = "select client_id from client";
+        String query  = "select client_id from client order by client_id";
         String query2 = "select count(distinct(client_id)) from client";
         try{
             Class.forName("org.postgresql.Driver");
@@ -121,7 +160,7 @@ public class admin extends Person {
         Connection con = null;
         Statement stmt = null;
         ResultSet rs = null;
-        String query  = "select emp_id from employee";
+        String query  = "select emp_id from employee order by emp_id";
         String query2 = "select count(distinct(emp_id)) from employee";
         try{
             Class.forName("org.postgresql.Driver");
@@ -307,7 +346,6 @@ public class admin extends Person {
         Connection c = null;
         String query = "delete from person where id = ?";
         //The following lines of code are temporary:
-        C.setID("CLI001");
         String client_id = C.getID();
 
         try{
@@ -325,7 +363,6 @@ public class admin extends Person {
         Connection c = null;
         String query = "delete from person where id = ?";
         //The following line of code is temporary:
-        E.setID("EMP001");
         String emp_id = E.getID();
 
         try{
@@ -360,10 +397,11 @@ class Driver{
         for (int i = 0; i < list.length; i++) {
             System.out.println(list[i]);
         } */
-        //  a.assignID("Employee");
-        Cli = a.showPrimaryDetails(Cli);
+        String st =  a.assignID("client");
+        System.out.println(st);
+        /* Cli = a.showPrimaryDetails(Cli);
         E = a.showPrimaryDetails(E);
         System.out.println("Client ID: " + Cli.getID() + "\nClient Name: " + Cli.getName());
-        System.out.println("Employee ID: " + E.getID() + "\nEmpl Name: " + E.getName());
+        System.out.println("Employee ID: " + E.getID() + "\nEmpl Name: " + E.getName()); */
     } 
 }
