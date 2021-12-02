@@ -63,8 +63,24 @@ select * from person ;
 select * from employee e ;
 select * from client c ;
 select * from project;
+select * from login l ;
+select * from project;
+
+select p.id, p.name, p.dob, c.company ,c.total_orders 
+from person p, client c
+where p.id = c.client_id and c.client_id = 'CLI001';
+
+
+select p.id, p.name, p.dob, e.experience ,e.specialisation_id 
+from person p, employee e 
+where p.id = e.emp_id and e.emp_id = 'EMP002';
+
+select p.id, p.name, p.dob, c.company ,c.total_orders  
+                         from person p, client c
+                         where p.id = c.client_id and c.client_id = 'CLI001';
 
 select count(distinct(emp_id)) as total_employees from employee;
+select client_id from client;
 
 insert into person values
 ('EMP001','Akash Harikumar','Gokulam','Edavanassery', 'Kollam','Kerala','690519','Indian','07/08/2001');
@@ -101,7 +117,7 @@ create table Project
 /*=====================Aditya=============================*/
 
 insert into Login Values ('ADM001','frontman', 'ehub', 'projname');
-insert into Login Values ('CLE001','moneyman', 'ehub', 'idk'), ('EMP001', 'avgworker', 'ehub', 'you know it');
+insert into Login Values ('CLI001','moneyman', 'ehub', 'idk'), ('EMP001', 'avgworker', 'ehub', 'you know it');
 
 /*=====================Uday=============================*/
 

@@ -3,6 +3,8 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 
 import java.awt.*;
+import java.awt.GridBagLayout;
+import java.awt.GridBagConstraints;
 import java.awt.event.*;
 
 import admin.admin;
@@ -19,8 +21,11 @@ public class admingui{
     JPanel empMenu = new JPanel();
     JPanel addClient = new JPanel();
     JPanel addEmp = new JPanel();
+    JPanel remEmp = new JPanel();
+    JPanel remClient = new JPanel();
 
     JLabel heading = new JLabel("Welcome Administrator");
+    JLabel id = new JLabel("ID");
     JLabel name = new JLabel("Name: ");
     JLabel streetName = new JLabel("Street Address: ");
     JLabel locality = new JLabel("Locality: ");
@@ -28,22 +33,37 @@ public class admingui{
     JLabel state = new JLabel("State: ");
     JLabel pincode = new JLabel("PINCODE: ");
     JLabel nationality = new JLabel("Nationality: ");
-    JLabel dob = new JLabel("DOB ( Format: YYYY-MM-DD ): ");
+    JLabel dob = new JLabel("DOB ( Format: YYYY-MM-DD )");
     JLabel experience = new JLabel("Experience (In Years)");
     JLabel domain = new JLabel("Specialisation Domain");
+    JLabel Company = new JLabel("Company");
+    JLabel totalOrders = new JLabel("Total Orders");
+
+    JLabel dynamicID = new JLabel();
+    JLabel dynamicName = new JLabel();
+    JLabel dynamicDOB = new JLabel();
+    JLabel dynamicCompany = new JLabel();
+    JLabel dynamicTotalOrder = new JLabel();
+    JLabel dynamicDomain = new JLabel();
+    JLabel dynamicExperience = new JLabel();
 
     
     JButton empButton = new JButton("Manage Employees");
     JButton cliButton = new JButton("Manage Clients");
     JButton proButton = new JButton("Manage Projects");
-    
     JButton addCliButton = new JButton("Add New Clients");
     JButton addEmplButton = new JButton("Add New Employees");
-    JButton submit = new JButton("Submit");
+    JButton submit1 = new JButton("Submit");
+    JButton submit2 = new JButton("Submit");
+    JButton remove1 = new JButton("Remove");
+    JButton remove2 = new JButton("Remove");
+
+
     
     JButton removeCliButton = new JButton("Remove Clients");
     JButton removeEmpButton = new JButton("Remove Employee");
 
+    JTextField idTextField = new JTextField();
     JTextField nameTextField = new JTextField("Sherlock Holmes");
     JTextField streetNameTextField = new JTextField("221B");
     JTextField localityTextField = new JTextField("Baker Street");
@@ -53,9 +73,14 @@ public class admingui{
     JTextField nationalityTextField = new JTextField("UK");
     JTextField dobTextField = new JTextField("1969-10-24");
     JTextField experienceTextField = new JTextField("12");
+    JTextField companyTextField = new JTextField("Apple");
     
+    String[] emptyArray = {"null"};
     //It is used to create a drop down menu of the various domains
     JComboBox<String> domainComboBox;
+    JComboBox<String> allID = new JComboBox<String>(emptyArray);
+    
+    
 
     
 
@@ -96,7 +121,11 @@ public class admingui{
         empButton.addActionListener(new manageEmployeeListener());
         addCliButton.addActionListener(new handleInputClient());
         addEmplButton.addActionListener(new handleInputEmployee());
-        submit.addActionListener(new handleEmployeeData());
+        removeCliButton.addActionListener(new handleRemoveClient());
+        removeEmpButton.addActionListener(new handleRemoveEmployee());
+        submit1.addActionListener(new handleEmployeeData());
+        submit2.addActionListener(new handleClientData());
+       
 
         frame.add(mainMenu,BorderLayout.CENTER);
         frame.add(menuHeadingPanel,BorderLayout.NORTH);
@@ -106,59 +135,324 @@ public class admingui{
         testing.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); */
     }
     
-    void addClientGUI(){
-        addClient.setLayout(new GridLayout(10,2,10,50));
-        addClient.setBorder(new EmptyBorder(new Insets(5,5,5,5)));
+    private void addClientGUI(){
+        
 
-        addClient.add(name);
-        addClient.add(nameTextField);
-        addClient.add(streetName);
-        addClient.add(streetNameTextField);
-        addClient.add(locality);
-        addClient.add(localityTextField);
-        addClient.add(District);
-        addClient.add(DistrictTextField);
-        addClient.add(state);
-        addClient.add(stateTextField);
-        addClient.add(pincode);
-        addClient.add(pincodeTextField);
-        addClient.add(nationality);
-        addClient.add(nationalityTextField);
-        addClient.add(dob);
-        addClient.add(dobTextField);
+        addClient.setLayout(new GridBagLayout());
+        GridBagConstraints gbc = new GridBagConstraints();
+        
+        gbc.gridx = 0;//column
+        gbc.gridy = 0;//row   
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.insets = new Insets(20,20,20,0);    
+        gbc.ipady = 10; // height of the grid 
+        addClient.add(name,gbc);
+
+        gbc.gridx = 1;
+        gbc.gridy = 0;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.ipadx = 40;
+        addClient.add(nameTextField,gbc);
+
+        gbc.gridx = 0;
+        gbc.gridy = 1;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        addClient.add(streetName,gbc);
+        
+        gbc.gridx = 1;
+        gbc.gridy = 1;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        addClient.add(streetNameTextField,gbc);
+        
+        gbc.gridx = 0;
+        gbc.gridy = 2;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        addClient.add(locality,gbc);
+        
+        gbc.gridx = 1;
+        gbc.gridy = 2;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        addClient.add(localityTextField,gbc);
+        
+        gbc.gridx = 0;
+        gbc.gridy = 3;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        addClient.add(District,gbc);
+        
+        gbc.gridx = 1;
+        gbc.gridy = 3;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        addClient.add(DistrictTextField,gbc);
+        
+        gbc.gridx = 0;
+        gbc.gridy = 4;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        addClient.add(state,gbc);
+        
+        gbc.gridx = 1;
+        gbc.gridy = 4;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        addClient.add(stateTextField,gbc);
+        
+        gbc.gridx = 0;
+        gbc.gridy = 5;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        addClient.add(pincode,gbc);
+        
+        gbc.gridx = 1;
+        gbc.gridy = 5;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        addClient.add(pincodeTextField,gbc);
+        
+        gbc.gridx = 0;
+        gbc.gridy = 6;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        addClient.add(nationality,gbc);
+        
+        gbc.gridx = 1;
+        gbc.gridy = 6;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        addClient.add(nationalityTextField,gbc);
+        
+        gbc.gridx = 0;
+        gbc.gridy = 7;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        addClient.add(dob,gbc);
+        
+        gbc.gridx = 1;
+        gbc.gridy = 7;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        addClient.add(dobTextField,gbc);
+
+        gbc.gridx = 0;
+        gbc.gridy = 8;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        addClient.add(Company,gbc);
+
+        gbc.gridx = 1;
+        gbc.gridy = 8;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        addClient.add(companyTextField,gbc);
+
+        gbc.gridx = 0;
+        gbc.gridy = 9;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        addClient.add(submit2,gbc);
     }
 
-    void addEmpGUI(){
-        addEmp.setLayout(new GridLayout(12,2,10,50));
-        addEmp.setBorder(new EmptyBorder(new Insets(20,20,20,20)));
+    private void addEmpGUI(){
+        addEmp.setLayout(new GridBagLayout());
+        GridBagConstraints gbc = new GridBagConstraints();
         
-        addEmp.add(name);
-        addEmp.add(nameTextField);
-        addEmp.add(streetName);
-        addEmp.add(streetNameTextField);
-        addEmp.add(locality);
-        addEmp.add(localityTextField);
-        addEmp.add(District);
-        addEmp.add(DistrictTextField);
-        addEmp.add(state);
-        addEmp.add(stateTextField);
-        addEmp.add(pincode);
-        addEmp.add(pincodeTextField);
-        addEmp.add(nationality);
-        addEmp.add(nationalityTextField);
-        addEmp.add(dob);
-        addEmp.add(dobTextField);
-        addEmp.add(experience);
-        addEmp.add(experienceTextField);
-        addEmp.add(domain);
+        gbc.gridx = 0;//column
+        gbc.gridy = 0;//row   
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.insets = new Insets(20,20,20,0);    
+        gbc.ipady = 10; // height of the grid 
+        addEmp.add(name,gbc);
+
+        gbc.gridx = 1;
+        gbc.gridy = 0;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        addEmp.add(nameTextField,gbc);
+
+        gbc.gridx = 0;
+        gbc.gridy = 1;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        addEmp.add(streetName,gbc);
+        
+        gbc.gridx = 1;
+        gbc.gridy = 1;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        addEmp.add(streetNameTextField,gbc);
+        
+        gbc.gridx = 0;
+        gbc.gridy = 2;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        addEmp.add(locality,gbc);
+        
+        gbc.gridx = 1;
+        gbc.gridy = 2;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        addEmp.add(localityTextField,gbc);
+        
+        gbc.gridx = 0;
+        gbc.gridy = 3;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        addEmp.add(District,gbc);
+        
+        gbc.gridx = 1;
+        gbc.gridy = 3;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        addEmp.add(DistrictTextField,gbc);
+        
+        gbc.gridx = 0;
+        gbc.gridy = 4;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        addEmp.add(state,gbc);
+        
+        gbc.gridx = 1;
+        gbc.gridy = 4;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        addEmp.add(stateTextField,gbc);
+        
+        gbc.gridx = 0;
+        gbc.gridy = 5;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        addEmp.add(pincode,gbc);
+        
+        gbc.gridx = 1;
+        gbc.gridy = 5;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        addEmp.add(pincodeTextField,gbc);
+        
+        gbc.gridx = 0;
+        gbc.gridy = 6;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        addEmp.add(nationality,gbc);
+        
+        gbc.gridx = 1;
+        gbc.gridy = 6;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        addEmp.add(nationalityTextField,gbc);
+        
+        gbc.gridx = 0;
+        gbc.gridy = 7;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        addEmp.add(dob,gbc);
+        
+        gbc.gridx = 1;
+        gbc.gridy = 7;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        addEmp.add(dobTextField,gbc);
+        
+        gbc.gridx = 0;
+        gbc.gridy = 8;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        addEmp.add(experience,gbc);
+        
+        gbc.gridx = 1;
+        gbc.gridy = 8;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        addEmp.add(experienceTextField,gbc);
+        
+        gbc.gridx = 0;
+        gbc.gridy = 9;
+        addEmp.add(domain,gbc);
         //Reference for the domain: https://www.quora.com/What-are-the-different-domains-in-software-development
         String[] domainChoices = {"WEB","ANDROID","SCIENTIFIC","BUSINESS", "MEDICAL","INDUSTRIAL & PROCESS CONTROL","SYSTEMS SOFTWARE", "TOOL DEVELOPMENT(COMPILERS, ASSEMBLERS)"};
         domainComboBox = new JComboBox<String>(domainChoices);
         domainComboBox.setBackground(Color.WHITE);
-        addEmp.add(domainComboBox);
+        gbc.gridx = 1;
+        gbc.gridy = 9;
+        addEmp.add(domainComboBox,gbc);
+
+        gbc.gridx = 0;
+        gbc.gridy = 10;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        addEmp.add(submit1,gbc);
     }
 
-    
+    private void remClientGUI(){
+        admin ad = new admin();
+        client cli = new client();
+        String[] ID = ad.PersonList(cli);
+        remClient.setLayout(new GridBagLayout());
+        GridBagConstraints gbc = new GridBagConstraints();
+        allID = new JComboBox<String>(ID);
+        
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        gbc.insets = new Insets(20,20,20,0);    
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        remClient.add(id,gbc);
+
+        gbc.gridx = 1;
+        gbc.gridy = 0;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        allID.setBackground(Color.white);
+        remClient.add(allID,gbc);
+
+        gbc.gridx = 0;
+        gbc.gridy = 1;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        remClient.add(name,gbc);
+
+        gbc.gridx = 1;
+        gbc.gridy = 1;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        remClient.add(dynamicName,gbc);
+
+        gbc.gridx = 0;
+        gbc.gridy = 2;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        remClient.add(dob,gbc);
+
+        gbc.gridx = 1;
+        gbc.gridy = 2;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        remClient.add(dynamicDOB,gbc);
+
+        gbc.gridx = 0;
+        gbc.gridy = 3;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        remClient.add(Company,gbc);
+
+        gbc.gridx = 1;
+        gbc.gridy = 3;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        remClient.add(dynamicCompany,gbc);
+
+        gbc.gridx = 0;
+        gbc.gridy = 4;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        remClient.add(totalOrders,gbc);
+
+        gbc.gridx = 1;
+        gbc.gridy = 4;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        remClient.add(dynamicTotalOrder,gbc);
+
+        gbc.gridx = 0;
+        gbc.gridy = 5;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        remClient.add(remove1,gbc);
+        allID.addActionListener(new handleShowDetails());
+    }
+
+    private void updateRemClientGUI(client C){
+        dynamicName.setText(C.getName());
+        dynamicDOB.setText(C.getDOB());
+        dynamicCompany.setText(C.getCompany());
+        dynamicTotalOrder.setText((String.format("%d", C.getTotal_Orders())));
+    }
+
+    private void remEmpGUI(){
+        admin ad = new admin();
+        employee emp = new employee();
+        remEmp.setLayout(new GridBagLayout());
+        GridBagConstraints gbc = new GridBagConstraints();
+        String[] ID = ad.PersonList(emp);
+        allID = new JComboBox<String>(ID);
+        
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        gbc.insets = new Insets(20,20,20,0);    
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        remEmp.add(id,gbc);
+
+        gbc.gridx = 1;
+        gbc.gridy = 0;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        remEmp.add(allID,gbc);
+
+        gbc.gridx = 0;
+        gbc.gridy = 1;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        remEmp.add(remove2,gbc);
+        System.out.println("Checking");
+        allID.addActionListener(new handleShowDetails());
+    }
     class manageClientListener implements ActionListener{
 
 
@@ -186,7 +480,7 @@ public class admingui{
             heading.setText("Input Client Information");
             addClientGUI();
             frame.add(addClient,BorderLayout.CENTER);
-            frame.add(submit,BorderLayout.SOUTH);
+            //frame.add(submit,BorderLayout.SOUTH);
         }
     }
 
@@ -197,11 +491,12 @@ public class admingui{
             heading.setText("Input Employee Information");
             addEmpGUI();
             frame.add(addEmp,BorderLayout.CENTER);
-            frame.add(submit,BorderLayout.SOUTH);
+            //frame.add(submit,BorderLayout.SOUTH);
         }
     }
 
     class handleEmployeeData implements ActionListener{
+        
         public void actionPerformed(ActionEvent a){
             admin ad = new admin();
             employee em = new employee();
@@ -248,22 +543,23 @@ public class admingui{
     class handleClientData implements ActionListener{
         public void actionPerformed(ActionEvent a){
             admin ad = new admin();
-            client em = new client();
-            em.setName(nameTextField.getText());
+            client cli = new client();
+            cli.setName(nameTextField.getText());
             String[] address = new String[4];
             address[0] = streetNameTextField.getText();
             address[1] = localityTextField.getText();
             address[2] = DistrictTextField.getText();
             address[3] = stateTextField.getText();
-            em.setAddress(address);
+            cli.setAddress(address);
+            cli.setCompany(companyTextField.getText());
             int failure = 1; //success -> 0, failure ->1
             int PINCODE = 0;
             try{
                 PINCODE = Integer.parseInt(pincodeTextField.getText());
-                em.setPINCODE(PINCODE);
-                em.setNationality(nationalityTextField.getText());
-                em.setDOB(dobTextField.getText());
-                failure = ad.AddPerson(em);
+                cli.setPINCODE(PINCODE);
+                cli.setNationality(nationalityTextField.getText());
+                cli.setDOB(dobTextField.getText());
+                failure = ad.AddPerson(cli);
             }catch(NumberFormatException nfe){
                 System.out.println("PINCODE must containt only numbers");
                 JOptionPane.showMessageDialog(frame, "PINCODE must contain only numbers", "WARNING", JOptionPane.WARNING_MESSAGE);
@@ -284,6 +580,37 @@ public class admingui{
                 }
             }
             
+        }
+    }
+
+    class handleRemoveEmployee implements ActionListener{
+        public void actionPerformed(ActionEvent a){
+            frame.remove(empMenu);
+            heading.setText("Remove Employee");
+            remEmpGUI();
+            frame.add(remEmp,BorderLayout.CENTER);
+        }
+    }
+
+    class handleRemoveClient implements ActionListener{
+        public void actionPerformed(ActionEvent a){
+            admin ad = new admin();
+            client cli = new client();
+            frame.remove(cliMenu);
+            heading.setText("Remove Client");
+            remClientGUI();
+            frame.add(remClient,BorderLayout.CENTER);
+        }
+    }
+    
+    class handleShowDetails implements ActionListener{
+        public void actionPerformed(ActionEvent a){
+            admin ad = new admin();
+            client cli = new client();
+            cli.setID((String)allID.getSelectedItem());
+            cli = ad.showPrimaryDetails(cli);
+            updateRemClientGUI(cli);
+        
         }
     }
 }
