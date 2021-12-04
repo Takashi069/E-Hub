@@ -10,7 +10,7 @@ import person.Person;
 import gui.secret;
 import Project.project;
 import java.util.Vector;
-
+import Project.project;
 public class client extends Person {
     secret s = new secret();
 
@@ -130,46 +130,72 @@ System.out.println(i + " records updated");
         String query = "delete from Project where Project_ID = ?";
         // The following lines of code are temporary:
 
-        String client_id = "PRO001";
+      //  String project_id = P.getProjectID;
 
         try {
             Class.forName("org.postgresql.Driver");
             c = DriverManager.getConnection(s.url, s.dbUser, s.dbPass);
             PreparedStatement ps = c.prepareStatement(query);
-            ps.setString(1, client_id);
+            ps.setString(1, P.getProjectID());
             int output = ps.executeUpdate();
-            System.out.println(output + " Row(s) Removed");
+          System.out.println(output + " Row(s) Removed");
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
-    // something under work
-    /*
-     * public void ClientPriority(){
-     * Connection c = null;
-     * String query = "select Total_Orders from client;";
-     * //The following lines of code are temporary:
-     * 
-     * // String client_id = "CLI001";
-     * 
-     * try{
-     * Class.forName("org.postgresql.Driver");
-     * c = DriverManager.getConnection(s.url, s.dbUser, s.dbPass);
-     * PreparedStatement ps = c.prepareStatement(query);
-     * // ps.setString(1, client_id);
-     * // ps.executeUpdate();
-     * ResultSet rs = ps.executeQuery(query);
-     * while (rs.next())
-     * {
-     * int x = rs.getInt("Total_Orders");
-     * System.out.println(x + " is the count");
-     * }
-     * 
-     * }catch(Exception e){
-     * e.printStackTrace();
-     * }
-     * }
-     */
+  
+    public project showPrimaryDetails(project p) {
+        Connection c = null;
+        project retreiveproject = new project();
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        java.sql.Date date;
+        String query1 = "select project_id,project_name,status_of_software from project where project_id=?";
+        try {
+            Class.forName("org.postgresql.Driver");
+            c = DriverManager.getConnection(s.url, s.dbUser, s.dbPass);
+            ps = c.prepareStatement(query1);
+            ps.setString(1,p.getProjectID());
+            rs = ps.executeQuery();
+            rs.next();
+            retreiveproject.setProjectID(rs.getString(1));
+            retreiveproject.setProjectName(rs.getString(2));
+            retreiveproject.setProjectStatus(rs.getString(3));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return retreiveproject;
+    }
+    public String[] PersonList(project P){
+        String[] list = null;
+        Connection con = null;
+        Statement stmt = null;
+        ResultSet rs = null;
+        String query  = "select project_id from project order by project_id";
+        String query2 = "select count(distinct(project_id)) from project";
+        try{
+            Class.forName("org.postgresql.Driver");
+            con = DriverManager.getConnection(s.url, s.dbUser, s.dbPass);
+            stmt = con.createStatement();
+            rs = stmt.executeQuery(query2);
+            rs.next();
+            list = new String[rs.getInt(1)];
+            rs = stmt.executeQuery(query);
+            
+            int i = 0;
+            while(rs.next()){
+                /* test = rs.getString(1);
+                System.out.println(test); */
+                list[i] = rs.getString(1);
+                i++;
+            }
+            
+        }catch(Exception e){
+            e.printStackTrace();
+            System.out.println("Error");
+        }
+        return list;
+    }
 }
 
 class Client_Report extends client {
@@ -252,11 +278,11 @@ class Client_Report extends client {
         Connection c = null;
         String query = "select client_id,count(Project_ID) as Totalprojcount from Project where Status_of_Software='PAID' group by client_id order by Totalprojcount desc;";
         //The following lines of code are temporary:
-Statement ps = null;
-//String client_id = "CLI001";
-Vector<String> Clientvec = new Vector<String>();
-Vector<Integer> Tprojvec = new Vector<Integer>();
-     Vector<String> Prionum = new Vector<String>();
+        Statement ps = null;
+        //String client_id = "CLI001";
+        Vector<String> Clientvec = new Vector<String>();
+        Vector<Integer> Tprojvec = new Vector<Integer>();
+        Vector<String> Prionum = new Vector<String>();
         try {
             String x = "asd";
             int y = 0;
@@ -279,8 +305,8 @@ Vector<Integer> Tprojvec = new Vector<Integer>();
                 // System.out.println(y);
             }
             // priority= Clientvec.indexOf(x);
-          setPriority(Clientvec.indexOf(x)+1);
-           // System.out.print(Clientvec);
+            setPriority(Clientvec.indexOf(x) + 1);
+            // System.out.print(Clientvec);
             //System.out.print(Tprojvec);
             // For prioirity thingy
             // update project set priority=? where ID=
@@ -292,6 +318,7 @@ Vector<Integer> Tprojvec = new Vector<Integer>();
             e.printStackTrace();
         }
     }
+    
 
 }
 
