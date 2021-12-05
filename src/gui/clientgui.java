@@ -7,6 +7,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import gui.clientComponents.requestProjGui;
+import gui.clientComponents.viewProjGui;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -41,6 +42,13 @@ public class clientgui extends JFrame {
             public void actionPerformed(ActionEvent ex) {
                 requestProjGui req = new requestProjGui(id);
                 req.setVisible(true);
+                c.setVisible(false);
+            }
+        });
+        viewProjButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent ex) {
+                new viewProjGui(id);
+                // req.setVisible(true);
                 c.setVisible(false);
             }
         });
