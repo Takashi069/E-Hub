@@ -118,7 +118,8 @@ create table Project
 /*=====================Aditya=============================*/
 
 insert into Login Values ('ADM001','frontman', 'ehub', 'projname');
-insert into Login Values ('CLI001','moneyman', 'ehub', 'idk'), ('EMP001', 'avgworker', 'ehub', 'you know it');
+insert into Login Values ('CLE001','moneyman', 'ehub', 'idk'), ('EMP001', 'avgworker', 'ehub', 'you know it');
+insert into Login Values ('CLE002','dollarman', 'ehub', 'idc');
 
 /*=====================Uday=============================*/
 
