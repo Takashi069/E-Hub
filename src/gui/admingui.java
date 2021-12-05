@@ -12,10 +12,12 @@ import admin.admin;
 import employee.employee;
 import client.client;
 
-public class admingui {
+public class admingui{
+    
     JFrame frame = new JFrame("Admin Menu");
-    JFrame testing = new JFrame("Testing");
-
+    JFrame testing  = new JFrame("Testing");
+    
+    JPanel display = new JPanel();
     JPanel mainMenu = new JPanel();
     JPanel menuHeadingPanel = new JPanel();
     JPanel cliMenu = new JPanel();
@@ -57,6 +59,7 @@ public class admingui {
     JButton submit2 = new JButton("Submit");
     JButton remove1 = new JButton("Remove");
     JButton remove2 = new JButton("Remove");
+    JButton backButton = new JButton("Back");
 
     JButton removeCliButton = new JButton("Remove Clients");
     JButton removeEmpButton = new JButton("Remove Employee");
@@ -72,15 +75,23 @@ public class admingui {
     JTextField dobTextField = new JTextField("1969-10-24");
     JTextField experienceTextField = new JTextField("12");
     JTextField companyTextField = new JTextField("Apple");
-
-    String[] emptyArray = { "null" };
-    // It is used to create a drop down menu of the various domains
-    JComboBox<String> domainComboBox;
+    
+    String[] emptyArray = {"null"};
+    //Reference for the domain: https://www.quora.com/What-are-the-different-domains-in-software-development
+    String[] domainChoices = {"WEB","ANDROID","SCIENTIFIC","BUSINESS", "MEDICAL","INDUSTRIAL & PROCESS CONTROL","SYSTEMS SOFTWARE", "TOOL DEVELOPMENT(COMPILERS, ASSEMBLERS)"};
+        //It is used to create a drop down menu of the various domains
+    JComboBox<String> domainComboBox = new JComboBox<String>(domainChoices);
     JComboBox<String> allID = new JComboBox<String>(emptyArray);
+    
+    CardLayout card;
 
-    // frame has BORDERLAYOUT by default
-    public admingui() {
-        frame.setSize(1280, 1024);
+    
+
+    //frame has BORDERLAYOUT by default
+    public admingui(){
+        card = new CardLayout();
+        display.setLayout(card);
+        frame.setSize(1280,1024);
         frame.setVisible(true);
         /*
          * testing.setSize(1280,1024);
@@ -96,22 +107,13 @@ public class admingui {
         mainMenu.add(cliButton);
         mainMenu.add(proButton);
 
-        cliMenu.setLayout(new GridLayout(3, 0, 0, 50));
-        cliMenu.setBorder(new EmptyBorder(new Insets(220, 220, 220, 220)));
-        cliMenu.add(addCliButton);
-        cliMenu.add(removeCliButton);
 
-        empMenu.setLayout(new GridLayout(3, 0, 0, 50));
-        empMenu.setBorder(new EmptyBorder(new Insets(220, 220, 220, 220)));
-        empMenu.add(addEmplButton);
-        empMenu.add(removeEmpButton);
-
-        // menuHeadingPanel.setBorder(new EmptyBorder(new Insets(50,50,50,50)));
-        heading.setFont(new Font("Verdana", Font.PLAIN, 35)); // to set the font-style and font-size of a Label
+        //menuHeadingPanel.setBorder(new EmptyBorder(new Insets(50,50,50,50)));
+        heading.setFont(new Font("Verdana", Font.PLAIN, 35)); //to set the font-style and font-size of a Label
         menuHeadingPanel.add(heading);
-
-        // menuHeadingPanel.setBackground(Color.BLUE);
-
+        
+        //menuHeadingPanel.setBackground(Color.BLUE);
+     
         cliButton.addActionListener(new manageClientListener());
         empButton.addActionListener(new manageEmployeeListener());
         addCliButton.addActionListener(new handleInputClient());
@@ -123,8 +125,19 @@ public class admingui {
         remove1.addActionListener(new handleRemovePerson("client"));
         remove2.addActionListener(new handleRemovePerson("employee"));
 
-        frame.add(mainMenu, BorderLayout.CENTER);
-        frame.add(menuHeadingPanel, BorderLayout.NORTH);
+       
+
+        display.add(mainMenu,"mainMenu");
+        display.add(cliMenu,"clientMenu");
+        display.add(empMenu,"employeeMenu");
+        display.add(addClient,"addClientMenu");
+        display.add(addEmp,"addEmployeeMenu");
+        display.add(remEmp,"removeEmployeeMenu");
+        display.add(remClient,"removeClientMenu");
+
+
+        frame.add(display,BorderLayout.CENTER);
+        frame.add(menuHeadingPanel,BorderLayout.NORTH);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         /*
          * testing.add(addClient,BorderLayout.CENTER);
@@ -132,6 +145,26 @@ public class admingui {
          * testing.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
          */
     }
+    
+    private void clientMenuGUI(){
+        cliMenu.setLayout(new GridLayout(3,0,0,50));
+        cliMenu.setBorder(new EmptyBorder(new Insets(220,220,220,220)));
+        cliMenu.add(addCliButton);
+        cliMenu.add(removeCliButton);
+        cliMenu.add(backButton);
+
+    }
+
+    private void empMenuGUI(){
+        empMenu.setLayout(new GridLayout(3,0,0,50));
+        empMenu.setBorder(new EmptyBorder(new Insets(220,220,220,220)));
+        empMenu.add(addEmplButton);
+        empMenu.add(removeEmpButton);
+        empMenu.add(backButton);
+    }
+
+    private void addClientGUI(){
+        
 
     private void addClientGUI() {
 
@@ -233,11 +266,16 @@ public class admingui {
 
         gbc.gridx = 0;
         gbc.gridy = 9;
+        addClient.add(backButton,gbc);
+
+        gbc.gridx = 1;
+        gbc.gridy = 9;
         gbc.fill = GridBagConstraints.HORIZONTAL;
         addClient.add(submit2, gbc);
     }
 
-    private void addEmpGUI() {
+    private void addEmpGUI(){
+
         addEmp.setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
 
@@ -335,18 +373,17 @@ public class admingui {
 
         gbc.gridx = 0;
         gbc.gridy = 9;
-        addEmp.add(domain, gbc);
-        // Reference for the domain:
-        // https://www.quora.com/What-are-the-different-domains-in-software-development
-        String[] domainChoices = { "WEB", "ANDROID", "SCIENTIFIC", "BUSINESS", "MEDICAL",
-                "INDUSTRIAL & PROCESS CONTROL", "SYSTEMS SOFTWARE", "TOOL DEVELOPMENT(COMPILERS, ASSEMBLERS)" };
-        domainComboBox = new JComboBox<String>(domainChoices);
+        addEmp.add(domain,gbc);
         domainComboBox.setBackground(Color.WHITE);
         gbc.gridx = 1;
         gbc.gridy = 9;
         addEmp.add(domainComboBox, gbc);
 
         gbc.gridx = 0;
+        gbc.gridy = 10;
+        addEmp.add(backButton,gbc);
+
+        gbc.gridx = 1;
         gbc.gridy = 10;
         gbc.fill = GridBagConstraints.HORIZONTAL;
         addEmp.add(submit1, gbc);
@@ -358,8 +395,12 @@ public class admingui {
         String[] ID = ad.PersonList(cli);
         remClient.setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
-        allID = new JComboBox<String>(ID);
-
+        allID.addActionListener(new handleShowDetails("client"));
+        allID.removeAllItems();
+        for (String id : ID) {
+            allID.addItem(id);
+        }
+        
         gbc.gridx = 0;
         gbc.gridy = 0;
         gbc.insets = new Insets(20, 20, 20, 0);
@@ -414,9 +455,12 @@ public class admingui {
 
         gbc.gridx = 0;
         gbc.gridy = 5;
+        remClient.add(backButton,gbc);
+        
+        gbc.gridx = 1;
+        gbc.gridy = 5;
         gbc.fill = GridBagConstraints.HORIZONTAL;
-        remClient.add(remove1, gbc);
-        allID.addActionListener(new handleShowDetails("client"));
+        remClient.add(remove1,gbc);
     }
 
     private void updateRemGUI(client C) {
@@ -438,9 +482,13 @@ public class admingui {
         employee emp = new employee();
         remEmp.setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
+        allID.addActionListener(new handleShowDetails("employee"));
         String[] ID = ad.PersonList(emp);
-        allID = new JComboBox<String>(ID);
-
+        allID.removeAllItems();
+        
+        for (String id : ID) {
+            allID.addItem(id);
+        }
         gbc.gridx = 0;
         gbc.gridy = 0;
         gbc.insets = new Insets(20, 20, 20, 0);
@@ -495,50 +543,63 @@ public class admingui {
 
         gbc.gridx = 0;
         gbc.gridy = 5;
+        remEmp.add(backButton,gbc);
+
+        gbc.gridx = 1;
+        gbc.gridy = 5;
         gbc.fill = GridBagConstraints.HORIZONTAL;
-        remEmp.add(remove2, gbc);
-        System.out.println("Checking");
-        allID.addActionListener(new handleShowDetails("employee"));
+        remEmp.add(remove2,gbc);
     }
+    
+    //Event Handlers from this point 
+    
+    class manageClientListener implements ActionListener{
 
     class manageClientListener implements ActionListener {
 
-        public void actionPerformed(ActionEvent a) {
-            frame.remove(mainMenu);
+        public void actionPerformed(ActionEvent a){
+            clientMenuGUI();
+            card.show(display, "clientMenu");
             heading.setText("Client Management Menu");
-            frame.add(cliMenu, BorderLayout.CENTER);
+            backButton.addActionListener(new goToMainMenu());
         }
     }
 
     class manageEmployeeListener implements ActionListener {
 
-        public void actionPerformed(ActionEvent a) {
-            frame.remove(mainMenu);
+        public void actionPerformed(ActionEvent a){
+            empMenuGUI();
+            card.show(display,"employeeMenu");
             heading.setText("Employee Management Menu");
-            ;
-            frame.add(empMenu, BorderLayout.CENTER);
+            backButton.addActionListener(new goToMainMenu());
         }
     }
 
-    class handleInputClient implements ActionListener {
+    class goToMainMenu implements ActionListener{
+        public void actionPerformed(ActionEvent a){
+            heading.setText("Administrator Panel");
+            card.show(display,"mainMenu");
+        }
+    }
+    class handleInputClient implements ActionListener{
 
-        public void actionPerformed(ActionEvent a) {
-            frame.remove(cliMenu);
+        public void actionPerformed(ActionEvent a){
             heading.setText("Input Client Information");
             addClientGUI();
-            frame.add(addClient, BorderLayout.CENTER);
-            // frame.add(submit,BorderLayout.SOUTH);
+            card.show(display,"addClientMenu");
+            backButton.addActionListener(new manageClientListener());
+            //frame.add(submit,BorderLayout.SOUTH);
         }
     }
 
     class handleInputEmployee implements ActionListener {
 
-        public void actionPerformed(ActionEvent a) {
-            frame.remove(empMenu);
+        public void actionPerformed(ActionEvent a){
             heading.setText("Input Employee Information");
             addEmpGUI();
-            frame.add(addEmp, BorderLayout.CENTER);
-            // frame.add(submit,BorderLayout.SOUTH);
+            card.show(display,"addEmployeeMenu");
+            backButton.addActionListener(new manageEmployeeListener());
+            //frame.add(submit,BorderLayout.SOUTH);
         }
     }
 
@@ -570,20 +631,17 @@ public class admingui {
                         JOptionPane.WARNING_MESSAGE);
             } finally {
                 System.out.println("Entered here");
-                if (failure == 0) {
-                    JOptionPane.showMessageDialog(frame, "Data Entry Successfull", "Success",
-                            JOptionPane.INFORMATION_MESSAGE);
-                    frame.dispose();
-                    new admingui();
+                if(failure == 0){
+                    JOptionPane.showMessageDialog(frame, "Data Entry Successfull", "Success", JOptionPane.INFORMATION_MESSAGE);
+                    card.show(display, "mainMenu");
 
-                } else if (failure == 1) {
+
+                }else if(failure == 1){
                     System.out.println("Failed");
                     JOptionPane.showMessageDialog(frame, "Data Entry Failed", "Failed", JOptionPane.ERROR_MESSAGE);
-                    // disposing the current frame and invoking the admingui to create a new frame
-                    // which
-                    // will technically redirect the admin to the home screen
-                    frame.dispose();
-                    new admingui();
+                    //disposing the current frame and invoking the admingui to create a new frame which
+                    //will technically redirect the admin to the home screen
+                    card.show(display, "mainMenu");
                 }
             }
 
@@ -616,41 +674,35 @@ public class admingui {
                         JOptionPane.WARNING_MESSAGE);
             } finally {
                 System.out.println("Entered here");
-                if (failure == 0) {
-                    JOptionPane.showMessageDialog(frame, "Data Entry Successfull", "Success",
-                            JOptionPane.INFORMATION_MESSAGE);
-                    frame.dispose();
-                    new admingui();
-
-                } else if (failure == 1) {
+                if(failure == 0){
+                    JOptionPane.showMessageDialog(frame, "Data Entry Successfull", "Success", JOptionPane.INFORMATION_MESSAGE);
+                    card.show(display,"mainMenu");
+                    
+                }else if(failure == 1){
                     System.out.println("Failed");
                     JOptionPane.showMessageDialog(frame, "Data Entry Failed", "Failed", JOptionPane.ERROR_MESSAGE);
-                    // disposing the current frame and invoking the admingui to create a new frame
-                    // which
-                    // will technically redirect the admin to the home screen
-                    frame.dispose();
-                    new admingui();
+                    //disposing the current frame and invoking the admingui to create a new frame which
+                    //will technically redirect the admin to the home screen
+                    card.show(display,"mainMenu");
                 }
             }
 
         }
     }
 
-    class handleRemoveEmployee implements ActionListener {
-        public void actionPerformed(ActionEvent a) {
-            frame.remove(empMenu);
+    class handleRemoveEmployee implements ActionListener{
+        public void actionPerformed(ActionEvent a){
             heading.setText("Remove Employee");
             remEmpGUI();
-            frame.add(remEmp, BorderLayout.CENTER);
+            card.show(display,"removeEmployeeMenu");
         }
     }
 
-    class handleRemoveClient implements ActionListener {
-        public void actionPerformed(ActionEvent a) {
-            frame.remove(cliMenu);
+    class handleRemoveClient implements ActionListener{
+        public void actionPerformed(ActionEvent a){
             heading.setText("Remove Client");
             remClientGUI();
-            frame.add(remClient, BorderLayout.CENTER);
+            card.show(display,"removeClientMenu");
         }
     }
 
@@ -681,9 +733,12 @@ public class admingui {
                 ad.removePerson(emp);
                 JOptionPane.showMessageDialog(frame, "Data Deleted", "Info", JOptionPane.PLAIN_MESSAGE);
             }
-            if (input == 0) {
-                frame.dispose();
-                new admingui();
+            if(input == 0){
+                card.show(display,"mainMenu");
+            }else if(type.compareToIgnoreCase("employee") == 0){
+                card.show(display,"removeEmployeeMenu");
+            }else if(type.compareToIgnoreCase("client") == 0){//the else is to prevent the duplication of the ID's when the user clicks on No in the Pop-Up Dialog box
+                card.show(display,"removeClientMenu");
             }
         }
 

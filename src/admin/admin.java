@@ -87,8 +87,8 @@ public class admin extends Person {
             c = DriverManager.getConnection(s.url, s.dbUser, s.dbPass);
             stmt = c.createStatement();
             rs = stmt.executeQuery(query);
-            rs.next();
-            count = rs.getInt("count");
+            if(rs.next())
+                count = rs.getInt("count");
             int[] sortedArray = new int[count];
             rs = stmt.executeQuery(query2);
             int i = count-1;
@@ -136,8 +136,8 @@ public class admin extends Person {
             con = DriverManager.getConnection(s.url, s.dbUser, s.dbPass);
             stmt = con.createStatement();
             rs = stmt.executeQuery(query2);
-            rs.next();
-            list = new String[rs.getInt(1)];
+            if(rs.next())
+                list = new String[rs.getInt(1)];
             rs = stmt.executeQuery(query);
             
             int i = 0;
@@ -167,8 +167,8 @@ public class admin extends Person {
             con = DriverManager.getConnection(s.url, s.dbUser, s.dbPass);
             stmt = con.createStatement();
             rs = stmt.executeQuery(query2);
-            rs.next();
-            list = new String[rs.getInt(1)];
+            if(rs.next())
+                list = new String[rs.getInt(1)];
             rs = stmt.executeQuery(query);
             
             int i = 0;
@@ -301,15 +301,18 @@ public class admin extends Person {
             ps = c.prepareStatement(query1);
             ps.setString(1, C.getID());
             rs = ps.executeQuery();
-            rs.next();
-            retreiveClient.setID(rs.getString(1));
-            retreiveClient.setName(rs.getString(2));
-            date  = rs.getDate(3);
-            retreiveClient.setDOB(date.toString());
-            retreiveClient.setCompany(rs.getString(4));
-            retreiveClient.setTotal_Orders(rs.getInt(5));
+            if(rs.next()){
+                retreiveClient.setID(rs.getString(1));
+                retreiveClient.setName(rs.getString(2));
+                // System.out.println(rs.getString(2));
+                date  = rs.getDate(3);
+                retreiveClient.setDOB(date.toString());
+                retreiveClient.setCompany(rs.getString(4));
+                retreiveClient.setTotal_Orders(rs.getInt(5));
+            }
         }catch(Exception e){
             e.printStackTrace();
+            System.out.println("Is it here\n\n");
         }
         return retreiveClient;
     }
@@ -329,13 +332,14 @@ public class admin extends Person {
             ps = c.prepareStatement(query1);
             ps.setString(1, E.getID());
             rs = ps.executeQuery();
-            rs.next();
-            retreiveEmployee.setID(rs.getString(1));
-            retreiveEmployee.setName(rs.getString(2));
-            date  = rs.getDate(3);
-            retreiveEmployee.setDOB(date.toString());
-            retreiveEmployee.setExperience(rs.getInt(4));
-            retreiveEmployee.setDomain(rs.getString(5));
+            if(rs.next()){
+                retreiveEmployee.setID(rs.getString(1));
+                retreiveEmployee.setName(rs.getString(2));
+                date  = rs.getDate(3);
+                retreiveEmployee.setDOB(date.toString());
+                retreiveEmployee.setExperience(rs.getInt(4));
+                retreiveEmployee.setDomain(rs.getString(5));
+            }
         }catch(Exception e){
             e.printStackTrace();
         }
