@@ -228,7 +228,7 @@ class Client_Report extends client {
                 "}";
     }
 
-    public void TotalProjectsCompleted() {
+    /* public void TotalProjectsCompleted() {
         Connection c = null;
         String query = "select count(Project_ID) as Totalprojcount from Project where Client_ID = ? and Status_of_Software='COMPLETED'";
         // The following lines of code are temporary:
@@ -249,9 +249,9 @@ class Client_Report extends client {
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }
+    } */
 
-    public void TotalProjectsPaid() {
+    /* public void TotalProjectsPaid() {
         Connection c = null;
         String query = "select count(Project_ID) as Totalprojcount from Project where Client_ID = ? and Status_of_Software='PAID'";
         // The following lines of code are temporary:
@@ -272,7 +272,7 @@ class Client_Report extends client {
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }
+    } */
 
     public void ClientPriority() {
         Connection c = null;
