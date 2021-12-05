@@ -1,6 +1,7 @@
 package gui.clientComponents;
 
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -8,6 +9,7 @@ import javax.swing.JTextField;
 
 import Project.project;
 import client.client;
+import gui.clientgui;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -16,22 +18,28 @@ import java.awt.*;
 public class requestProjGui extends JFrame {
     JLabel nameLabel = new JLabel("Project Name: ");
     JLabel domainLabel = new JLabel("Domain: ");
-    JLabel releaseDateLabel = new JLabel("Expected Release Date: ");
+    JLabel releaseDateLabel = new JLabel("Release Date ( Format: YYYY-MM-DD ): ");
     JLabel startDateLabel = new JLabel("Expected Starting Date: ");
     String cl_id;
 
-    JTextField nameTextField = new JTextField(20);
-    JTextField domainTextField = new JTextField(20);
+    JTextField nameTextField = new JTextField(20);;
     JTextField releaseTextField = new JTextField(20);
     JTextField startTextField = new JTextField(20);
+
+    String[] domainChoices = { "WEB", "ANDROID", "SCIENTIFIC", "BUSINESS", "MEDICAL",
+            "INDUSTRIAL & PROCESS CONTROL", "SYSTEMS SOFTWARE", "TOOL DEVELOPMENT(COMPILERS, ASSEMBLERS)" };
+    JComboBox<String> domainOptions;
 
     JPanel title = new JPanel();
     JPanel menu;
     JButton requestButton = new JButton("Request");
     JButton resetButton = new JButton("Reset");
+    JButton backButton = new JButton("Go Back");
 
     public requestProjGui(String id) {
         cl_id = id;
+        domainOptions = new JComboBox<String>(domainChoices);
+        domainOptions.setBackground(Color.WHITE);
         menu = new JPanel(new GridBagLayout());
         GridBagConstraints constraints = new GridBagConstraints();
         constraints.anchor = GridBagConstraints.WEST;
@@ -49,7 +57,7 @@ public class requestProjGui extends JFrame {
         menu.add(domainLabel, constraints);
 
         constraints.gridx = 1;
-        menu.add(domainTextField, constraints);
+        menu.add(domainOptions, constraints);
 
         constraints.gridx = 0;
         constraints.gridy = 2;
@@ -70,6 +78,12 @@ public class requestProjGui extends JFrame {
         constraints.anchor = GridBagConstraints.CENTER;
         menu.add(resetButton, constraints);
 
+        constraints.gridx = 2;
+        constraints.gridy = 4;
+        constraints.gridwidth = 4;
+        constraints.anchor = GridBagConstraints.CENTER;
+        menu.add(backButton, constraints);
+
         add(menu);
         setSize(1280, 1024);
         setVisible(true);
@@ -86,12 +100,31 @@ public class requestProjGui extends JFrame {
 
                 proj.setProjectName(nameTextField.getText());
                 proj.setProjectDeadline(releaseTextField.getText());
-                proj.setProjectType(domainTextField.getText());
+                proj.setProjectType(domainOptions.getItemAt(domainOptions.getSelectedIndex()));
                 proj.setClientID(cl_id);
-
                 cli.AddProject(proj);
                 dispose();
             }
         });
+
+        resetButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent ex) {
+                nameTextField.setText("");
+                releaseTextField.setText("");
+            }
+        });
+
+        backButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent ex) {
+                dispose();
+            }
+        });
+
+    }
+}
+
+class cdriver {
+    public static void main(String[] args) {
+        new clientgui("CLE001");
     }
 }

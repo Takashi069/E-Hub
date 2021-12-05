@@ -47,8 +47,8 @@ public class clientgui extends JFrame {
         });
         viewProjButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent ex) {
-                viewProjGui req = new viewProjGui();
-               // req.setVisible(true);
+                new viewProjGui(id);
+                // req.setVisible(true);
                 c.setVisible(false);
             }
         });

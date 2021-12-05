@@ -60,7 +60,7 @@ public class loginframe extends JFrame implements ActionListener {
                 try {
                     Class.forName("org.postgresql.Driver");
                     secret obj = new secret();
-                    c = DriverManager.getConnection(obj.url,obj.dbUser, obj.dbPass);
+                    c = DriverManager.getConnection(obj.url, obj.dbUser, obj.dbPass);
                 } catch (Exception e) {
                     e.printStackTrace();
                     System.err.println(e.getClass().getName() + ": " + e.getMessage());
@@ -89,9 +89,8 @@ public class loginframe extends JFrame implements ActionListener {
                             }
                             if (rs.getString("id").equals("CLE")) {
                                 System.out.println("Welcome Client");
-                                clientgui cli = new clientgui(rs.getString("full_id"));
+                                new clientgui(rs.getString("full_id"));
                                 dispose();
-                                cli.setVisible(true);
                             }
                         }
                         rs.close();
@@ -127,6 +126,5 @@ public class loginframe extends JFrame implements ActionListener {
         frame.setTitle("Login Form");
         frame.setVisible(true);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
     }
 }
