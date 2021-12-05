@@ -56,8 +56,68 @@ public class project {
     }
 
     public void setProjectMembers(String[] ProjectMembers) {
-        this.ProjectMembers = ProjectMembers;
+        Connection c = null;
+        Statement stmt = null;
+        try {
+            Class.forName("org.postgresql.Driver");
+            secret obj = new secret();
+            c = DriverManager.getConnection(obj.url,obj.dbUser, obj.dbPass);
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.err.println(e.getClass().getName() + ": " + e.getMessage());
+            System.exit(0);
+        }
+        String[] tmp_list = new String[4];
+        try {
+            System.out.println("Opened database successfully");
+            stmt = c.createStatement();
+            String sql = String.format(
+                "select Emp_ID from employee where Specialisation_ID = '%s' and Engaged_In_Project = 'N';","WEB");
+            ResultSet rs = stmt.executeQuery(sql);
+            int i = 0;
+            while (rs.next() && i < 5) {
+                String Emp_ID = rs.getString("Emp_ID");
+                tmp_list[i] = Emp_ID;
+                i++;
+            }
+                rs.close();
+                stmt.close();
+        }catch(Exception e)
+    {
+        System.out.println(e.toString());
     }
+        
+}
+
+    public void updateEmpStatus(String[] Emp_IDs) {
+        Connection c = null;
+        Statement stmt = null;
+
+        try {
+            Class.forName("org.postgresql.Driver");
+            secret obj = new secret();
+            c = DriverManager.getConnection(obj.url,obj.dbUser, obj.dbPass);
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.err.println(e.getClass().getName() + ": " + e.getMessage());
+            System.exit(0);
+        }
+        int i = 0;
+        while(i<6){
+            try {
+                System.out.println("Opened database successfully");
+                stmt = c.createStatement();
+                String sql = String.format(
+                    "update employee set Engaged_In_Project = 'N' where Emp_ID = '%s';",Emp_IDs[i]);
+                stmt.executeUpdate(sql);
+                stmt.close();
+            }catch(Exception e)
+        {
+            System.out.println(e.toString());
+        }
+
+        }
+    } 
 
     public String getProjectHead() {
         return this.ProjectHead;
@@ -80,7 +140,7 @@ public class project {
             System.out.println("Opened database successfully");
             stmt = c.createStatement();
             String sql = String.format(
-                    "select Emp_ID from employee where Specialisation_ID = '%s' and Engaged_In_Project = 'N' order by Emp_Join_Date;","WEB001");
+                "select Emp_ID from employee where Specialisation_ID = '%s' and Engaged_In_Project = 'N' order by experience desc;","WEB");
             ResultSet rs = stmt.executeQuery(sql);
             if (rs.next()) {
                 String Emp_ID = rs.getString("Emp_ID");
