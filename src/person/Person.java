@@ -11,7 +11,7 @@ public abstract class Person {
     public Person(){
 
         name = "John Doe";
-        DOB = "01/01/1950";
+        DOB = "1950-01-01";
         Address = new String[]{"StreetName", "Locality","District","State"};
         PINCODE = 000000;
         Nationality = "Indian";

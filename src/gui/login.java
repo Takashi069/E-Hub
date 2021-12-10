@@ -10,7 +10,7 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
 
-public class loginframe extends JFrame implements ActionListener {
+public class login extends JFrame implements ActionListener {
     Container container = getContentPane();
     JLabel userLabel = new JLabel("USERNAME");
     JLabel passwordLabel = new JLabel("PASSWORD");
@@ -20,7 +20,7 @@ public class loginframe extends JFrame implements ActionListener {
     JButton resetButton = new JButton("RESET");
     JCheckBox showPassword = new JCheckBox("Show Password");
 
-    loginframe() {
+    login() {
         setLayoutManager();
         setLocationAndSize();
         addComponentsToContainer();
@@ -60,8 +60,8 @@ public class loginframe extends JFrame implements ActionListener {
                 try {
                     Class.forName("org.postgresql.Driver");
                     secret obj = new secret();
-                    c = DriverManager.getConnection(obj.url, obj.dbUser, obj.dbPass);
-                } catch (Exception e) {
+                    c = DriverManager.getConnection(obj.url, obj.dbUser, obj.dbPass); //We have used objects here as the URL, username and psswd are different for
+                } catch (Exception e) {      //each one of us. So all our necessary info is stored in secret.java
                     e.printStackTrace();
                     System.err.println(e.getClass().getName() + ": " + e.getMessage());
                     System.exit(0);
@@ -78,22 +78,25 @@ public class loginframe extends JFrame implements ActionListener {
                             userText);
                     ResultSet rs = stmt.executeQuery(sql);
                     if (rs.next()) {
-                        if (rs.getString("password").equals(pwdText)) {
+                        if (rs.getString("password").equals(pwdText)) { // This line verifies the password
                             if (rs.getString("id").equals("ADM")) {
                                 // redirect to admin dashboard
                                 System.out.println("Welcome admin");
+                                new admingui();
+                                dispose();
                             }
                             if (rs.getString("id").equals("EMP")) {
                                 System.out.println("Welcome employee");
                                 // redirect to employee dashboard
                             }
-                            if (rs.getString("id").equals("CLE")) {
+                            if (rs.getString("id").equals("CLI")) {
                                 System.out.println("Welcome Client");
                                 new clientgui(rs.getString("full_id"));
-                                dispose();
+                                dispose(); //this will close the login frame completely
                             }
                         }
                         rs.close();
+                        c.close();
                         stmt.close();
                     }
                 } catch (Exception e) {
@@ -103,6 +106,7 @@ public class loginframe extends JFrame implements ActionListener {
         });
         resetButton.addActionListener(this);
         showPassword.addActionListener(this);
+        passwordField.setEchoChar('*'); //replace whatever the user types with a character.
     }
 
     public void actionPerformed(ActionEvent e) {
@@ -112,7 +116,7 @@ public class loginframe extends JFrame implements ActionListener {
         }
         if (e.getSource() == showPassword) {
             if (showPassword.isSelected()) {
-                passwordField.setEchoChar((char) 0);
+                passwordField.setEchoChar((char)0); //setting the character to 0 indicates that we want the password field to behave as a normal TextField
             } else {
                 passwordField.setEchoChar('*');
             }
@@ -121,8 +125,8 @@ public class loginframe extends JFrame implements ActionListener {
     }
 
     public static void main(String[] a) {
-        loginframe frame = new loginframe();
-        frame.setSize(new Dimension(1280, 1024));
+        login frame = new login();
+        frame.setSize(new Dimension(960, 640));
         frame.setTitle("Login Form");
         frame.setVisible(true);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

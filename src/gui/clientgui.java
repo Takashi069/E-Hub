@@ -55,3 +55,9 @@ public class clientgui extends JFrame {
     }
 
 }
+
+class Driver123{
+    public static void main(String[] args) {
+        new clientgui("CLI001");
+    }
+}

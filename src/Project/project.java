@@ -74,8 +74,8 @@ public class project {
             String sql = String.format(
                 "select Emp_ID from employee where Specialisation_ID = '%s' and Engaged_In_Project = 'N';","WEB");
             ResultSet rs = stmt.executeQuery(sql);
-            int i = 0;
-            while (rs.next() && i < 5) {
+            int i = 1;
+            while (rs.next() && i < 5) { //the reason why i<5 is because we're picking 4 employees to work on this project
                 String Emp_ID = rs.getString("Emp_ID");
                 tmp_list[i] = Emp_ID;
                 i++;
@@ -102,8 +102,8 @@ public class project {
             System.err.println(e.getClass().getName() + ": " + e.getMessage());
             System.exit(0);
         }
-        int i = 0;
-        while(i<6){
+        int i = 1;
+        while(i<6){ //this while loop is used to change the status of the employees once the project is completed
             try {
                 System.out.println("Opened database successfully");
                 stmt = c.createStatement();
@@ -180,34 +180,6 @@ public class project {
 
     public void setClientID(String ClientID) {
         this.ClientID = ClientID;
-    }
-
-}
-
-class Project_report extends project {
-
-    private String Date_of_Commencement;
-
-    public String getDate_of_Commencement() {
-        return this.Date_of_Commencement;
-    }
-
-    public void setDate_of_Commencement(String Date_of_Commencement) {
-        this.Date_of_Commencement = Date_of_Commencement;
-    }
-
-    public String displayReport() {
-        return "{" +
-                " ProjectID='" + getProjectID() + "'" +
-                ", ProjectName='" + getProjectName() + "'" +
-                ", ProjectType='" + getProjectType() + "'" +
-                ", ProjectDeadline='" + getProjectDeadline() + "'" +
-                ", ProjectMembers='" + getProjectMembers() + "'" +
-                ", ProjectHead='" + getProjectHead() + "'" +
-                ", ProjectStatus='" + getProjectStatus() + "'" +
-                ", ClientID='" + getClientID() + "'" +
-                " Date_of_Commencement='" + getDate_of_Commencement() + "'" +
-                "}";
     }
 
 }

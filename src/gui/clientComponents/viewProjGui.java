@@ -15,7 +15,7 @@ public class viewProjGui {
 
     JFrame frame = new JFrame("Client Menu");
     JPanel cliMenu = new JPanel();
-    JPanel remClient = new JPanel();
+    JPanel viewProject = new JPanel();
     JLabel heading = new JLabel("Welcome Client");
     String[] emptyArray = { "null" };
     JLabel id = new JLabel("ID");
@@ -38,7 +38,7 @@ public class viewProjGui {
         cli.ProjectList(pro, ClientID);
         id_list = cli.getPersonIdList();
         name_list = cli.getPersonNameList();
-        remClient.setLayout(new GridBagLayout());
+        viewProject.setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
         allID = new JComboBox<String>(name_list);
 
@@ -46,49 +46,49 @@ public class viewProjGui {
         gbc.gridy = 0;
         gbc.insets = new Insets(20, 20, 20, 0);
         gbc.fill = GridBagConstraints.HORIZONTAL;
-        remClient.add(id, gbc);
+        viewProject.add(id, gbc);
 
         gbc.gridx = 1;
         gbc.gridy = 0;
         gbc.fill = GridBagConstraints.HORIZONTAL;
         allID.setBackground(Color.white);
-        remClient.add(allID, gbc);
+        viewProject.add(allID, gbc);
 
         gbc.gridx = 0;
         gbc.gridy = 1;
         gbc.fill = GridBagConstraints.HORIZONTAL;
-        remClient.add(name, gbc);
+        viewProject.add(name, gbc);
 
         gbc.gridx = 1;
         gbc.gridy = 1;
         gbc.fill = GridBagConstraints.HORIZONTAL;
-        remClient.add(dynamicName, gbc);
+        viewProject.add(dynamicName, gbc);
 
         gbc.gridx = 0;
         gbc.gridy = 3;
         gbc.fill = GridBagConstraints.HORIZONTAL;
-        remClient.add(Company, gbc);
+        viewProject.add(Company, gbc);
 
         gbc.gridx = 1;
         gbc.gridy = 3;
         gbc.fill = GridBagConstraints.HORIZONTAL;
-        remClient.add(dynamicCompany, gbc);
+        viewProject.add(dynamicCompany, gbc);
 
         gbc.gridx = 0;
         gbc.gridy = 5;
         gbc.fill = GridBagConstraints.HORIZONTAL;
-        remClient.add(remove1, gbc);
+        viewProject.add(remove1, gbc);
 
         gbc.gridx = 2;
         gbc.gridy = 4;
         gbc.gridwidth = 4;
         gbc.anchor = GridBagConstraints.CENTER;
-        remClient.add(backButton, gbc);
+        viewProject.add(backButton, gbc);
 
         remove1.addActionListener(new handleRemoveProject());
         allID.addActionListener(new handleShowDetails());
         frame.setSize(1280, 1024);
-        frame.add(remClient);
+        frame.add(viewProject);
         frame.setVisible(true);
 
         backButton.addActionListener(new ActionListener() {
@@ -99,7 +99,7 @@ public class viewProjGui {
 
     }
 
-    private void updateRemClientGUI(project P) {
+    private void updateviewProjectGUI(project P) {
         dynamicName.setText(P.getProjectName());
         dynamicCompany.setText(P.getProjectStatus());
         // dynamicTotalOrder.setText((String.format("%d", C.getTotal_Orders())));
@@ -123,7 +123,7 @@ public class viewProjGui {
             client cli = new client();
             pro.setProjectID((String) id_list[allID.getSelectedIndex()]);
             pro = cli.showPrimaryDetails(pro);
-            updateRemClientGUI(pro);
+            updateviewProjectGUI(pro);
             // System.out.println(pro.getProjectName());
 
         }
@@ -139,8 +139,10 @@ public class viewProjGui {
 
             project pro = new project();
             pro.setProjectID((String) id_list[allID.getSelectedIndex()]);
-            cli.removeProject(pro);
-            JOptionPane.showMessageDialog(frame, "Data Deleted", "Info", JOptionPane.PLAIN_MESSAGE);
+            if(input == 0){
+                cli.removeProject(pro);
+                JOptionPane.showMessageDialog(frame, "Data Deleted", "Info", JOptionPane.PLAIN_MESSAGE);
+            }
             frame.dispose();
             new viewProjGui(ClientID);
         }

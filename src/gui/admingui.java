@@ -26,6 +26,7 @@ public class admingui{
     JPanel addEmp = new JPanel();
     JPanel remEmp = new JPanel();
     JPanel remClient = new JPanel();
+    JPanel project = new JPanel();
 
     JLabel heading = new JLabel("Welcome Administrator");
     JLabel id = new JLabel("ID");
@@ -52,9 +53,11 @@ public class admingui{
 
     JButton empButton = new JButton("Manage Employees");
     JButton cliButton = new JButton("Manage Clients");
-    JButton proButton = new JButton("Manage Projects");
+    JButton projectButton = new JButton("Manage Projects");
     JButton addCliButton = new JButton("Add New Clients");
     JButton addEmplButton = new JButton("Add New Employees");
+    JButton viewNonApprovedProjects = new JButton("View Non-Approved Projects");
+    JButton changeProjectStatus = new JButton("Change Project Status");
     JButton submit1 = new JButton("Submit");
     JButton submit2 = new JButton("Submit");
     JButton remove1 = new JButton("Remove");
@@ -97,7 +100,7 @@ public class admingui{
     public admingui(){
         card = new CardLayout();
         display.setLayout(card);
-        frame.setSize(1280,1024);
+        frame.setSize(960,640);
         frame.setVisible(true);
         /*
          * testing.setSize(1280,1024);
@@ -108,10 +111,10 @@ public class admingui{
         mainMenu.setLayout(new GridLayout(3, 0, 0, 50));
         // To add paddings inside the panel I used EmptyBorder along with Insets->
         // Reason: To make the buttons more centralised
-        mainMenu.setBorder(new EmptyBorder(new Insets(220, 220, 220, 220)));
+        mainMenu.setBorder(new EmptyBorder(new Insets(20, 20, 20, 20)));
         mainMenu.add(empButton);
         mainMenu.add(cliButton);
-        mainMenu.add(proButton);
+        mainMenu.add(projectButton);
 
 
         //menuHeadingPanel.setBorder(new EmptyBorder(new Insets(50,50,50,50)));
@@ -122,6 +125,7 @@ public class admingui{
      
         cliButton.addActionListener(new manageClientListener());
         empButton.addActionListener(new manageEmployeeListener());
+        projectButton.addActionListener(new manageProjectListener());
         addCliButton.addActionListener(new handleInputClient());
         addEmplButton.addActionListener(new handleInputEmployee());
         removeCliButton.addActionListener(new handleRemoveClient());
@@ -140,6 +144,7 @@ public class admingui{
         display.add(addEmp,"addEmployeeMenu");
         display.add(remEmp,"removeEmployeeMenu");
         display.add(remClient,"removeClientMenu");
+        display.add(project,"projectMenu");
 
 
         frame.add(display,BorderLayout.CENTER);
@@ -154,7 +159,7 @@ public class admingui{
     
     private void clientMenuGUI(){
         cliMenu.setLayout(new GridLayout(3,0,0,50));
-        cliMenu.setBorder(new EmptyBorder(new Insets(220,220,220,220)));
+        cliMenu.setBorder(new EmptyBorder(new Insets(20,20,20,20)));
         cliMenu.add(addCliButton);
         cliMenu.add(removeCliButton);
         cliMenu.add(backButton);
@@ -163,14 +168,21 @@ public class admingui{
 
     private void empMenuGUI(){
         empMenu.setLayout(new GridLayout(3,0,0,50));
-        empMenu.setBorder(new EmptyBorder(new Insets(220,220,220,220)));
+        empMenu.setBorder(new EmptyBorder(new Insets(20,20,20,20)));
         empMenu.add(addEmplButton);
         empMenu.add(removeEmpButton);
         empMenu.add(backButton);
     }
 
+    private void projectMenuGUI(){
+        project.setLayout(new GridLayout(3,0,20,20));
+        project.setBorder(new EmptyBorder(new Insets(20,20,20,20)));
+        project.add(viewNonApprovedProjects);
+        project.add(changeProjectStatus);
+        project.add(backButton);
+        backButton.addActionListener(new goToMainMenu());
+    }
         
-
     private void addClientGUI() {
 
         addClient.setLayout(new GridBagLayout());
@@ -179,7 +191,6 @@ public class admingui{
         gbc.gridx = 0;// column
         gbc.gridy = 0;// row
         gbc.fill = GridBagConstraints.HORIZONTAL;
-        gbc.insets = new Insets(20, 20, 20, 0);
         gbc.ipady = 10; // height of the grid
         addClient.add(name, gbc);
 
@@ -268,13 +279,15 @@ public class admingui{
         gbc.gridy = 8;
         gbc.fill = GridBagConstraints.HORIZONTAL;
         addClient.add(companyTextField, gbc);
-
+        //                      t,  l,  b,  r
+        gbc.insets = new Insets(20, 0, 0, 20);
         gbc.gridx = 0;
         gbc.gridy = 9;
         addClient.add(backButton,gbc);
 
         gbc.gridx = 1;
         gbc.gridy = 9;
+        gbc.insets = new Insets(20, 0, 0, 0);
         gbc.fill = GridBagConstraints.HORIZONTAL;
         addClient.add(submit2, gbc);
     }
@@ -287,7 +300,6 @@ public class admingui{
         gbc.gridx = 0;// column
         gbc.gridy = 0;// row
         gbc.fill = GridBagConstraints.HORIZONTAL;
-        gbc.insets = new Insets(20, 20, 20, 0);
         gbc.ipady = 10; // height of the grid
         addEmp.add(name, gbc);
 
@@ -379,15 +391,18 @@ public class admingui{
         gbc.gridx = 0;
         gbc.gridy = 9;
         addEmp.add(domain,gbc);
+        
         domainComboBox.setBackground(Color.WHITE);
         gbc.gridx = 1;
         gbc.gridy = 9;
         addEmp.add(domainComboBox, gbc);
 
+        gbc.insets = new Insets(40, 0, 20, 10);
         gbc.gridx = 0;
         gbc.gridy = 10;
         addEmp.add(backButton,gbc);
 
+        gbc.insets = new Insets(20, 0, 0, 0);
         gbc.gridx = 1;
         gbc.gridy = 10;
         gbc.fill = GridBagConstraints.HORIZONTAL;
@@ -583,12 +598,20 @@ public class admingui{
         }
     }
 
+    class manageProjectListener implements ActionListener{
+        public void actionPerformed(ActionEvent a){
+            heading.setText("Projects Menu");
+            projectMenuGUI();
+            card.show(display,"projectMenu");
+        }
+    }
     class goToMainMenu implements ActionListener{
         public void actionPerformed(ActionEvent a){
             heading.setText("Administrator Panel");
             card.show(display,"mainMenu");
         }
     }
+    
     class handleInputClient implements ActionListener{
 
         public void actionPerformed(ActionEvent a){

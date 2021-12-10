@@ -7,6 +7,7 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.Date; //To retrieve the Current Date
 
+import Project.project;
 import person.Person;
 import client.client;
 import employee.employee;
@@ -72,8 +73,6 @@ public class admin extends Person {
             queryid = "emp_id";
         }else if(type.compareToIgnoreCase("client")==0){
             queryid = "client_id";
-        }else if(type=="project"){
-            queryid = "project_id";
         }
         String countString;
         String query = "select count(distinct(" +queryid+")) from " + ogtype;
@@ -118,8 +117,6 @@ public class admin extends Person {
             finalID = "CLI" + countString;
         }else if(type.compareToIgnoreCase("Employee") == 0){
             finalID = "EMP" + countString;
-        }else if(type.compareToIgnoreCase("Project") == 0){
-            finalID = "PRO" + countString;
         }
         return finalID;
     }
@@ -214,7 +211,7 @@ public class admin extends Person {
             ps.setString(6, E.getAddress()[3]);
             ps.setString(7, String.format("%d", E.getPINCODE()));
             ps.setString(8, E.getNationality());
-            ps.setDate(9, java.sql.Date.valueOf(E.getDOB()));
+            ps.setDate(9, java.sql.Date.valueOf(E.getDOB())); //DOB of Employee: YYYY-MM-DD
             
             int output = ps.executeUpdate();
             System.out.println(output + " Rows Updated");
@@ -225,13 +222,13 @@ public class admin extends Person {
             ps.setInt(2,E.getExperience());
             ps.setString(3,E.getDomain());
             //To set the date as the current date
-            ps.setDate(4, new java.sql.Date(date.getTime()));
-            output = ps.executeUpdate();
+            ps.setDate(4, new java.sql.Date(date.getTime())); //Date's constructor is invoked here, which accepts a parameter in milliseconds and converts it into SQL Date
+            output = ps.executeUpdate();                      //getTime will return the number of milliseconds from 1st Jan 1970 till today
             System.out.println(output + " Rows Updated");
             stmt.close();
             c.close();
             return 0;
-
+                
         }catch(Exception e){
             e.printStackTrace();
             return 1;
@@ -312,7 +309,7 @@ public class admin extends Person {
             }
         }catch(Exception e){
             e.printStackTrace();
-            System.out.println("Is it here\n\n");
+            //System.out.println("Is it here\n\n");
         }
         return retreiveClient;
     }
@@ -380,7 +377,27 @@ public class admin extends Person {
             e.printStackTrace();
         }
     }
+//wrote it recently, not to be explained
+    /* public void listProjects(){
 
+        Connection c = null;
+        Statement stmt = null;
+        project p = new project();
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        String query = "select project_id, client_id, project_name, date_of_release, domain where status_of_software = 'NOT APPROVED'";
+        
+        try{
+            Class.forName("org.postgresql.Driver");
+            c = DriverManager.getConnection(s.url, s.dbUser, s.dbPass);
+            stmt = c.createStatement();
+            rs = stmt.executeQuery(query);
+            
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+    
+    } */
     
 }
 

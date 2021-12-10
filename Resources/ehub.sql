@@ -65,6 +65,7 @@ select * from client c ;
 select * from project;
 select * from login l ;
 select * from project;
+select * from login l ;
 
 select p.id, p.name, p.dob, c.company ,c.total_orders 
 from person p, client c
@@ -100,6 +101,9 @@ drop table client;
 drop table employee ;
 DROP TABLE person;
 drop table login;
+
+insert into person values
+('ADM001','Akash Harikumar','Gokulam','Edavanassery', 'Kollam','Kerala','690519','Indian','07/08/2001');
 /*=====================Mohak=============================*/
 create table Project
 (
@@ -119,8 +123,9 @@ create table Project
 /*=====================Aditya=============================*/
 
 insert into Login Values ('ADM001','frontman', 'ehub', 'projname');
-insert into Login Values ('CLE001','moneyman', 'ehub', 'idk'), ('EMP001', 'avgworker', 'ehub', 'you know it');
-insert into Login Values ('CLE002','dollarman', 'ehub', 'idc');
+
+insert into Login Values ('CLI001','Mark', 'ehub', 'ehub');
+insert into Login Values ('CLI002','Donald', 'ehub', 'ehub');
 
 /*=====================Uday=============================*/
 

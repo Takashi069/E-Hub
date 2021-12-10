@@ -83,10 +83,10 @@ public class client extends Person {
         this.Company = Company;
     }
 
-    private int findMissingNumber(int[] arr) {
+    private int findMissingNumber(int[] arr) { //arr is sorted in ascending order, the arrays will have the numbers 
         int i;
         for (i = 1; i <= arr.length; i++) {
-            System.out.println(arr[i - 1] + "\t" + i);
+            System.out.println(arr[i - 1] + "\t" + i); 
             if (i != arr[i - 1]) {
                 return i;
             }
@@ -99,7 +99,7 @@ public class client extends Person {
         Statement stmt = null;
 
         // We need to add the data in the Project table first
-        String count = "select count(Project_ID) as id from Project;";
+        String count = "select count(Project_ID) as id from Project;"; // it is used to give the size of the array sortedArray
         String query2 = "select substring(Project_ID,4,6) from Project order by Project_ID desc";
         try {
             Class.forName("org.postgresql.Driver");
@@ -194,7 +194,7 @@ public class client extends Person {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return retreiveproject;
+        return retreiveproject; //Returning it so you can display it
     }
 
     public void ProjectList(project P, String client_id) {
@@ -231,94 +231,16 @@ public class client extends Person {
             System.out.println("Error");
         }
     }
-}
-
-class Client_Report extends client {
-    private int totalProjectsCompleted;
-    private int totalProjectsPaid;
-
-    public int getTotalProjectsCompleted() {
-        return this.totalProjectsCompleted;
-    }
-
-    public void setTotalProjectsCompleted(int totalProjectsCompleted) {
-        this.totalProjectsCompleted = totalProjectsCompleted;
-    }
-
-    public int getTotalProjectsPaid() {
-        return this.totalProjectsPaid;
-    }
-
-    public void setTotalProjectsPaid(int totalProjectsPaid) {
-        this.totalProjectsPaid = totalProjectsPaid;
-    }
-
-    public String displayReport() {
-        return "{" +
-                " clientID='" + getID() + "'" +
-                ", totalProjectsRequested='" + getTotalProjectsRequested() + "'" +
-                ", priority='" + getPriority() + "'" +
-                " totalProjectsCompleted='" + getTotalProjectsCompleted() + "'" +
-                ", totalProjectsPaid='" + getTotalProjectsPaid() + "'" +
-                "}";
-    }
-
-    /* public void TotalProjectsCompleted() {
-        Connection c = null;
-        String query = "select count(Project_ID) as Totalprojcount from Project where Client_ID = ? and Status_of_Software='COMPLETED'";
-        // The following lines of code are temporary:
-
-        String client_id = "CLI001";
-        try {
-            int x = 0;
-            Class.forName("org.postgresql.Driver");
-            c = DriverManager.getConnection(s.url, s.dbUser, s.dbPass);
-            PreparedStatement ps = c.prepareStatement(query);
-            ps.setString(1, client_id);
-            ResultSet rs = ps.executeQuery();
-            if (rs.next()) {
-                x = rs.getInt("Totalprojcount");
-            }
-            rs.close();
-            System.out.println(x + " is the count");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    } */
-
-    /* public void TotalProjectsPaid() {
-        Connection c = null;
-        String query = "select count(Project_ID) as Totalprojcount from Project where Client_ID = ? and Status_of_Software='PAID'";
-        // The following lines of code are temporary:
-
-        String client_id = "CLI001";
-        try {
-            int x = 0;
-            Class.forName("org.postgresql.Driver");
-            c = DriverManager.getConnection(s.url, s.dbUser, s.dbPass);
-            PreparedStatement ps = c.prepareStatement(query);
-            ps.setString(1, client_id);
-            ResultSet rs = ps.executeQuery();
-            if (rs.next()) {
-                x = rs.getInt("Totalprojcount");
-            }
-            rs.close();
-            System.out.println(x + " is the count");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    } */
 
     public void ClientPriority() {
         Connection c = null;
         String query = "select client_id,count(Project_ID) as Totalprojcount from Project where Status_of_Software='PAID' group by client_id order by Totalprojcount desc;";
-        // The following lines of code are temporary:
         Statement ps = null;
         // String client_id = "CLI001";
         Vector<String> Clientvec = new Vector<String>();
         Vector<Integer> Tprojvec = new Vector<Integer>();
         try {
-            String x = "asd";
+            String x = "asd"; // just for initialisation
             int y = 0;
             Class.forName("org.postgresql.Driver");
             c = DriverManager.getConnection(s.url, s.dbUser, s.dbPass);
@@ -352,14 +274,12 @@ class Client_Report extends client {
             e.printStackTrace();
         }
     }
-
 }
-
 class Driver {
     public static void main(String[] args) {
         client Cli = new client();
         project pro = new project();
-        Client_Report clire = new Client_Report();
+       
         // clire.ClientPriority();
         // Cli.AddProject(pro);
         // Cli.removeProject(pro);
