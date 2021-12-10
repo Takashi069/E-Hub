@@ -23,7 +23,7 @@ E-hub is a software company that provides various types of software solutions to
 
 * **Priority**:giving more importance to clients who have given more project
 
-* **GUI Resolution**:<br> `1280 X 1024`
+* **GUI Resolution**:<br> `960 X 640`
 
 * **GUI Made using Java Swings**
 
@@ -60,5 +60,24 @@ src
 
 <br>
 
----
-# DEADLINE : 05/12/2021 19:00:00 
+# Contributions: 
+
+## Akash: (AM.EN.U4CSE20204)
+
+Admin GUI and working of the admin class, it's functionalities and connections with database using JDBC (pertaining to admin)
+
+## Mohak: (AM.EN.U4CSE20247)
+
+Login GUI, Project class implementation, connections using JDBC pertaining to project class and Project Report.
+
+## Adithya (AM.EN.U4CSE20258)
+
+Login JDBC connections, Client Dashboard GUI, Request project GUI and connection using JDBC and view projects connection to the DB using JDBC.
+
+## Uday (AM.EN.U4CSE20273)
+
+Employee Class, View Project GUI and functions, Client GUI, implementation and connection using JDBC, Client and Employee Report.
+
+<br>
+
+# DEADLINE : 15/12/2021 19:00:00 
