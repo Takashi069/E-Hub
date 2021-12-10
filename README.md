@@ -60,6 +60,11 @@ src
 
 <br>
 
+# OOPS Concepts used so far: 
+* Inheritance
+* Polymorphism -> Function Overloading
+*  Abstraction -> Person class will have a function called assignID which will be abstract
+
 # Contributions: 
 
 ## Akash: (AM.EN.U4CSE20204)
