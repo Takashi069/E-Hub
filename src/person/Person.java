@@ -74,4 +74,7 @@ public abstract class Person {
         this.PhoneNumber = PhoneNumber;
     }
 
+    abstract public String assignID();
+    abstract protected int findMissingNumber(int arr[]);
+
 }

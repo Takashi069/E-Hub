@@ -53,7 +53,7 @@ public class admin extends Person {
     the numbers in the array.
 
     */
-    private int findMissingNumber(int[] arr){
+    protected int findMissingNumber(int[] arr){
         System.out.println("\n\nFinding the missing number");
         int i;
         for (i = 1; i <= arr.length; i++) {
@@ -65,15 +65,10 @@ public class admin extends Person {
         return i;
     }
 
-    String assignID(String type){
+    public String assignID(){
         int count = 0;
-        String ogtype = type.toLowerCase();
-        String queryid = ogtype;
-        if(type.compareToIgnoreCase("employee")==0){
-            queryid = "emp_id";
-        }else if(type.compareToIgnoreCase("client")==0){
-            queryid = "client_id";
-        }
+        String ogtype = "admin";
+        String queryid = "admin_id";
         String countString;
         String query = "select count(distinct(" +queryid+")) from " + ogtype;
         String query2 = "select substring(" + queryid +",4,6) from " + ogtype + " order by "+queryid +" desc";
@@ -113,11 +108,7 @@ public class admin extends Person {
         }
         String finalID = "";
         //compareToIgnoreCase() -> 0 = same string, 1 = different strings
-        if(type.compareToIgnoreCase("Client") == 0){
-            finalID = "CLI" + countString;
-        }else if(type.compareToIgnoreCase("Employee") == 0){
-            finalID = "EMP" + countString;
-        }
+        finalID = "ADM" + countString;
         return finalID;
     }
 
@@ -203,7 +194,7 @@ public class admin extends Person {
 
             //Add the information in the Person table
             PreparedStatement ps = c.prepareStatement(personQuery);
-            ps.setString(1, assignID("Employee"));;
+            ps.setString(1, E.assignID());;
             ps.setString(2, E.getName());
             ps.setString(3, E.getAddress()[0]);
             ps.setString(4, E.getAddress()[1]);
@@ -218,7 +209,7 @@ public class admin extends Person {
             
             //Add the Employee information in the Employee Table
             ps = c.prepareStatement(Empquery);
-            ps.setString(1, assignID("Employee"));
+            ps.setString(1, E.assignID());
             ps.setInt(2,E.getExperience());
             ps.setString(3,E.getDomain());
             //To set the date as the current date
@@ -255,7 +246,7 @@ public class admin extends Person {
 
             //Add the information in the Person table
             PreparedStatement ps = c.prepareStatement(personQuery);
-            ps.setString(1, assignID("Client"));;
+            ps.setString(1, C.assignID());;
             ps.setString(2, C.getName());
             ps.setString(3, C.getAddress()[0]);
             ps.setString(4, C.getAddress()[1]);
@@ -269,7 +260,7 @@ public class admin extends Person {
             System.out.println(output + " Rows Updated");
             
             ps = c.prepareStatement(Cliquery);
-            ps.setString(1, assignID("Client"));
+            ps.setString(1, C.assignID());
             ps.setString(2, C.getCompany());
             output = ps.executeUpdate();
             System.out.println(output + " Row(s) Updated");
@@ -418,7 +409,7 @@ class Driver{
         for (int i = 0; i < list.length; i++) {
             System.out.println(list[i]);
         } */
-        String st =  a.assignID("client");
+        String st =  a.assignID();
         System.out.println(st);
         /* Cli = a.showPrimaryDetails(Cli);
         E = a.showPrimaryDetails(E);

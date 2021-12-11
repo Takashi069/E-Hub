@@ -83,7 +83,7 @@ public class client extends Person {
         this.Company = Company;
     }
 
-    private int findMissingNumber(int[] arr) { //arr is sorted in ascending order, the arrays will have the numbers 
+    protected int findMissingNumber(int[] arr) { //arr is sorted in ascending order, the arrays will have the numbers 
         int i;
         for (i = 1; i <= arr.length; i++) {
             System.out.println(arr[i - 1] + "\t" + i); 
@@ -92,6 +92,52 @@ public class client extends Person {
             }
         }
         return i;
+    }
+
+    public String assignID(){
+        int count = 0;
+        String ogtype = "client";
+        String queryid = "client_id";
+        String countString;
+        String query = "select count(distinct(" +queryid+")) from " + ogtype;
+        String query2 = "select substring(" + queryid +",4,6) from " + ogtype + " order by "+queryid +" desc";
+        System.out.println(query+"\n"+query2);
+        Statement stmt = null;
+        Connection c = null;
+        ResultSet rs = null;
+        int missingID = 0;
+        try{
+            c = DriverManager.getConnection(s.url, s.dbUser, s.dbPass);
+            stmt = c.createStatement();
+            rs = stmt.executeQuery(query);
+            if(rs.next())
+                count = rs.getInt("count");
+            int[] sortedArray = new int[count];
+            rs = stmt.executeQuery(query2);
+            int i = count-1;
+            /*
+                This while loop creates an array from the list of 
+                data entries we recieved. The array is sorted in ascending 
+                order.
+            */
+            while(rs.next()){
+                sortedArray[i] = Integer.parseInt(rs.getString(1));
+                i--;
+            }
+            missingID = findMissingNumber(sortedArray);
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        
+        countString = String.format("%d", missingID);
+        if(countString.length()<3){
+            for (int i = countString.length(); i < 3; i++){
+                countString = "0"+countString;
+            }
+        }
+        String finalID = "";
+        finalID = "CLI" + countString;
+        return finalID;
     }
 
     public void AddProject(project p) {
