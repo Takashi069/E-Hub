@@ -202,7 +202,27 @@ public class client extends Person {
 
     }
 
-    public void removeProject(project P) {
+    public void suggestChanges(project P) {
+     Connection c = null;
+        String query = "update project set project_log=concat(project_log,?) where project_id=?";
+        // The following lines of code are temporary:
+
+        // String project_id = P.getProjectID;
+
+        try {
+            Class.forName("org.postgresql.Driver");
+            c = DriverManager.getConnection(s.url, s.dbUser, s.dbPass);
+            PreparedStatement ps = c.prepareStatement(query);
+            String final_log = "Client:\n" + P.getProjectLog() + "\n#";
+            ps.setString(1, final_log);
+            ps.setString(2,P.getProjectID());
+            int output = ps.executeUpdate();
+            System.out.println(output + " Row(s) Updated");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+ }
+    /* public void removeProject(project P) {
         Connection c = null;
         String query = "delete from Project where Project_ID = ?";
         // The following lines of code are temporary:
@@ -219,7 +239,7 @@ public class client extends Person {
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }
+    } */
 
     public project showPrimaryDetails(project p) {
         Connection c = null;

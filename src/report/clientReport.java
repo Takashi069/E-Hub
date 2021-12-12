@@ -1,4 +1,5 @@
 package report;
+
 import client.client;
 
 public class clientReport extends client {
@@ -21,13 +22,11 @@ public class clientReport extends client {
         this.totalProjectsPaid = totalProjectsPaid;
     }
 
-    
-
     /* public void TotalProjectsCompleted() {
         Connection c = null;
         String query = "select count(Project_ID) as Totalprojcount from Project where Client_ID = ? and Status_of_Software='COMPLETED'";
         // The following lines of code are temporary:
-
+    
         String client_id = "CLI001";
         try {
             int x = 0;
@@ -50,7 +49,7 @@ public class clientReport extends client {
         Connection c = null;
         String query = "select count(Project_ID) as Totalprojcount from Project where Client_ID = ? and Status_of_Software='PAID'";
         // The following lines of code are temporary:
-
+    
         String client_id = "CLI001";
         try {
             int x = 0;
@@ -69,9 +68,7 @@ public class clientReport extends client {
         }
     } */
 
-    
-
-    public String displayReport() { //right now it does nothing
+    /* public String displayReport() { //right now it does nothing
         return "{" +
                 " clientID='" + getID() + "'" +
                 ", totalProjectsRequested='" + getTotalProjectsRequested() + "'" +
@@ -79,5 +76,9 @@ public class clientReport extends client {
                 " totalProjectsCompleted='" + getTotalProjectsCompleted() + "'" +
                 ", totalProjectsPaid='" + getTotalProjectsPaid() + "'" +
                 "}";
-    }
+    } */
+
+    String[] displayReport = { getID(), getCompany(), Integer.toString(getPriority()),
+            Integer.toString(getTotal_Orders()) };
+  
 }

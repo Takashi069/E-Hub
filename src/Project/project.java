@@ -17,6 +17,7 @@ public class project {
     private String[] ProjectMembers;
     private String ProjectHead;
     private String ProjectStatus;
+    private String ProjectLog;
     private String ClientID;
 
     public String getProjectID() {
@@ -25,6 +26,13 @@ public class project {
 
     public void setProjectID(String ProjectID) {
         this.ProjectID = ProjectID;
+    }
+    public String getProjectLog() {
+        return this.ProjectLog;
+    }
+
+    public void setProjectLog(String ProjectLog) {
+        this.ProjectLog = ProjectLog;
     }
 
     public String getProjectName() {

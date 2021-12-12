@@ -25,7 +25,7 @@ public class viewProjGui {
     JLabel dynamicCompany = new JLabel();
     String[] id_list;
     String[] name_list;
-    JButton remove1 = new JButton("Remove");
+    JButton remove1 = new JButton("Suggest Changes");
     JButton backButton = new JButton("Go Back");
 
     JComboBox<String> allID = new JComboBox<String>(emptyArray);
@@ -131,20 +131,29 @@ public class viewProjGui {
 
     class handleRemoveProject implements ActionListener {
         public void actionPerformed(ActionEvent a) {
-            admin ad = new admin();
+            /* admin ad = new admin();
             client cli = new client();
             int input = JOptionPane.showConfirmDialog(frame, "Confirm Deletion of Person", "WARNING",
                     JOptionPane.YES_NO_OPTION);
             // 0->Yes, 1->No
-
+            
             project pro = new project();
             pro.setProjectID((String) id_list[allID.getSelectedIndex()]);
-            if(input == 0){
+            if (input == 0) {
                 cli.removeProject(pro);
                 JOptionPane.showMessageDialog(frame, "Data Deleted", "Info", JOptionPane.PLAIN_MESSAGE);
-            }
+            } 
             frame.dispose();
-            new viewProjGui(ClientID);
+            new viewProjGui(ClientID);*/
+            project pro = new project();
+            pro.setProjectID((String) id_list[allID.getSelectedIndex()]);
+           System.out.println(id_list[allID.getSelectedIndex()]);
+            new suggestionGui(pro);  
         }
+    }
+}
+class Driver123{
+    public static void main(String[] args) {
+        new viewProjGui("CLE001");
     }
 }

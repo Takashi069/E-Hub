@@ -125,6 +125,6 @@ public class requestProjGui extends JFrame {
 
 class cdriver {
     public static void main(String[] args) {
-        new clientgui("CLE001");
+        new requestProjGui("CLE001");
     }
 }
