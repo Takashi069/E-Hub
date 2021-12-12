@@ -60,8 +60,10 @@ public class login extends JFrame implements ActionListener {
                 try {
                     Class.forName("org.postgresql.Driver");
                     secret obj = new secret();
-                    c = DriverManager.getConnection(obj.url, obj.dbUser, obj.dbPass); //We have used objects here as the URL, username and psswd are different for
-                } catch (Exception e) {      //each one of us. So all our necessary info is stored in secret.java
+                    c = DriverManager.getConnection(obj.url, obj.dbUser, obj.dbPass); // We have used objects here as
+                                                                                      // the URL, username and psswd are
+                                                                                      // different for
+                } catch (Exception e) { // each one of us. So all our necessary info is stored in secret.java
                     e.printStackTrace();
                     System.err.println(e.getClass().getName() + ": " + e.getMessage());
                     System.exit(0);
@@ -92,7 +94,7 @@ public class login extends JFrame implements ActionListener {
                             if (rs.getString("id").equals("CLI")) {
                                 System.out.println("Welcome Client");
                                 new clientgui(rs.getString("full_id"));
-                                dispose(); //this will close the login frame completely
+                                dispose(); // this will close the login frame completely
                             }
                         }
                         rs.close();
@@ -106,7 +108,7 @@ public class login extends JFrame implements ActionListener {
         });
         resetButton.addActionListener(this);
         showPassword.addActionListener(this);
-        passwordField.setEchoChar('*'); //replace whatever the user types with a character.
+        passwordField.setEchoChar('*'); // replace whatever the user types with a character.
     }
 
     public void actionPerformed(ActionEvent e) {
@@ -116,7 +118,8 @@ public class login extends JFrame implements ActionListener {
         }
         if (e.getSource() == showPassword) {
             if (showPassword.isSelected()) {
-                passwordField.setEchoChar((char)0); //setting the character to 0 indicates that we want the password field to behave as a normal TextField
+                passwordField.setEchoChar((char) 0); // setting the character to 0 indicates that we want the password
+                                                     // field to behave as a normal TextField
             } else {
                 passwordField.setEchoChar('*');
             }
