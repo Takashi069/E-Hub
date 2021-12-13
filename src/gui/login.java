@@ -72,7 +72,7 @@ public class login extends JFrame implements ActionListener {
                     String userText;
                     String pwdText;
                     userText = userTextField.getText();
-                    pwdText = passwordField.getText();
+                    pwdText = String.valueOf(passwordField.getPassword());
                     String sql = String.format(
                             "select Substring(ID,1,3) as id,id as full_id, Password from Login where username='%s';",
                             userText);

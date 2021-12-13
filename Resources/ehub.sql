@@ -58,6 +58,10 @@ create table Expertise
 	Qualification varchar(30), 
 )
 
+alter table project add column project_log varchar(10000);
+
+update project set project_log = 'This is a sample description#';
+
 /* For Testing, Need not execute */
 select * from person ;
 select * from employee e ;
@@ -83,6 +87,9 @@ select p.id, p.name, p.dob, c.company ,c.total_orders
 
 select count(distinct(client_id))  from client c ;
 select client_id from client;
+select project_id from project where status_of_software = 'NOT APPROVED' order by project_id;
+select project_id from project where status_of_software !='NOT APPROVED' order by project_id ;
+select project_id,project_name,date_of_release,status_of_software,client_id from project;
 
 insert into person values
 ('EMP001','Akash Harikumar','Gokulam','Edavanassery', 'Kollam','Kerala','690519','Indian','07/08/2001');
@@ -91,6 +98,9 @@ insert into employee values
 
 insert into employee values
 ('EMP001','University Degree','WEB','N','07/08/2021' );
+
+update project set status_of_software = 'APPROVED';
+update project set status_of_software = 'NOT APPROVED' where project_id ='PRO002';
 
 delete from employee ;
 delete from client;
@@ -104,6 +114,11 @@ drop table login;
 
 insert into person values
 ('ADM001','Akash Harikumar','Gokulam','Edavanassery', 'Kollam','Kerala','690519','Indian','07/08/2001');
+
+
+
+select project_log from project p;
+
 /*=====================Mohak=============================*/
 create table Project
 (

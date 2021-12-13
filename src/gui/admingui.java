@@ -10,7 +10,10 @@ import java.awt.event.*;
 
 import admin.admin;
 import employee.employee;
+import exceptions.noData;
 import client.client;
+import Project.project;
+
 
 public class admingui{
     
@@ -27,6 +30,8 @@ public class admingui{
     JPanel remEmp = new JPanel();
     JPanel remClient = new JPanel();
     JPanel project = new JPanel();
+    JPanel projectApprove = new JPanel();
+    JPanel projectUpdateStatus = new JPanel();
 
     JLabel heading = new JLabel("Welcome Administrator");
     JLabel id = new JLabel("ID");
@@ -42,14 +47,22 @@ public class admingui{
     JLabel domain = new JLabel("Specialisation Domain");
     JLabel Company = new JLabel("Company");
     JLabel totalOrders = new JLabel("Total Orders");
+    JLabel projectName = new JLabel("Project Name");
+    JLabel clientID = new JLabel("Client ID");
+    JLabel status = new JLabel("Status of Software: ");
+    JLabel deadline = new JLabel("Deadline Date(YYYY-MM-DD)");
 
-    JLabel dynamicID = new JLabel();
-    JLabel dynamicName = new JLabel();
-    JLabel dynamicDOB = new JLabel();
-    JLabel dynamicCompany = new JLabel();
-    JLabel dynamicTotalOrder = new JLabel();
-    JLabel dynamicDomain = new JLabel();
-    JLabel dynamicExperience = new JLabel();
+    JTextField dynamicID = new JTextField();
+    JTextField dynamicName = new JTextField();
+    JTextField dynamicDOB = new JTextField();
+    JTextField dynamicCompany = new JTextField();
+    JTextField dynamicTotalOrder = new JTextField();
+    JTextField dynamicDomain = new JTextField();
+    JTextField dynamicExperience = new JTextField();
+    JTextField dynamicProjectNameTextField = new JTextField();
+    JTextField dynamicClientIDTextField = new JTextField();
+    JTextField dynamicStatusTextField = new JTextField();
+    JTextField dynamicDeadlineTextField = new JTextField();
 
     JButton empButton = new JButton("Manage Employees");
     JButton cliButton = new JButton("Manage Clients");
@@ -60,6 +73,8 @@ public class admingui{
     JButton changeProjectStatus = new JButton("Change Project Status");
     JButton submit1 = new JButton("Submit");
     JButton submit2 = new JButton("Submit");
+    JButton change1 = new JButton("Change");
+    JButton Approve = new JButton("Approve");
     JButton remove1 = new JButton("Remove");
     JButton remove2 = new JButton("Remove");
     JButton backButton = new JButton("Back");
@@ -79,14 +94,17 @@ public class admingui{
     JTextField experienceTextField = new JTextField("12");
     JTextField companyTextField = new JTextField("Apple");
     
+    
     String[] emptyArray = {"null"};
     //Reference for the domain: https://www.quora.com/What-are-the-different-domains-in-software-development
-    String[] domainChoices = {"WEB","ANDROID","SCIENTIFIC","BUSINESS", "MEDICAL","INDUSTRIAL & PROCESS CONTROL","SYSTEMS SOFTWARE", "TOOL DEVELOPMENT(COMPILERS, ASSEMBLERS)"};
-        //It is used to create a drop down menu of the various domains
+    final String[] domainChoices = {"WEB","ANDROID","SCIENTIFIC","BUSINESS", "MEDICAL","INDUSTRIAL & PROCESS CONTROL","SYSTEMS SOFTWARE", "TOOL DEVELOPMENT(COMPILERS, ASSEMBLERS)"};
+    final String[] statusChoices = {"APPROVED","REJECTED","DEADLINE DATE CHANGED","CHANGES REJECTED","CHANGES APPROVED","WORK IN PROGRESS","TESTING","COMPLETED","PAID"};
+    //It is used to create a drop down menu of the various domains
     JComboBox<String> domainComboBox = new JComboBox<String>(domainChoices);
     JComboBox<String> allID1 = new JComboBox<String>(emptyArray); //for Employee
     JComboBox<String> allID2 = new JComboBox<String>(emptyArray); //for Client 
-
+    JComboBox<String> allID3 = new JComboBox<String>(emptyArray); //for project
+    JComboBox<String> statusComboBox = new JComboBox<String>(statusChoices); //for Project Status 
     /*
         The reason why they were made two seperate comboBoxes were beecause, while using one, the other would also get called which caused wrong data to 
         be displayed
@@ -106,7 +124,6 @@ public class admingui{
          * testing.setSize(1280,1024);
          * testing.setVisible(true);
          */
-
         // GridLayout(rows, columns, horizontal gap, vertical gap)
         mainMenu.setLayout(new GridLayout(3, 0, 0, 50));
         // To add paddings inside the panel I used EmptyBorder along with Insets->
@@ -145,6 +162,8 @@ public class admingui{
         display.add(remEmp,"removeEmployeeMenu");
         display.add(remClient,"removeClientMenu");
         display.add(project,"projectMenu");
+        display.add(projectApprove,"projectApproveMenu");
+        display.add(projectUpdateStatus,"projectStatusMenu");
 
 
         frame.add(display,BorderLayout.CENTER);
@@ -157,6 +176,18 @@ public class admingui{
          */
     }
     
+    private int logPrompt(project P){
+        admin adm = new admin();
+        String message = JOptionPane.showInputDialog(frame, "Admin Log Message", "", JOptionPane.INFORMATION_MESSAGE);
+        System.out.println(message);
+        if(message!=null && message.length()>0){
+            adm.addProjectLog(P, message);
+            return 1;
+        }else{
+            return 0;
+        }
+    }
+
     private void clientMenuGUI(){
         cliMenu.setLayout(new GridLayout(3,0,0,50));
         cliMenu.setBorder(new EmptyBorder(new Insets(20,20,20,20)));
@@ -180,7 +211,10 @@ public class admingui{
         project.add(viewNonApprovedProjects);
         project.add(changeProjectStatus);
         project.add(backButton);
+        changeProjectStatus.addActionListener(new goToChangeStatus());
+        viewNonApprovedProjects.addActionListener(new handleApproveProjects());
         backButton.addActionListener(new goToMainMenu());
+
     }
         
     private void addClientGUI() {
@@ -419,6 +453,7 @@ public class admingui{
         for (String id : ID) {
             allID2.addItem(id);
         }
+        gbc.ipadx = 100;
         gbc.gridx = 0;
         gbc.gridy = 0;
         gbc.insets = new Insets(20, 20, 20, 0);
@@ -440,6 +475,8 @@ public class admingui{
         gbc.gridy = 1;
         gbc.fill = GridBagConstraints.HORIZONTAL;
         remClient.add(dynamicName, gbc);
+        dynamicName.setEditable(false);
+        dynamicName.setBackground(Color.WHITE);
 
         gbc.gridx = 0;
         gbc.gridy = 2;
@@ -450,6 +487,8 @@ public class admingui{
         gbc.gridy = 2;
         gbc.fill = GridBagConstraints.HORIZONTAL;
         remClient.add(dynamicDOB, gbc);
+        dynamicDOB.setEditable(false);
+        dynamicDOB.setBackground(Color.WHITE);
 
         gbc.gridx = 0;
         gbc.gridy = 3;
@@ -460,6 +499,8 @@ public class admingui{
         gbc.gridy = 3;
         gbc.fill = GridBagConstraints.HORIZONTAL;
         remClient.add(dynamicCompany, gbc);
+        dynamicCompany.setEditable(false);
+        dynamicCompany.setBackground(Color.WHITE);
 
         gbc.gridx = 0;
         gbc.gridy = 4;
@@ -470,6 +511,8 @@ public class admingui{
         gbc.gridy = 4;
         gbc.fill = GridBagConstraints.HORIZONTAL;
         remClient.add(dynamicTotalOrder, gbc);
+        dynamicCompany.setEditable(false);
+        dynamicCompany.setBackground(Color.WHITE);
 
         gbc.gridx = 0;
         gbc.gridy = 5;
@@ -499,6 +542,34 @@ public class admingui{
         dynamicDomain.setText(E.getDomain());
     }
 
+    private void updateProjectGUI(project P){
+        
+        int index = 0;
+        String item = P.getProjectStatus();
+        System.out.println("item: " + item);
+        try{
+            if(item == null)
+                throw new noData();    
+            for (int i = 0; i < statusChoices.length; i++) {
+                if(item.compareToIgnoreCase(statusChoices[i])==0){
+                    index = i;
+                    break;
+                }
+            }
+            System.out.println(index);
+            dynamicProjectNameTextField.setText(P.getProjectName());
+            System.out.println(P.getClientID()); //--> Shows NULL here
+            dynamicClientIDTextField.setText(P.getClientID());
+            //System.out.println("UpdateRemEmpGUI: " + p.getName());
+            dynamicStatusTextField.setText(P.getProjectStatus());
+            dynamicDeadlineTextField.setText(P.getProjectDeadline());
+            statusComboBox.setSelectedIndex(index);
+            projectUpdateStatus.repaint();
+        }catch(noData nd){
+            nd.displaYError(frame);
+        }
+    }
+
     private void remEmpGUI() {
         admin ad = new admin();
         employee emp = new employee();
@@ -510,6 +581,8 @@ public class admingui{
         for (String id : ID) {
             allID1.addItem(id);
         }
+        gbc.ipadx = 100;
+        gbc.ipady = 50;
         gbc.gridx = 0;
         gbc.gridy = 0;
         gbc.insets = new Insets(20, 20, 20, 0);
@@ -531,6 +604,8 @@ public class admingui{
         gbc.gridy = 1;
         gbc.fill = GridBagConstraints.HORIZONTAL;
         remEmp.add(dynamicName, gbc);
+        dynamicName.setEditable(false);
+        dynamicName.setBackground(Color.WHITE);
 
         gbc.gridx = 0;
         gbc.gridy = 2;
@@ -541,6 +616,8 @@ public class admingui{
         gbc.gridy = 2;
         gbc.fill = GridBagConstraints.HORIZONTAL;
         remEmp.add(dynamicDOB, gbc);
+        dynamicDOB.setEditable(false);
+        dynamicDOB.setBackground(Color.WHITE);
 
         gbc.gridx = 0;
         gbc.gridy = 3;
@@ -551,6 +628,8 @@ public class admingui{
         gbc.gridy = 3;
         gbc.fill = GridBagConstraints.HORIZONTAL;
         remEmp.add(dynamicExperience, gbc);
+        dynamicExperience.setEditable(false);
+        dynamicExperience.setBackground(Color.WHITE);
 
         gbc.gridx = 0;
         gbc.gridy = 4;
@@ -561,6 +640,8 @@ public class admingui{
         gbc.gridy = 4;
         gbc.fill = GridBagConstraints.HORIZONTAL;
         remEmp.add(dynamicDomain, gbc);
+        dynamicDomain.setEditable(false);
+        dynamicDomain.setBackground(Color.WHITE);
 
         gbc.gridx = 0;
         gbc.gridy = 5;
@@ -575,6 +656,161 @@ public class admingui{
 
     }
     
+    private void changeProjectStatus(){
+        admin a = new admin();
+        String[] projectList = a.ProjectList();
+        projectUpdateStatus.setLayout(new GridBagLayout());
+        GridBagConstraints gbc = new GridBagConstraints();
+        allID3.setBackground(Color.WHITE);
+        statusComboBox.setBackground(Color.WHITE);
+
+        allID3.removeAllItems();
+        for (String id : projectList) {
+            allID3.addItem(id);
+        }
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        gbc.insets = new Insets(20, 20, 20, 0);
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        projectUpdateStatus.add(id, gbc);
+
+        gbc.gridx = 1;
+        gbc.gridy = 0;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        allID2.setBackground(Color.white);
+        projectUpdateStatus.add(allID3, gbc);
+
+        gbc.gridx = 0;
+        gbc.gridy = 1;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        projectUpdateStatus.add(projectName, gbc);
+
+        gbc.gridx = 1;
+        gbc.gridy = 1;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        projectUpdateStatus.add(dynamicProjectNameTextField, gbc);
+        dynamicProjectNameTextField.setEditable(false);
+        dynamicProjectNameTextField.setBackground(Color.WHITE);
+
+        gbc.gridx = 0;
+        gbc.gridy = 2;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        projectUpdateStatus.add(clientID, gbc);
+
+        gbc.gridx = 1;
+        gbc.gridy = 2;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        projectUpdateStatus.add(dynamicClientIDTextField, gbc);
+        dynamicClientIDTextField.setEditable(false);
+        dynamicClientIDTextField.setBackground(Color.WHITE);
+
+        gbc.gridx = 0;
+        gbc.gridy = 3;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        projectUpdateStatus.add(status, gbc);
+
+        gbc.gridx = 1;
+        gbc.gridy = 3;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        projectUpdateStatus.add(statusComboBox, gbc);
+
+        gbc.gridx = 0;
+        gbc.gridy = 4;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        projectUpdateStatus.add(deadline, gbc);
+
+        gbc.gridx = 1;
+        gbc.gridy = 4;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        projectUpdateStatus.add(dynamicDeadlineTextField, gbc);
+
+
+        gbc.gridx = 0;
+        gbc.gridy = 5;
+        projectUpdateStatus.add(backButton,gbc);
+        
+        gbc.gridx = 1;
+        gbc.gridy = 5;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        projectUpdateStatus.add(change1,gbc);
+        allID3.addActionListener(new handleShowProjectDetails());
+        change1.addActionListener(new handleStatusChange());
+    }
+
+    private void approveProjectGUI() throws noData{
+        admin a = new admin();
+        String[] projectList = a.ProjectListNotApproved();
+        if(projectList == null){
+            System.out.println("Project List is NULL");
+            throw new noData();
+        }
+        projectApprove.setLayout(new GridBagLayout());
+        GridBagConstraints gbc = new GridBagConstraints();
+        allID3.setBackground(Color.WHITE);
+        allID3.removeAllItems();
+        for (String id : projectList) {
+            allID3.addItem(id);
+        }
+        allID3.setSelectedIndex(0);
+        System.out.println("Printing selected index of allID3:"+allID3.getSelectedIndex());
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        gbc.insets = new Insets(20, 20, 20, 0);
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        projectApprove.add(id, gbc);
+
+        gbc.gridx = 1;
+        gbc.gridy = 0;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        allID2.setBackground(Color.white);
+        projectApprove.add(allID3, gbc);
+
+        gbc.gridx = 0;
+        gbc.gridy = 1;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        projectApprove.add(projectName, gbc);
+
+        gbc.gridx = 1;
+        gbc.gridy = 1;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        projectApprove.add(dynamicProjectNameTextField, gbc);
+        dynamicProjectNameTextField.setEditable(false);
+        dynamicProjectNameTextField.setBackground(Color.WHITE);
+
+        gbc.gridx = 0;
+        gbc.gridy = 2;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        projectApprove.add(clientID, gbc);
+
+        gbc.gridx = 1;
+        gbc.gridy = 2;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        projectApprove.add(dynamicClientIDTextField, gbc);
+        dynamicClientIDTextField.setEditable(false);
+        dynamicClientIDTextField.setBackground(Color.WHITE);
+
+        gbc.gridx = 0;
+        gbc.gridy = 3;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        projectApprove.add(deadline, gbc);
+
+        gbc.gridx = 1;
+        gbc.gridy = 3;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        projectApprove.add(dynamicDeadlineTextField, gbc);
+
+
+        gbc.gridx = 0;
+        gbc.gridy = 5;
+        projectApprove.add(backButton,gbc);
+        
+        gbc.gridx = 1;
+        gbc.gridy = 5;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        projectApprove.add(Approve,gbc);
+        allID3.addActionListener(new handleShowProjectDetails());
+        Approve.addActionListener(new handleStatusChange());
+    }
     //Event Handlers from this point 
     
 
@@ -605,13 +841,25 @@ public class admingui{
             card.show(display,"projectMenu");
         }
     }
+
     class goToMainMenu implements ActionListener{
         public void actionPerformed(ActionEvent a){
-            heading.setText("Administrator Panel");
-            card.show(display,"mainMenu");
+            frame.dispose();
+            new admingui(); 
+            //disposing and re-creating the frame fixed a lot of bugs in the back button part of the GUI such as the showProjectDetails 
         }
     }
     
+    class goToChangeStatus implements ActionListener{
+        public void actionPerformed(ActionEvent a){
+            heading.setText("Update Project Status");
+            changeProjectStatus();
+            card.show(display,"projectStatusMenu");
+            frame.repaint();
+            frame.revalidate();
+        }
+    }
+
     class handleInputClient implements ActionListener{
 
         public void actionPerformed(ActionEvent a){
@@ -801,10 +1049,75 @@ public class admingui{
             updateRemGUI(emp);
         }
     }
+
+    class handleShowProjectDetails implements ActionListener{
+        public void actionPerformed(ActionEvent a){
+            admin ad = new admin();
+            project p = new project();
+            System.out.println("In handleShowProjectDetails");
+            p.setProjectID((String)allID3.getSelectedItem());
+            System.out.println("Project ID: " + p.getProjectID());
+            p = ad.showPrimaryDetails(p);
+            updateProjectGUI(p);
+
+            
+        }
+    }
+
+    class handleApproveProjects implements ActionListener{
+        public void actionPerformed(ActionEvent a){
+            //admin ad = new admin();
+            try{
+                approveProjectGUI();
+                card.show(display,"projectApproveMenu");
+                //allID3.addItemListener(new handleShowProjectDetails());
+                frame.repaint();
+                frame.revalidate();
+                
+            }catch(noData nd){
+                nd.displaYError(frame);
+            }
+        }
+    }
+    
+    class handleApproval implements ActionListener{
+        public void actionPerformed(ActionEvent a){
+            admin ad = new admin();
+            project p = new project();
+            p.setProjectID((String)allID3.getSelectedItem());
+            ad.approveProject(p);
+            logPrompt(p);
+            JOptionPane.showMessageDialog(frame, "Status Updated", "Info", JOptionPane.PLAIN_MESSAGE);
+        }
+    }
+
+    class handleStatusChange implements ActionListener{
+        public void actionPerformed(ActionEvent a){
+            String status = (String)statusComboBox.getSelectedItem();
+            System.out.println(status);
+            admin ad = new admin();
+            project p = new project();
+            p.setProjectID((String)allID3.getSelectedItem());
+            int output = logPrompt(p);
+            if(output == 1){
+                ad.updateProjectStatus(p, status);
+                JOptionPane.showMessageDialog(frame, "Status Updated", "Info", JOptionPane.PLAIN_MESSAGE);
+            }else{
+                JOptionPane.showMessageDialog(frame, "Status Not Updated: Provide Log to update", "Info", JOptionPane.PLAIN_MESSAGE);
+
+            }
+
+        }
+    }
+
+
 }
+
+    
 
 class Driver {
     public static void main(String[] args) {
-        new admingui();
+       new admingui();
+       //adg.logPrompt();
     }
 }
