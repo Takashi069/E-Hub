@@ -9,13 +9,14 @@ import java.awt.GridBagConstraints;
 import java.awt.event.*;
 
 import admin.admin;
+import assets.getAssets;
 import client.client;
 import gui.secret;
 import Project.project;
 
 public class viewProjGui {
     JFrame frame = new JFrame("Client Menu");
-    secret path = new secret();
+    getAssets path = new getAssets();
     JPanel cliMenu = new JPanel();
     JLabel viewProject = new JLabel(new ImageIcon(path.frame_bg));
     JLabel heading = new JLabel("Welcome Client");

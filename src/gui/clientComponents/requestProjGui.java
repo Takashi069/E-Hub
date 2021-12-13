@@ -11,6 +11,7 @@ import javax.swing.JTextField;
 import javax.swing.border.LineBorder;
 
 import Project.project;
+import assets.getAssets;
 import client.client;
 import gui.clientgui;
 import gui.secret;
@@ -37,7 +38,7 @@ public class requestProjGui extends JFrame {
     JComboBox<String> domainOptions;
 
     JPanel title = new JPanel();
-    secret path = new secret();
+    getAssets path = new getAssets();
     JLabel menu=new JLabel(new ImageIcon(path.frame_bg));
     JButton requestButton = new JButton(new ImageIcon(path.request_btn));
     JButton resetButton = new JButton(new ImageIcon(path.reset_btn));

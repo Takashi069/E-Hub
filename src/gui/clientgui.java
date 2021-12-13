@@ -9,6 +9,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
+import assets.getAssets;
 import gui.clientComponents.requestProjGui;
 import gui.clientComponents.viewProjGui;
 
@@ -20,10 +21,9 @@ public class clientgui extends JFrame {
     JFrame frame = new JFrame("Client Dashboard");
     JPanel title = new JPanel();
     JPanel menu = new JPanel();
-    JLabel label = new JLabel("Welcome Client");
     JButton viewProjButton;
     JButton addProjButton;
-    secret path = new secret();
+    getAssets path = new getAssets();
     JLabel background=new JLabel(new ImageIcon(path.frame_bg));
     ImageIcon viewProjectsIcon= new ImageIcon(path.view_bg);
     ImageIcon requestProjectsIcon= new ImageIcon(path.req_bg);
@@ -50,9 +50,7 @@ public class clientgui extends JFrame {
 
         background.add(viewProjButton);
         background.add(addProjButton);
-        title.add(label);
         background.setBorder(BorderFactory.createEmptyBorder(250, 250, 250, 250));
-        frame.add(title, BorderLayout.NORTH);
         frame.add(background, BorderLayout.CENTER);
         setActions(this, id);
     }

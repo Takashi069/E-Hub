@@ -6,6 +6,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import Project.project;
+import assets.getAssets;
 import client.client;
 import javax.swing.border.LineBorder;
 
@@ -21,7 +22,7 @@ import java.awt.*;
 import javax.swing.*;
 
 public class suggestionGui extends JFrame {
-    secret path = new secret();
+    getAssets path = new getAssets();
     JFrame frame = new JFrame("Client Menu");
     JLabel projectLog = new JLabel("Project log: ");
     // JLabel domainLabel = new JLabel("Domain: ");
