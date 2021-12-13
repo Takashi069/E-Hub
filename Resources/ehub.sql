@@ -142,5 +142,23 @@ insert into Login Values ('ADM001','frontman', 'ehub', 'projname');
 insert into Login Values ('CLI001','Mark', 'ehub', 'ehub');
 insert into Login Values ('CLI002','Donald', 'ehub', 'ehub');
 
+create table Project_Team(Project_id varchar(6),Emp_ID varchar(6), Project_leader varchar(6),
+						 primary key(Project_id, Emp_ID),
+						 foreign key (Project_leader) references Employee(Emp_ID) on delete cascade
+						 )
+						 
+select * from project_team;
+
+insert into employee values('EMP002', 4,'WEB', 'Y', '2019-05-01');
+insert into employee values('EMP003', 4,'WEB', 'Y', '2019-05-01');
+insert into employee values('EMP004', 4,'WEB', 'Y', '2019-05-01');
+insert into employee values('EMP005', 8,'WEB', 'Y', '2019-05-01');
+
+insert into Project_team values('PRO001', 'EMP001', 'EMP005');
+insert into Project_team values('PRO001', 'EMP002', 'EMP005');
+insert into Project_team values('PRO001', 'EMP003', 'EMP005');
+insert into Project_team values('PRO001', 'EMP004', 'EMP005');
+insert into Project_team values('PRO001', 'EMP005', 'EMP005');
+
 /*=====================Uday=============================*/
 
