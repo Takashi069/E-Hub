@@ -78,7 +78,10 @@ public class clientReport extends client {
                 "}";
     } */
 
-    String[] displayReport = { getID(), getCompany(), Integer.toString(getPriority()),
-            Integer.toString(getTotal_Orders()) };
-  
+    public String[] setDisplayReport() {
+        
+        String[] displayReport = { getID(), getCompany(), Integer.toString(getPriority()),
+                Integer.toString(getTotal_Orders()) };
+        return displayReport;
+    }
 }

@@ -2,7 +2,7 @@ package report;
 
 import employee.employee;
 
-public class employeeReport extends employee{
+public class employeeReport extends employee {
 
     /* public String displayReport() {
         return "{" +
@@ -12,7 +12,8 @@ public class employeeReport extends employee{
                 ", Experience='" + getExperience() + "'" +
                 "}";
     } */
-
-    String[] displayReport = { getID(), getEmployee_join_date(), getDomain(), Integer.toString(getExperience()) };
-    
+    public String[] setDisplayReport() {
+        String[] displayReport = { getID(), getEmployee_join_date(), getDomain(), Integer.toString(getExperience()) };
+        return displayReport;
+    }
 }
