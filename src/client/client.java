@@ -83,10 +83,10 @@ public class client extends Person {
         this.Company = Company;
     }
 
-    protected int findMissingNumber(int[] arr) { //arr is sorted in ascending order, the arrays will have the numbers 
+    protected int findMissingNumber(int[] arr) { // arr is sorted in ascending order, the arrays will have the numbers
         int i;
         for (i = 1; i <= arr.length; i++) {
-            System.out.println(arr[i - 1] + "\t" + i); 
+            System.out.println(arr[i - 1] + "\t" + i);
             if (i != arr[i - 1]) {
                 return i;
             }
@@ -94,45 +94,45 @@ public class client extends Person {
         return i;
     }
 
-    public String assignID(){
+    public String assignID() {
         int count = 0;
         String ogtype = "client";
         String queryid = "client_id";
         String countString;
-        String query = "select count(distinct(" +queryid+")) from " + ogtype;
-        String query2 = "select substring(" + queryid +",4,6) from " + ogtype + " order by "+queryid +" desc";
-        System.out.println(query+"\n"+query2);
+        String query = "select count(distinct(" + queryid + ")) from " + ogtype;
+        String query2 = "select substring(" + queryid + ",4,6) from " + ogtype + " order by " + queryid + " desc";
+        System.out.println(query + "\n" + query2);
         Statement stmt = null;
         Connection c = null;
         ResultSet rs = null;
         int missingID = 0;
-        try{
+        try {
             c = DriverManager.getConnection(s.url, s.dbUser, s.dbPass);
             stmt = c.createStatement();
             rs = stmt.executeQuery(query);
-            if(rs.next())
+            if (rs.next())
                 count = rs.getInt("count");
             int[] sortedArray = new int[count];
             rs = stmt.executeQuery(query2);
-            int i = count-1;
+            int i = count - 1;
             /*
-                This while loop creates an array from the list of 
-                data entries we recieved. The array is sorted in ascending 
-                order.
-            */
-            while(rs.next()){
+             * This while loop creates an array from the list of
+             * data entries we recieved. The array is sorted in ascending
+             * order.
+             */
+            while (rs.next()) {
                 sortedArray[i] = Integer.parseInt(rs.getString(1));
                 i--;
             }
             missingID = findMissingNumber(sortedArray);
-        }catch(Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
-        
+
         countString = String.format("%d", missingID);
-        if(countString.length()<3){
-            for (int i = countString.length(); i < 3; i++){
-                countString = "0"+countString;
+        if (countString.length() < 3) {
+            for (int i = countString.length(); i < 3; i++) {
+                countString = "0" + countString;
             }
         }
         String finalID = "";
@@ -145,7 +145,8 @@ public class client extends Person {
         Statement stmt = null;
 
         // We need to add the data in the Project table first
-        String count = "select count(Project_ID) as id from Project;"; // it is used to give the size of the array sortedArray
+        String count = "select count(Project_ID) as id from Project;"; // it is used to give the size of the array
+                                                                       // sortedArray
         String query2 = "select substring(Project_ID,4,6) from Project order by Project_ID desc";
         try {
             Class.forName("org.postgresql.Driver");
@@ -171,8 +172,9 @@ public class client extends Person {
             p.setProjectID(newId);
 
             String ProjectQuery = String.format(
-                    "insert into Project(Project_ID, Client_ID, Project_Name, Date_of_Release, Status_of_software, Domain) values('%s','%s', '%s','%s','%s','%s')",
-                    p.getProjectID(), p.getClientID(), p.getProjectName(), p.getProjectDeadline(), "NOT APPROVED",
+                    "insert into Project(Project_ID, Client_ID, Project_Name,Project_Log ,Date_of_Release, Status_of_software, Domain) values('%s','%s','%s','%s\n#','%s','%s','%s')",
+                    p.getProjectID(), p.getClientID(), p.getProjectName(), p.getProjectLog(), p.getProjectDeadline(),
+                    "NOT APPROVED",
                     p.getProjectType());
 
             stmt = c.createStatement();
@@ -203,8 +205,8 @@ public class client extends Person {
     }
 
     public void suggestChanges(project P) {
-     Connection c = null;
-        String query = "update project set project_log=concat(project_log,?) where project_id=?";
+        Connection c = null;
+        String query = "update project set project_log=concat(project_log,?), status_of_software='CHANGES REQUESTED' where project_id=?";
         // The following lines of code are temporary:
 
         // String project_id = P.getProjectID;
@@ -215,38 +217,40 @@ public class client extends Person {
             PreparedStatement ps = c.prepareStatement(query);
             String final_log = "Client:\n" + P.getProjectLog() + "\n#";
             ps.setString(1, final_log);
-            ps.setString(2,P.getProjectID());
+            ps.setString(2, P.getProjectID());
             int output = ps.executeUpdate();
             System.out.println(output + " Row(s) Updated");
         } catch (Exception e) {
             e.printStackTrace();
         }
- }
-    /* public void removeProject(project P) {
-        Connection c = null;
-        String query = "delete from Project where Project_ID = ?";
-        // The following lines of code are temporary:
-
-        // String project_id = P.getProjectID;
-
-        try {
-            Class.forName("org.postgresql.Driver");
-            c = DriverManager.getConnection(s.url, s.dbUser, s.dbPass);
-            PreparedStatement ps = c.prepareStatement(query);
-            ps.setString(1, P.getProjectID());
-            int output = ps.executeUpdate();
-            System.out.println(output + " Row(s) Removed");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    } */
+    }
+    /*
+     * public void removeProject(project P) {
+     * Connection c = null;
+     * String query = "delete from Project where Project_ID = ?";
+     * // The following lines of code are temporary:
+     * 
+     * // String project_id = P.getProjectID;
+     * 
+     * try {
+     * Class.forName("org.postgresql.Driver");
+     * c = DriverManager.getConnection(s.url, s.dbUser, s.dbPass);
+     * PreparedStatement ps = c.prepareStatement(query);
+     * ps.setString(1, P.getProjectID());
+     * int output = ps.executeUpdate();
+     * System.out.println(output + " Row(s) Removed");
+     * } catch (Exception e) {
+     * e.printStackTrace();
+     * }
+     * }
+     */
 
     public project showPrimaryDetails(project p) {
         Connection c = null;
         project retreiveproject = new project();
         PreparedStatement ps = null;
         ResultSet rs = null;
-        String query1 = "select project_id,project_name,status_of_software from project where project_id=?";
+        String query1 = "select project_id,project_name,project_log,status_of_software from project where project_id=?";
         try {
             Class.forName("org.postgresql.Driver");
             c = DriverManager.getConnection(s.url, s.dbUser, s.dbPass);
@@ -256,11 +260,12 @@ public class client extends Person {
             rs.next();
             retreiveproject.setProjectID(rs.getString(1));
             retreiveproject.setProjectName(rs.getString(2));
-            retreiveproject.setProjectStatus(rs.getString(3));
+            retreiveproject.setProjectLog(rs.getString(3));
+            retreiveproject.setProjectStatus(rs.getString(4));
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return retreiveproject; //Returning it so you can display it
+        return retreiveproject; // Returning it so you can display it
     }
 
     public void ProjectList(project P, String client_id) {
@@ -341,11 +346,12 @@ public class client extends Person {
         }
     }
 }
+
 class Driver {
     public static void main(String[] args) {
         client Cli = new client();
         project pro = new project();
-       
+
         // clire.ClientPriority();
         // Cli.AddProject(pro);
         // Cli.removeProject(pro);

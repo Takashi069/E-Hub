@@ -27,6 +27,7 @@ public class project {
     public void setProjectID(String ProjectID) {
         this.ProjectID = ProjectID;
     }
+
     public String getProjectLog() {
         return this.ProjectLog;
     }
@@ -63,13 +64,41 @@ public class project {
         return this.ProjectMembers;
     }
 
+    public String retrieveLog(String id) {
+        Connection c = null;
+        Statement stmt = null;
+        String retrieved_log = "";
+        try {
+            Class.forName("org.postgresql.Driver");
+            secret obj = new secret();
+            c = DriverManager.getConnection(obj.url, obj.dbUser, obj.dbPass);
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.err.println(e.getClass().getName() + ": " + e.getMessage());
+            System.exit(0);
+        }
+        try {
+            stmt = c.createStatement();
+            String sql = String.format(
+                    "select project_log from project where project_id='%s'", id);
+            ResultSet rs = stmt.executeQuery(sql);
+            if (rs.next()) {
+                retrieved_log = rs.getString(1);
+            }
+            return retrieved_log;
+        } catch (Exception e) {
+            System.out.println(e.toString());
+            return "No logs registered";
+        }
+    }
+
     public void setProjectMembers(String[] ProjectMembers) {
         Connection c = null;
         Statement stmt = null;
         try {
             Class.forName("org.postgresql.Driver");
             secret obj = new secret();
-            c = DriverManager.getConnection(obj.url,obj.dbUser, obj.dbPass);
+            c = DriverManager.getConnection(obj.url, obj.dbUser, obj.dbPass);
         } catch (Exception e) {
             e.printStackTrace();
             System.err.println(e.getClass().getName() + ": " + e.getMessage());
@@ -80,22 +109,22 @@ public class project {
             System.out.println("Opened database successfully");
             stmt = c.createStatement();
             String sql = String.format(
-                "select Emp_ID from employee where Specialisation_ID = '%s' and Engaged_In_Project = 'N';","WEB");
+                    "select Emp_ID from employee where Specialisation_ID = '%s' and Engaged_In_Project = 'N';", "WEB");
             ResultSet rs = stmt.executeQuery(sql);
             int i = 1;
-            while (rs.next() && i < 5) { //the reason why i<5 is because we're picking 4 employees to work on this project
+            while (rs.next() && i < 5) { // the reason why i<5 is because we're picking 4 employees to work on this
+                                         // project
                 String Emp_ID = rs.getString("Emp_ID");
                 tmp_list[i] = Emp_ID;
                 i++;
             }
-                rs.close();
-                stmt.close();
-        }catch(Exception e)
-    {
-        System.out.println(e.toString());
+            rs.close();
+            stmt.close();
+        } catch (Exception e) {
+            System.out.println(e.toString());
+        }
+
     }
-        
-}
 
     public void updateEmpStatus(String[] Emp_IDs) {
         Connection c = null;
@@ -104,40 +133,40 @@ public class project {
         try {
             Class.forName("org.postgresql.Driver");
             secret obj = new secret();
-            c = DriverManager.getConnection(obj.url,obj.dbUser, obj.dbPass);
+            c = DriverManager.getConnection(obj.url, obj.dbUser, obj.dbPass);
         } catch (Exception e) {
             e.printStackTrace();
             System.err.println(e.getClass().getName() + ": " + e.getMessage());
             System.exit(0);
         }
         int i = 1;
-        while(i<6){ //this while loop is used to change the status of the employees once the project is completed
+        while (i < 6) { // this while loop is used to change the status of the employees once the
+                        // project is completed
             try {
                 System.out.println("Opened database successfully");
                 stmt = c.createStatement();
                 String sql = String.format(
-                    "update employee set Engaged_In_Project = 'N' where Emp_ID = '%s';",Emp_IDs[i]);
+                        "update employee set Engaged_In_Project = 'N' where Emp_ID = '%s';", Emp_IDs[i]);
                 stmt.executeUpdate(sql);
                 stmt.close();
-            }catch(Exception e)
-        {
-            System.out.println(e.toString());
-        }
+            } catch (Exception e) {
+                System.out.println(e.toString());
+            }
 
         }
-    } 
+    }
 
     public String getProjectHead() {
         return this.ProjectHead;
     }
 
-    public void setProjectHead(){
+    public void setProjectHead() {
         Connection c = null;
         Statement stmt = null;
         try {
             Class.forName("org.postgresql.Driver");
             secret obj = new secret();
-            c = DriverManager.getConnection(obj.url,obj.dbUser, obj.dbPass);
+            c = DriverManager.getConnection(obj.url, obj.dbUser, obj.dbPass);
         } catch (Exception e) {
             e.printStackTrace();
             System.err.println(e.getClass().getName() + ": " + e.getMessage());
@@ -148,31 +177,30 @@ public class project {
             System.out.println("Opened database successfully");
             stmt = c.createStatement();
             String sql = String.format(
-                "select Emp_ID from employee where Specialisation_ID = '%s' and Engaged_In_Project = 'N' order by experience desc;","WEB");
+                    "select Emp_ID from employee where Specialisation_ID = '%s' and Engaged_In_Project = 'N' order by experience desc;",
+                    "WEB");
             ResultSet rs = stmt.executeQuery(sql);
             if (rs.next()) {
                 String Emp_ID = rs.getString("Emp_ID");
                 stmt = c.createStatement();
                 String sql2 = String.format(
-                "update Project set project_leader = '%s' where Project_ID = '%s';", Emp_ID,"PRO001");
+                        "update Project set project_leader = '%s' where Project_ID = '%s';", Emp_ID, "PRO001");
                 PreparedStatement ps = c.prepareStatement(sql2);
                 int output = 0;
                 output = ps.executeUpdate();
                 System.out.println(output + " Row(s) Updated");
                 String sql3 = String.format(
-                "UPDATE employee set Engaged_In_Project = 'Y' where Emp_ID = '%s';",Emp_ID);
+                        "UPDATE employee set Engaged_In_Project = 'Y' where Emp_ID = '%s';", Emp_ID);
                 ps = c.prepareStatement(sql3);
                 output = ps.executeUpdate();
                 System.out.println(output + " Row(s) Updated");
             }
-                rs.close();
-                stmt.close();
-        }catch(Exception e)
-    {
-        System.out.println(e.toString());
+            rs.close();
+            stmt.close();
+        } catch (Exception e) {
+            System.out.println(e.toString());
+        }
     }
-}
-    
 
     public String getProjectStatus() {
         return this.ProjectStatus;
@@ -192,10 +220,10 @@ public class project {
 
 }
 
-class driver{
+class driver {
     public static void main(String[] args) {
         project obj = new project();
         obj.setProjectHead();
-        
+
     }
 }

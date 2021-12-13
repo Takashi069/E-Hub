@@ -21,17 +21,21 @@ public class viewProjGui {
     JLabel id = new JLabel("ID");
     JLabel name = new JLabel("Project Name: ");
     JLabel dynamicName = new JLabel();
-    JLabel Company = new JLabel("Status of the Project");
-    JLabel dynamicCompany = new JLabel();
+    JLabel status = new JLabel("Status of the Project");
+    JLabel statusLabel = new JLabel();
     String[] id_list;
     String[] name_list;
-    JButton remove1 = new JButton("Suggest Changes");
+    JButton suggest = new JButton("Suggest Changes");
     JButton backButton = new JButton("Go Back");
+    JLabel descriptionLabel = new JLabel("Description");
+    JTextArea descriptionTextField = new JTextArea(10, 50);
+    String project_status;
 
     JComboBox<String> allID = new JComboBox<String>(emptyArray);
     String ClientID = "";
 
     public viewProjGui(String cli_id) {
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         ClientID = cli_id;
         project pro = new project();
         client cli = new client();
@@ -67,25 +71,37 @@ public class viewProjGui {
         gbc.gridx = 0;
         gbc.gridy = 3;
         gbc.fill = GridBagConstraints.HORIZONTAL;
-        viewProject.add(Company, gbc);
+        viewProject.add(descriptionLabel, gbc);
 
         gbc.gridx = 1;
         gbc.gridy = 3;
         gbc.fill = GridBagConstraints.HORIZONTAL;
-        viewProject.add(dynamicCompany, gbc);
+        descriptionTextField.setLineWrap(true);
+        descriptionTextField.setEditable(false);
+        viewProject.add(descriptionTextField, gbc);
 
         gbc.gridx = 0;
         gbc.gridy = 5;
         gbc.fill = GridBagConstraints.HORIZONTAL;
-        viewProject.add(remove1, gbc);
+        viewProject.add(status, gbc);
+
+        gbc.gridx = 1;
+        gbc.gridy = 5;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        viewProject.add(statusLabel, gbc);
+
+        gbc.gridx = 0;
+        gbc.gridy = 7;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        viewProject.add(suggest, gbc);
 
         gbc.gridx = 2;
-        gbc.gridy = 4;
+        gbc.gridy = 7;
         gbc.gridwidth = 4;
         gbc.anchor = GridBagConstraints.CENTER;
         viewProject.add(backButton, gbc);
 
-        remove1.addActionListener(new handleRemoveProject());
+        suggest.addActionListener(new handleSuggestChanges());
         allID.addActionListener(new handleShowDetails());
         frame.setSize(1280, 1024);
         frame.add(viewProject);
@@ -101,7 +117,11 @@ public class viewProjGui {
 
     private void updateviewProjectGUI(project P) {
         dynamicName.setText(P.getProjectName());
-        dynamicCompany.setText(P.getProjectStatus());
+        statusLabel.setText(P.getProjectStatus());
+        project_status = P.getProjectStatus();
+        String full_log = P.getProjectLog();
+        String description = full_log.split("#")[0].replaceAll("\\\\n", System.getProperty("line.separator"));
+        descriptionTextField.setText(description);
         // dynamicTotalOrder.setText((String.format("%d", C.getTotal_Orders())));
     }
     /*
@@ -129,31 +149,37 @@ public class viewProjGui {
         }
     }
 
-    class handleRemoveProject implements ActionListener {
+    class handleSuggestChanges implements ActionListener {
         public void actionPerformed(ActionEvent a) {
-            /* admin ad = new admin();
-            client cli = new client();
-            int input = JOptionPane.showConfirmDialog(frame, "Confirm Deletion of Person", "WARNING",
-                    JOptionPane.YES_NO_OPTION);
-            // 0->Yes, 1->No
-            
+            /*
+             * admin ad = new admin();
+             * client cli = new client();
+             * int input = JOptionPane.showConfirmDialog(frame,
+             * "Confirm Deletion of Person", "WARNING",
+             * JOptionPane.YES_NO_OPTION);
+             * // 0->Yes, 1->No
+             * 
+             * project pro = new project();
+             * pro.setProjectID((String) id_list[allID.getSelectedIndex()]);
+             * if (input == 0) {
+             * cli.removeProject(pro);
+             * JOptionPane.showMessageDialog(frame, "Data Deleted", "Info",
+             * JOptionPane.PLAIN_MESSAGE);
+             * }
+             * frame.dispose();
+             * new viewProjGui(ClientID);
+             */
             project pro = new project();
             pro.setProjectID((String) id_list[allID.getSelectedIndex()]);
-            if (input == 0) {
-                cli.removeProject(pro);
-                JOptionPane.showMessageDialog(frame, "Data Deleted", "Info", JOptionPane.PLAIN_MESSAGE);
-            } 
-            frame.dispose();
-            new viewProjGui(ClientID);*/
-            project pro = new project();
-            pro.setProjectID((String) id_list[allID.getSelectedIndex()]);
-           System.out.println(id_list[allID.getSelectedIndex()]);
-            new suggestionGui(pro);  
+            pro.setProjectStatus(project_status);
+            System.out.println(id_list[allID.getSelectedIndex()]);
+            new suggestionGui(pro);
         }
     }
 }
-class Driver123{
+
+class Driver123 {
     public static void main(String[] args) {
-        new viewProjGui("CLE001");
+        new viewProjGui("CLI001");
     }
 }
