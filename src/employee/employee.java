@@ -14,7 +14,24 @@ public class employee extends Person {
     private String Employee_join_date;
     private String Domain;
     private int Experience;
+    private int ProjectsWorked;
+    private int ProjectsLed;
 
+    public int getProjectsWorked() {
+        return this.ProjectsWorked;
+    }
+
+    public void setProjectsWorked(int ProjectsWorked) {
+        this.ProjectsWorked = ProjectsWorked;
+    }
+
+    public int getProjectsLed() {
+        return this.ProjectsLed;
+    }
+
+    public void setProjectsLed(int ProjectsLed) {
+        this.ProjectsLed = ProjectsLed;
+    }
 
     public String getID() {
         return this.Employee_ID;

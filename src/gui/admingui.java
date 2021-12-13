@@ -51,6 +51,8 @@ public class admingui{
     JLabel clientID = new JLabel("Client ID");
     JLabel status = new JLabel("Status of Software: ");
     JLabel deadline = new JLabel("Deadline Date(YYYY-MM-DD)");
+    JLabel projectsWorked = new JLabel("Total Projects Worked");
+    JLabel projectsLed = new JLabel("Total Projects Led");
 
     JTextField dynamicID = new JTextField();
     JTextField dynamicName = new JTextField();
@@ -59,6 +61,8 @@ public class admingui{
     JTextField dynamicTotalOrder = new JTextField();
     JTextField dynamicDomain = new JTextField();
     JTextField dynamicExperience = new JTextField();
+    JTextField dynamicProjectsWorked = new JTextField();
+    JTextField dynamicProjectsLed = new JTextField();
     JTextField dynamicProjectNameTextField = new JTextField();
     JTextField dynamicClientIDTextField = new JTextField();
     JTextField dynamicStatusTextField = new JTextField();
@@ -81,6 +85,8 @@ public class admingui{
 
     JButton removeCliButton = new JButton("Remove Clients");
     JButton removeEmpButton = new JButton("Remove Employee");
+
+    JButton viewEmpButton = new JButton("View Employees");
 
     JTextField idTextField = new JTextField();
     JTextField nameTextField = new JTextField("Sherlock Holmes");
@@ -147,6 +153,7 @@ public class admingui{
         addEmplButton.addActionListener(new handleInputEmployee());
         removeCliButton.addActionListener(new handleRemoveClient());
         removeEmpButton.addActionListener(new handleRemoveEmployee());
+        viewEmpButton.addActionListener(new handleViewEmployee());
         submit1.addActionListener(new handleEmployeeData());
         submit2.addActionListener(new handleClientData());
         remove1.addActionListener(new handleRemovePerson("client"));
@@ -198,11 +205,13 @@ public class admingui{
     }
 
     private void empMenuGUI(){
-        empMenu.setLayout(new GridLayout(3,0,0,50));
+        empMenu.setLayout(new GridLayout(4,0,0,50));
         empMenu.setBorder(new EmptyBorder(new Insets(20,20,20,20)));
         empMenu.add(addEmplButton);
         empMenu.add(removeEmpButton);
+        empMenu.add(viewEmpButton);
         empMenu.add(backButton);
+        
     }
 
     private void projectMenuGUI(){
@@ -540,6 +549,8 @@ public class admingui{
         //System.out.println("UpdateRemEmpGUI: " + E.getName());
         dynamicExperience.setText(String.format("%d", E.getExperience()));
         dynamicDomain.setText(E.getDomain());
+        dynamicProjectsWorked.setText(Integer.toString(E.getProjectsWorked()) );
+        dynamicProjectsLed.setText(Integer.toString(E.getProjectsLed()) );
     }
 
     private void updateProjectGUI(project P){
@@ -652,6 +663,110 @@ public class admingui{
         gbc.fill = GridBagConstraints.HORIZONTAL;
         remEmp.add(remove2,gbc);
         
+        allID1.addActionListener(new handleShowEmpDetails());
+
+    }
+
+    private void viewEmpGUI() {
+        admin ad = new admin();
+        employee emp = new employee();
+        remEmp.setLayout(new GridBagLayout());
+        GridBagConstraints gbc = new GridBagConstraints();
+        String[] ID = ad.PersonList(emp);
+        allID1.removeAllItems();
+        
+        for (String id : ID) {
+            allID1.addItem(id);
+        }
+        gbc.ipadx = 100;
+        gbc.ipady = 10;
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        gbc.insets = new Insets(20, 20, 20, 0);
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        remEmp.add(id, gbc);
+
+        gbc.gridx = 1;
+        gbc.gridy = 0;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        allID1.setBackground(Color.white);
+        remEmp.add(allID1, gbc);
+
+        gbc.gridx = 0;
+        gbc.gridy = 1;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        remEmp.add(name, gbc);
+
+        gbc.gridx = 1;
+        gbc.gridy = 1;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        remEmp.add(dynamicName, gbc);
+        dynamicName.setEditable(false);
+        dynamicName.setBackground(Color.WHITE);
+
+        gbc.gridx = 0;
+        gbc.gridy = 2;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        remEmp.add(dob, gbc);
+
+        gbc.gridx = 1;
+        gbc.gridy = 2;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        remEmp.add(dynamicDOB, gbc);
+        dynamicDOB.setEditable(false);
+        dynamicDOB.setBackground(Color.WHITE);
+
+        gbc.gridx = 0;
+        gbc.gridy = 3;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        remEmp.add(experience, gbc);
+
+        gbc.gridx = 1;
+        gbc.gridy = 3;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        remEmp.add(dynamicExperience, gbc);
+        dynamicExperience.setEditable(false);
+        dynamicExperience.setBackground(Color.WHITE);
+
+        gbc.gridx = 0;
+        gbc.gridy = 4;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        remEmp.add(domain, gbc);
+
+        gbc.gridx = 1;
+        gbc.gridy = 4;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        remEmp.add(dynamicDomain, gbc);
+        dynamicDomain.setEditable(false);
+        dynamicDomain.setBackground(Color.WHITE);
+
+        gbc.gridx = 0;
+        gbc.gridy = 5;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        remEmp.add(projectsWorked, gbc);
+
+        gbc.gridx = 1;
+        gbc.gridy = 5;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        remEmp.add(dynamicProjectsWorked, gbc);
+        dynamicProjectsWorked.setEditable(false);
+        dynamicProjectsWorked.setBackground(Color.WHITE);
+
+        gbc.gridx = 0;
+        gbc.gridy = 6;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        remEmp.add(projectsLed, gbc);
+
+        gbc.gridx = 1;
+        gbc.gridy = 6;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        remEmp.add(dynamicProjectsLed, gbc);
+        dynamicProjectsLed.setEditable(false);
+        dynamicProjectsLed.setBackground(Color.WHITE);
+
+        gbc.gridx = 0;
+        gbc.gridy = 7;
+        remEmp.add(backButton,gbc);
         allID1.addActionListener(new handleShowEmpDetails());
 
     }
@@ -973,6 +1088,14 @@ public class admingui{
         public void actionPerformed(ActionEvent a){
             heading.setText("Remove Employee");
             remEmpGUI();
+            card.show(display,"removeEmployeeMenu");
+        }
+    }
+
+    class handleViewEmployee implements ActionListener{
+        public void actionPerformed(ActionEvent a){
+            heading.setText("View Employee");
+            viewEmpGUI();
             card.show(display,"removeEmployeeMenu");
         }
     }
