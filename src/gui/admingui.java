@@ -18,7 +18,6 @@ import Project.project;
 public class admingui{
     
     JFrame frame = new JFrame("Admin Menu");
-    JFrame testing  = new JFrame("Testing");
     
     JPanel display = new JPanel();
     JPanel mainMenu = new JPanel();
@@ -73,6 +72,7 @@ public class admingui{
     JButton projectButton = new JButton("Manage Projects");
     JButton addCliButton = new JButton("Add New Clients");
     JButton addEmplButton = new JButton("Add New Employees");
+    JButton viewClientReport = new JButton("View Client Statistics");
     JButton viewNonApprovedProjects = new JButton("View Non-Approved Projects");
     JButton changeProjectStatus = new JButton("Change Project Status");
     JButton submit1 = new JButton("Submit");
@@ -82,23 +82,25 @@ public class admingui{
     JButton remove1 = new JButton("Remove");
     JButton remove2 = new JButton("Remove");
     JButton backButton = new JButton("Back");
+    JButton viewChanges = new JButton("View Projects with Changes Suggested");
+    JButton logout = new JButton("Log Out");
 
     JButton removeCliButton = new JButton("Remove Clients");
     JButton removeEmpButton = new JButton("Remove Employee");
 
-    JButton viewEmpButton = new JButton("View Employees");
+    JButton viewEmpButton = new JButton("View Employee Statistics");
 
     JTextField idTextField = new JTextField();
-    JTextField nameTextField = new JTextField("Sherlock Holmes");
-    JTextField streetNameTextField = new JTextField("221B");
-    JTextField localityTextField = new JTextField("Baker Street");
-    JTextField DistrictTextField = new JTextField("Central London");
-    JTextField stateTextField = new JTextField("London");
-    JTextField pincodeTextField = new JTextField("125462");
-    JTextField nationalityTextField = new JTextField("UK");
-    JTextField dobTextField = new JTextField("1969-10-24");
-    JTextField experienceTextField = new JTextField("12");
-    JTextField companyTextField = new JTextField("Apple");
+    JTextField nameTextField = new JTextField("");
+    JTextField streetNameTextField = new JTextField("");
+    JTextField localityTextField = new JTextField("");
+    JTextField DistrictTextField = new JTextField("");
+    JTextField stateTextField = new JTextField("");
+    JTextField pincodeTextField = new JTextField("");
+    JTextField nationalityTextField = new JTextField("");
+    JTextField dobTextField = new JTextField("");
+    JTextField experienceTextField = new JTextField("");
+    JTextField companyTextField = new JTextField("");
     
     
     String[] emptyArray = {"null"};
@@ -131,13 +133,14 @@ public class admingui{
          * testing.setVisible(true);
          */
         // GridLayout(rows, columns, horizontal gap, vertical gap)
-        mainMenu.setLayout(new GridLayout(3, 0, 0, 50));
+        mainMenu.setLayout(new GridLayout(4, 0, 0, 50));
         // To add paddings inside the panel I used EmptyBorder along with Insets->
         // Reason: To make the buttons more centralised
         mainMenu.setBorder(new EmptyBorder(new Insets(20, 20, 20, 20)));
         mainMenu.add(empButton);
         mainMenu.add(cliButton);
         mainMenu.add(projectButton);
+        mainMenu.add(logout);
 
 
         //menuHeadingPanel.setBorder(new EmptyBorder(new Insets(50,50,50,50)));
@@ -158,7 +161,32 @@ public class admingui{
         submit2.addActionListener(new handleClientData());
         remove1.addActionListener(new handleRemovePerson("client"));
         remove2.addActionListener(new handleRemovePerson("employee"));
-
+        viewClientReport.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent a){
+                frame.dispose();
+                new ClientReportGui();
+            }
+        });
+        viewChanges.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent a){
+                try{
+                    new gui.admincomponents.projectInfo();
+                    frame.dispose();
+                }catch(noData nd){
+                    nd.displaYError(frame);
+                }
+                }
+        });
+        logout.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent a){
+                frame.dispose();
+                login frame = new login();
+                frame.setSize(new Dimension(960, 640));
+                frame.setTitle("Login Form");
+                frame.setVisible(true);
+                frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            }
+        });
        
 
         display.add(mainMenu,"mainMenu");
@@ -196,11 +224,13 @@ public class admingui{
     }
 
     private void clientMenuGUI(){
-        cliMenu.setLayout(new GridLayout(3,0,0,50));
+        cliMenu.setLayout(new GridLayout(4,0,0,50));
         cliMenu.setBorder(new EmptyBorder(new Insets(20,20,20,20)));
         cliMenu.add(addCliButton);
         cliMenu.add(removeCliButton);
+        cliMenu.add(viewClientReport);
         cliMenu.add(backButton);
+
 
     }
 
@@ -463,6 +493,7 @@ public class admingui{
             allID2.addItem(id);
         }
         gbc.ipadx = 100;
+        gbc.ipady = 10;
         gbc.gridx = 0;
         gbc.gridy = 0;
         gbc.insets = new Insets(20, 20, 20, 0);
@@ -593,7 +624,7 @@ public class admingui{
             allID1.addItem(id);
         }
         gbc.ipadx = 100;
-        gbc.ipady = 50;
+        gbc.ipady = 10;
         gbc.gridx = 0;
         gbc.gridy = 0;
         gbc.insets = new Insets(20, 20, 20, 0);
@@ -848,6 +879,12 @@ public class admingui{
         gbc.gridy = 5;
         gbc.fill = GridBagConstraints.HORIZONTAL;
         projectUpdateStatus.add(change1,gbc);
+
+        gbc.gridx = 0;
+        gbc.gridy = 7;
+        gbc.gridwidth = 2;
+        projectUpdateStatus.add(viewChanges,gbc);
+
         allID3.addActionListener(new handleShowProjectDetails());
         change1.addActionListener(new handleStatusChange());
     }

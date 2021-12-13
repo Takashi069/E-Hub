@@ -10,7 +10,6 @@ import javax.swing.JTextField;
 
 import Project.project;
 import client.client;
-import gui.clientgui;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;

@@ -11,7 +11,7 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 
 public class login extends JFrame implements ActionListener {
-    Container container = getContentPane();
+    //Container container = getContentPane();
     JLabel userLabel = new JLabel("USERNAME");
     JLabel passwordLabel = new JLabel("PASSWORD");
     JTextField userTextField = new JTextField();
@@ -19,19 +19,21 @@ public class login extends JFrame implements ActionListener {
     JButton loginButton = new JButton("LOGIN");
     JButton resetButton = new JButton("RESET");
     JCheckBox showPassword = new JCheckBox("Show Password");
+    JPanel panel = new JPanel();
 
     login() {
         setLayoutManager();
-        setLocationAndSize();
+        //setLocationAndSize();
         addComponentsToContainer();
         addActionEvent();
+        add(panel);
     }
 
     public void setLayoutManager() {
-        container.setLayout(null);
+        panel.setLayout(new GridBagLayout());
     }
 
-    public void setLocationAndSize() {
+    /* public void setLocationAndSize() {
         userLabel.setBounds(330, 160, 193, 52);
         passwordLabel.setBounds(330, 280, 193, 52);
         userTextField.setBounds(450, 170, 281, 40);
@@ -40,16 +42,34 @@ public class login extends JFrame implements ActionListener {
         loginButton.setBounds(400, 420, 150, 30);
         resetButton.setBounds(580, 420, 150, 30);
 
-    }
+    } */
 
     public void addComponentsToContainer() {
-        container.add(userLabel);
-        container.add(passwordLabel);
-        container.add(userTextField);
-        container.add(passwordField);
-        container.add(showPassword);
-        container.add(loginButton);
-        container.add(resetButton);
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        gbc.ipady = 10;
+        gbc.insets = new Insets(20,20,20,20);
+        panel.add(userLabel,gbc);
+        gbc.gridx = 0;
+        gbc.gridy = 1;
+        panel.add(passwordLabel,gbc);
+        gbc.gridx = 1;
+        gbc.gridy = 0;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        panel.add(userTextField,gbc);
+        gbc.gridx = 1;
+        gbc.gridy = 1;
+        panel.add(passwordField,gbc);
+        gbc.gridx = 0;
+        gbc.gridy = 2;
+        panel.add(showPassword,gbc);
+        gbc.gridx = 0;
+        gbc.gridy = 3;
+        panel.add(loginButton,gbc);
+        gbc.gridx = 1;
+        gbc.gridy = 3;
+        panel.add(resetButton,gbc);
     }
 
     public void addActionEvent() {

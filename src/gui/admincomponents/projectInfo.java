@@ -1,5 +1,4 @@
-package gui.clientComponents;
-
+package gui.admincomponents;
 import javax.swing.*;
 
 import java.awt.*;
@@ -8,43 +7,42 @@ import java.awt.GridBagConstraints;
 import java.awt.event.*;
 
 import admin.admin;
-import client.client;
+import exceptions.noData;
+import gui.admingui;
 import Project.project;
 
-public class viewProjGui {
+public class projectInfo {
 
-    JFrame frame = new JFrame("Client Menu");
+    JFrame frame = new JFrame("Modification Approval Menu");
     JPanel cliMenu = new JPanel();
     JPanel viewProject = new JPanel();
-    JLabel heading = new JLabel("Welcome Client");
+    JLabel heading = new JLabel("Welcome Admin");
     String[] emptyArray = { "null" };
-    JLabel id = new JLabel("ID");
+    JLabel id = new JLabel("Project ID: ");
     JLabel name = new JLabel("Project Name: ");
     JLabel dynamicName = new JLabel();
     JLabel status = new JLabel("Status of the Project");
     JLabel statusLabel = new JLabel();
-    String[] id_list;
-    String[] name_list;
-    JButton suggest = new JButton("Suggest Changes");
+    JButton approve = new JButton("Approve Modifications");
+    JButton reject = new JButton("Reject Modifications");
     JButton backButton = new JButton("Go Back");
-    JLabel descriptionLabel = new JLabel("Description");
+    JLabel descriptionLabel = new JLabel("Project Log");
     JTextArea descriptionTextField = new JTextArea(10, 50);
     String project_status;
 
     JComboBox<String> allID = new JComboBox<String>(emptyArray);
-    String ClientID = "";
+    String[] projID = null;
 
-    public viewProjGui(String cli_id) {
+    public projectInfo() throws noData {
+
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        ClientID = cli_id;
-        project pro = new project();
-        client cli = new client();
-        cli.ProjectList(pro, ClientID);
-        id_list = cli.getPersonIdList();
-        name_list = cli.getPersonNameList();
+        admin ad = new admin();
+        projID = ad.ProjectListChangesRequested() ;   
+        if(projID == null)
+            throw new noData();     
         viewProject.setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
-        allID = new JComboBox<String>(name_list);
+        allID = new JComboBox<String>(projID);
 
         gbc.gridx = 0;
         gbc.gridy = 0;
@@ -93,7 +91,12 @@ public class viewProjGui {
         gbc.gridx = 0;
         gbc.gridy = 7;
         gbc.fill = GridBagConstraints.HORIZONTAL;
-        viewProject.add(suggest, gbc);
+        viewProject.add(approve, gbc);
+
+        gbc.gridx = 1;
+        gbc.gridy = 7;
+        gbc.fill = GridBagConstraints.CENTER;
+        viewProject.add(reject,gbc);
 
         gbc.gridx = 2;
         gbc.gridy = 7;
@@ -101,8 +104,9 @@ public class viewProjGui {
         gbc.anchor = GridBagConstraints.CENTER;
         viewProject.add(backButton, gbc);
 
-        suggest.addActionListener(new handleSuggestChanges());
+        approve.addActionListener(new handleApproveChanges());
         allID.addActionListener(new handleShowDetails());
+        reject.addActionListener(new handleRejectChanges());
         frame.setSize(960, 640);
         frame.add(viewProject);
         frame.setVisible(true);
@@ -110,6 +114,7 @@ public class viewProjGui {
         backButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent ex) {
                 frame.dispose();
+                new admingui();
             }
         });
 
@@ -120,54 +125,71 @@ public class viewProjGui {
         statusLabel.setText(P.getProjectStatus());
         project_status = P.getProjectStatus();
         String full_log = P.getProjectLog();
-        String description = full_log.split("#")[0].replaceAll("\\\\n", System.getProperty("line.separator"));
+        String description = full_log.replaceAll("\\\\n", System.getProperty("line.separator"));
         descriptionTextField.setText(description);
         // dynamicTotalOrder.setText((String.format("%d", C.getTotal_Orders())));
     }
     
+    private int logPrompt(project P){
+        admin adm = new admin();
+        String message = JOptionPane.showInputDialog(frame, "Admin Log Message", "", JOptionPane.INFORMATION_MESSAGE);
+        System.out.println(message);
+        if(message!=null && message.length()>0){
+            adm.addProjectLog(P, message);
+            return 1;
+        }else{
+            return 0;
+        }
+    }
+
     class handleShowDetails implements ActionListener {
         public void actionPerformed(ActionEvent a) {
             project pro = new project();
-            client cli = new client();
-            pro.setProjectID((String) id_list[allID.getSelectedIndex()]);
-            pro = cli.showPrimaryDetails(pro);
+            admin ad = new admin();
+            pro.setProjectID((String)allID.getSelectedItem());
+            pro = ad.showPrimaryDetails(pro);
             updateviewProjectGUI(pro);
             // System.out.println(pro.getProjectName());
 
         }
     }
 
-    class handleSuggestChanges implements ActionListener {
+    class handleApproveChanges implements ActionListener {
         public void actionPerformed(ActionEvent a) {
-            /*
-             * admin ad = new admin();
-             * client cli = new client();
-             * int input = JOptionPane.showConfirmDialog(frame,
-             * "Confirm Deletion of Person", "WARNING",
-             * JOptionPane.YES_NO_OPTION);
-             * // 0->Yes, 1->No
-             * 
-             * project pro = new project();
-             * pro.setProjectID((String) id_list[allID.getSelectedIndex()]);
-             * if (input == 0) {
-             * cli.removeProject(pro);
-             * JOptionPane.showMessageDialog(frame, "Data Deleted", "Info",
-             * JOptionPane.PLAIN_MESSAGE);
-             * }
-             * frame.dispose();
-             * new viewProjGui(ClientID);
-             */
             project pro = new project();
-            pro.setProjectID((String) id_list[allID.getSelectedIndex()]);
-            pro.setProjectStatus(project_status);
-            System.out.println(id_list[allID.getSelectedIndex()]);
-            new suggestionGui(pro);
+            admin ad = new admin();
+            pro.setProjectID((String)allID.getSelectedItem());
+            int output = logPrompt(pro);
+            if(output == 1){
+                ad.ProjectChanges(pro,"CHANGES ACCEPTED");
+                JOptionPane.showMessageDialog(frame, "Status Updated", "Info", JOptionPane.PLAIN_MESSAGE);
+            }else{
+                JOptionPane.showMessageDialog(frame, "Status Not Updated: Provide Log to update", "Info", JOptionPane.PLAIN_MESSAGE);
+
+            }
+            frame.repaint();
+        }
+    }
+    class handleRejectChanges implements ActionListener {
+        public void actionPerformed(ActionEvent a) {
+            project pro = new project();
+            admin ad = new admin();
+            pro.setProjectID((String)allID.getSelectedItem());
+            int output = logPrompt(pro);
+            if(output == 1){
+                ad.ProjectChanges(pro,"CHANGES REJECTED");
+                JOptionPane.showMessageDialog(frame, "Status Updated", "Info", JOptionPane.PLAIN_MESSAGE);
+            }else{
+                JOptionPane.showMessageDialog(frame, "Status Not Updated: Provide Log to update", "Info", JOptionPane.PLAIN_MESSAGE);
+
+            }
+            frame.repaint();
         }
     }
 }
 
 class Driver123 {
     public static void main(String[] args) {
-        new viewProjGui("CLI001");
+        //new projectInfo();
     }
 }

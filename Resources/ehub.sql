@@ -71,6 +71,8 @@ select * from login l ;
 select * from project;
 select * from login l ;
 
+delete from project;
+
 select p.id, p.name, p.dob, c.company ,c.total_orders 
 from person p, client c
 where p.id = c.client_id and c.client_id = 'CLI001';
@@ -117,7 +119,7 @@ insert into person values
 
 
 
-select project_log from project p;
+select project_log, project_id from project p;
 
 /*=====================Mohak=============================*/
 create table Project

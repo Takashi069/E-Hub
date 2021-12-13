@@ -4,9 +4,9 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.sql.Statement;
 import gui.secret;
+import exceptions.*;
 
 public class project {
 
@@ -92,9 +92,10 @@ public class project {
         }
     }
 
-    public void setProjectMembers(String[] ProjectMembers) {
+    public void setProjectMembers(String[] ProjectMembers) throws noEmployeeAvailable{
         Connection c = null;
         Statement stmt = null;
+        PreparedStatement ps = null;
         try {
             Class.forName("org.postgresql.Driver");
             secret obj = new secret();
@@ -104,13 +105,27 @@ public class project {
             System.err.println(e.getClass().getName() + ": " + e.getMessage());
             System.exit(0);
         }
-        String[] tmp_list = new String[4];
+        String query1 = "select count(Emp_ID) from employee where Specialisation_ID = ? and Engaged_In_Project = 'N'";
+        
         try {
             System.out.println("Opened database successfully");
             stmt = c.createStatement();
+            ps = c.prepareStatement(query1);
+            ps.setString(0, ProjectType);
+            ResultSet rs = ps.executeQuery();
+            String[] tmp_list=null;
+            int size = 0;
+            while(rs.next()){
+                if(rs.getInt(1) < 5) //the reason why it's less than 5 is without a project leader, there wouldnt be a proper project
+                    throw new noEmployeeAvailable();
+                else{
+                    size = rs.getInt(1);
+                }
+            }
+            tmp_list = new String[size];
             String sql = String.format(
-                    "select Emp_ID from employee where Specialisation_ID = '%s' and Engaged_In_Project = 'N';", "WEB");
-            ResultSet rs = stmt.executeQuery(sql);
+                    "select Emp_ID from employee where Specialisation_ID = '%s' and Engaged_In_Project = 'N';", ProjectType);
+            rs = stmt.executeQuery(sql);
             int i = 1;
             while (rs.next() && i < 5) { // the reason why i<5 is because we're picking 4 employees to work on this
                                          // project
@@ -160,7 +175,7 @@ public class project {
         return this.ProjectHead;
     }
 
-    public void setProjectHead() {
+    public void setProjectHead(project P) {
         Connection c = null;
         Statement stmt = null;
         try {
@@ -178,13 +193,13 @@ public class project {
             stmt = c.createStatement();
             String sql = String.format(
                     "select Emp_ID from employee where Specialisation_ID = '%s' and Engaged_In_Project = 'N' order by experience desc;",
-                    "WEB");
+                    P.getProjectType());
             ResultSet rs = stmt.executeQuery(sql);
             if (rs.next()) {
                 String Emp_ID = rs.getString("Emp_ID");
                 stmt = c.createStatement();
                 String sql2 = String.format(
-                        "update Project set project_leader = '%s' where Project_ID = '%s';", Emp_ID, "PRO001");
+                        "update Project set project_leader = '%s' where Project_ID = '%s';", Emp_ID, ProjectID);
                 PreparedStatement ps = c.prepareStatement(sql2);
                 int output = 0;
                 output = ps.executeUpdate();
@@ -223,7 +238,7 @@ public class project {
 class driver {
     public static void main(String[] args) {
         project obj = new project();
-        obj.setProjectHead();
+        obj.setProjectHead(obj);
 
     }
 }

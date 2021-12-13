@@ -423,20 +423,21 @@ public class admin extends Person {
         PreparedStatement ps = null;
         ResultSet rs = null;
         java.sql.Date date;
-        String query1 = "select project_id,project_name,date_of_release,status_of_software,client_id from project where project_id = ?";
+        String query1 = "select project_id,project_name,date_of_release,status_of_software,client_id,project_log from project where project_id = ?";
         try{
             Class.forName("org.postgresql.Driver");
             c = DriverManager.getConnection(s.url, s.dbUser, s.dbPass);
             ps = c.prepareStatement(query1);
             ps.setString(1, p.getProjectID());
             rs = ps.executeQuery();
-            if(rs.next()){
+            while(rs.next()){
                 retrieveProject.setProjectID(rs.getString(1));
                 retrieveProject.setProjectName(rs.getString(2));
                 date  = rs.getDate(3);
                 retrieveProject.setProjectDeadline(date.toString());
                 retrieveProject.setProjectStatus(rs.getString(4));
                 retrieveProject.setClientID(rs.getString(5));
+                retrieveProject.setProjectLog(rs.getString(6));
             }
         }catch(Exception e){
             e.printStackTrace();
@@ -481,10 +482,67 @@ public class admin extends Person {
         return list;
     }
 
+    public String[] ProjectListChangesRequested(){
+        System.out.println("Project List Changes Requested");
+        String[] list = null;
+        Connection con = null;
+        Statement stmt = null;
+        ResultSet rs = null;
+        String query  = "select project_id from project where status_of_software = 'CHANGES REQUESTED' order by project_id";
+        String query2 = "select count(project_id) from project where status_of_software = 'CHANGES REQUESTED'";
+        try{
+            Class.forName("org.postgresql.Driver");
+            con = DriverManager.getConnection(s.url, s.dbUser, s.dbPass);
+            stmt = con.createStatement();
+            rs = stmt.executeQuery(query2);
+            int size;
+            if(rs.next()){
+                size = rs.getInt(1);
+                if(size == 0)
+                    return null;
+                list = new String[size];
+            }
+            rs = stmt.executeQuery(query);
+            
+            int i = 0;
+            while(rs.next()){
+                /* test = rs.getString(1);
+                System.out.println(test); */
+                list[i] = rs.getString(1);
+                i++;
+            }
+            
+        }catch(Exception e){
+            e.printStackTrace();
+            System.out.println("Error");
+        }
+        return list;
+    }
+
+
     public void approveProject(project P){
         Connection con = null;
         Statement stmt = null;
         String query  = "update project set status_of_software = 'APPROVED' where project_id = " + P.getProjectID();
+        try{
+            Class.forName("org.postgresql.Driver");
+            con = DriverManager.getConnection(s.url, s.dbUser, s.dbPass);
+            stmt = con.createStatement();
+            int output = stmt.executeUpdate(query);
+            System.out.println(output + " Row(s) Updated");
+
+        }catch(Exception e)
+        {
+            e.printStackTrace();
+            System.out.println("Error");
+        }
+    }
+
+    public void ProjectChanges(project P,String status){//for approval or rejection of a change requested
+        Connection con = null;
+        Statement stmt = null;
+        System.out.println(P.getProjectID());
+        String query  = "update project set status_of_software = '"+status+"' where project_id = '" + P.getProjectID()+"'";
         try{
             Class.forName("org.postgresql.Driver");
             con = DriverManager.getConnection(s.url, s.dbUser, s.dbPass);

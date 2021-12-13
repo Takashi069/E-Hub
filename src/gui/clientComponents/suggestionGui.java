@@ -1,6 +1,5 @@
 package gui.clientComponents;
 
-import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -8,8 +7,6 @@ import javax.swing.JPanel;
 
 import Project.project;
 import client.client;
-import gui.clientComponents.requestProjGui;
-import gui.clientComponents.viewProjGui;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -59,6 +56,7 @@ public class suggestionGui extends JFrame {
         constraints.gridx = 1;
         Projectlog_area.setLineWrap(true);
         Projectlog_area.setText(final_log);
+        Projectlog_area.setSize(500, 500);
         menu.add(Projectlog_area, constraints);
 
         /*
@@ -100,7 +98,7 @@ public class suggestionGui extends JFrame {
         menu.add(backButton, constraints);
 
         add(menu);
-        setSize(1280, 1024);
+        setSize(960, 640);
         setVisible(true);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setButtonActions();

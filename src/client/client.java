@@ -349,8 +349,8 @@ public class client extends Person {
 
 class Driver {
     public static void main(String[] args) {
-        client Cli = new client();
-        project pro = new project();
+        /* client Cli = new client();
+        project pro = new project(); */
 
         // clire.ClientPriority();
         // Cli.AddProject(pro);
