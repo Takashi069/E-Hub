@@ -1,6 +1,7 @@
 package gui.clientComponents;
 
 import javax.swing.*;
+import javax.swing.border.LineBorder;
 
 import java.awt.*;
 import java.awt.GridBagLayout;
@@ -9,13 +10,14 @@ import java.awt.event.*;
 
 import admin.admin;
 import client.client;
+import gui.secret;
 import Project.project;
 
 public class viewProjGui {
-
     JFrame frame = new JFrame("Client Menu");
+    secret path = new secret();
     JPanel cliMenu = new JPanel();
-    JPanel viewProject = new JPanel();
+    JLabel viewProject = new JLabel(new ImageIcon(path.frame_bg));
     JLabel heading = new JLabel("Welcome Client");
     String[] emptyArray = { "null" };
     JLabel id = new JLabel("ID");
@@ -25,8 +27,8 @@ public class viewProjGui {
     JLabel statusLabel = new JLabel();
     String[] id_list;
     String[] name_list;
-    JButton suggest = new JButton("Suggest Changes");
-    JButton backButton = new JButton("Go Back");
+    JButton suggest = new JButton(new ImageIcon(path.suggest_btn));
+    JButton backButton = new JButton(new ImageIcon(path.back_btn));
     JLabel descriptionLabel = new JLabel("Description");
     JTextArea descriptionTextField = new JTextArea(10, 50);
     String project_status;
@@ -50,27 +52,33 @@ public class viewProjGui {
         gbc.gridy = 0;
         gbc.insets = new Insets(20, 20, 20, 0);
         gbc.fill = GridBagConstraints.HORIZONTAL;
+        id.setForeground(Color.WHITE);
         viewProject.add(id, gbc);
 
         gbc.gridx = 1;
         gbc.gridy = 0;
         gbc.fill = GridBagConstraints.HORIZONTAL;
-        allID.setBackground(Color.white);
+        allID.setForeground(Color.WHITE);
+        allID.setBackground(Color.DARK_GRAY);
+        allID.setBorder(new LineBorder(Color.DARK_GRAY));
         viewProject.add(allID, gbc);
 
         gbc.gridx = 0;
         gbc.gridy = 1;
         gbc.fill = GridBagConstraints.HORIZONTAL;
+        name.setForeground(Color.WHITE);
         viewProject.add(name, gbc);
 
         gbc.gridx = 1;
         gbc.gridy = 1;
         gbc.fill = GridBagConstraints.HORIZONTAL;
+        dynamicName.setForeground(Color.WHITE);
         viewProject.add(dynamicName, gbc);
 
         gbc.gridx = 0;
         gbc.gridy = 3;
         gbc.fill = GridBagConstraints.HORIZONTAL;
+        descriptionLabel.setForeground(Color.WHITE);
         viewProject.add(descriptionLabel, gbc);
 
         gbc.gridx = 1;
@@ -78,27 +86,39 @@ public class viewProjGui {
         gbc.fill = GridBagConstraints.HORIZONTAL;
         descriptionTextField.setLineWrap(true);
         descriptionTextField.setEditable(false);
+        descriptionTextField.setForeground(Color.WHITE);
+        descriptionTextField.setCaretColor(Color.WHITE);
+        descriptionTextField.setBackground(Color.DARK_GRAY);
+        descriptionTextField.setBorder(new LineBorder(Color.DARK_GRAY));
         viewProject.add(descriptionTextField, gbc);
 
         gbc.gridx = 0;
         gbc.gridy = 5;
         gbc.fill = GridBagConstraints.HORIZONTAL;
+        status.setForeground(Color.WHITE);
         viewProject.add(status, gbc);
 
         gbc.gridx = 1;
         gbc.gridy = 5;
         gbc.fill = GridBagConstraints.HORIZONTAL;
+        statusLabel.setForeground(Color.WHITE);
         viewProject.add(statusLabel, gbc);
 
         gbc.gridx = 0;
         gbc.gridy = 7;
         gbc.fill = GridBagConstraints.HORIZONTAL;
+        suggest.setOpaque(false);
+        suggest.setContentAreaFilled(false);
+        suggest.setBorderPainted(false);
         viewProject.add(suggest, gbc);
 
         gbc.gridx = 2;
         gbc.gridy = 7;
         gbc.gridwidth = 4;
         gbc.anchor = GridBagConstraints.CENTER;
+        backButton.setOpaque(false);
+        backButton.setContentAreaFilled(false);
+        backButton.setBorderPainted(false);
         viewProject.add(backButton, gbc);
 
         suggest.addActionListener(new handleSuggestChanges());

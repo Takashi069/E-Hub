@@ -1,5 +1,6 @@
 package gui.clientComponents;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
@@ -7,9 +8,12 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.border.LineBorder;
 
 import Project.project;
 import client.client;
+import gui.clientgui;
+import gui.secret;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -33,65 +37,94 @@ public class requestProjGui extends JFrame {
     JComboBox<String> domainOptions;
 
     JPanel title = new JPanel();
-    JPanel menu;
-    JButton requestButton = new JButton("Request");
-    JButton resetButton = new JButton("Reset");
-    JButton backButton = new JButton("Go Back");
+    secret path = new secret();
+    JLabel menu=new JLabel(new ImageIcon(path.frame_bg));
+    JButton requestButton = new JButton(new ImageIcon(path.request_btn));
+    JButton resetButton = new JButton(new ImageIcon(path.reset_btn));
+    JButton backButton = new JButton(new ImageIcon(path.back_btn));
 
     public requestProjGui(String id) {
         cl_id = id;
         domainOptions = new JComboBox<String>(domainChoices);
         domainOptions.setBackground(Color.WHITE);
-        menu = new JPanel(new GridBagLayout());
+        menu.setLayout(new GridBagLayout());
         GridBagConstraints constraints = new GridBagConstraints();
         constraints.anchor = GridBagConstraints.WEST;
         constraints.insets = new Insets(10, 10, 10, 10);
 
         constraints.gridx = 0;
         constraints.gridy = 0;
+        nameLabel.setForeground(Color.WHITE);
         menu.add(nameLabel, constraints);
 
         constraints.gridx = 1;
+        nameTextField.setForeground(Color.WHITE);
+        nameTextField.setBackground(Color.DARK_GRAY);
+        nameTextField.setBorder(new LineBorder(Color.DARK_GRAY));
+        nameTextField.setCaretColor(Color.WHITE);
         menu.add(nameTextField, constraints);
 
         constraints.gridx = 0;
         constraints.gridy = 1;
+        domainLabel.setForeground(Color.WHITE);
         menu.add(domainLabel, constraints);
 
         constraints.gridx = 1;
+        domainOptions.setForeground(Color.WHITE);
+        domainOptions.setBackground(Color.DARK_GRAY);
+        domainOptions.setBorder(new LineBorder(Color.DARK_GRAY));
         menu.add(domainOptions, constraints);
 
         constraints.gridx = 0;
         constraints.gridy = 2;
+        descriptionLabel.setForeground(Color.WHITE);
         menu.add(descriptionLabel, constraints);
 
         descriptionTextField.setLineWrap(true);
         constraints.gridx = 1;
+        descriptionTextField.setForeground(Color.WHITE);
+        descriptionTextField.setCaretColor(Color.WHITE);
+        descriptionTextField.setBackground(Color.DARK_GRAY);
+        descriptionTextField.setBorder(new LineBorder(Color.DARK_GRAY));
         menu.add(descriptionTextField, constraints);
 
         constraints.gridx = 0;
         constraints.gridy = 3;
+        releaseDateLabel.setForeground(Color.WHITE);
         menu.add(releaseDateLabel, constraints);
 
         constraints.gridx = 1;
+        releaseTextField.setForeground(Color.WHITE);
+        releaseTextField.setCaretColor(Color.WHITE);
+        releaseTextField.setBackground(Color.DARK_GRAY);
+        releaseTextField.setBorder(new LineBorder(Color.DARK_GRAY));
         menu.add(releaseTextField, constraints);
 
         constraints.gridx = 0;
         constraints.gridy = 5;
         constraints.gridwidth = 4;
         constraints.anchor = GridBagConstraints.CENTER;
+        requestButton.setOpaque(false);
+        requestButton.setContentAreaFilled(false);
+        requestButton.setBorderPainted(false);
         menu.add(requestButton, constraints);
 
         constraints.gridx = 1;
         constraints.gridy = 5;
         constraints.gridwidth = 4;
         constraints.anchor = GridBagConstraints.CENTER;
+        resetButton.setOpaque(false);
+        resetButton.setContentAreaFilled(false);
+        resetButton.setBorderPainted(false);
         menu.add(resetButton, constraints);
 
         constraints.gridx = 2;
         constraints.gridy = 5;
         constraints.gridwidth = 4;
         constraints.anchor = GridBagConstraints.CENTER;
+        backButton.setOpaque(false);
+        backButton.setContentAreaFilled(false);
+        backButton.setBorderPainted(false);
         menu.add(backButton, constraints);
 
         add(menu);

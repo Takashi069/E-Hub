@@ -7,6 +7,13 @@ import javax.swing.JPanel;
 
 import Project.project;
 import client.client;
+import javax.swing.border.LineBorder;
+
+import Project.project;
+import client.client;
+import gui.secret;
+import gui.clientComponents.requestProjGui;
+import gui.clientComponents.viewProjGui;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -14,23 +21,24 @@ import java.awt.*;
 import javax.swing.*;
 
 public class suggestionGui extends JFrame {
+    secret path = new secret();
     JFrame frame = new JFrame("Client Menu");
     JLabel projectLog = new JLabel("Project log: ");
     // JLabel domainLabel = new JLabel("Domain: ");
     JLabel suggestionLabel = new JLabel("Enter Your Suggestions Here: ");
     JLabel startDateLabel = new JLabel("Expected Starting Date: ");
     String cl_id;
-    JTextArea Projectlog_area = new JTextArea(20, 50);
+    JTextArea Projectlog_area = new JTextArea(10, 40);
 
-    JTextArea Suggestion_area = new JTextArea(20, 50);
+    JTextArea Suggestion_area = new JTextArea(10, 40);
     // JTextField startTextField = new JTextField(20);
     // JComboBox<String> domainOptions;
 
     JPanel title = new JPanel();
-    JPanel menu;
-    JButton requestButton = new JButton("Request");
-    JButton resetButton = new JButton("Reset");
-    JButton backButton = new JButton("Go Back");
+    JLabel menu = new JLabel(new ImageIcon(path.frame_bg));
+    JButton requestButton = new JButton(new ImageIcon(path.request_btn));
+    JButton resetButton = new JButton(new ImageIcon(path.reset_btn));
+    JButton backButton = new JButton(new ImageIcon(path.back_btn));
     project ProjectObj;
     String project_id;
     String log;
@@ -44,19 +52,23 @@ public class suggestionGui extends JFrame {
         final_log = log.replaceAll("\\\\n", System.getProperty("line.separator"));
         final_log = final_log.replaceAll("#", System.getProperty("line.separator"));
         // domainOptions.setBackground(Color.WHITE);
-        menu = new JPanel(new GridBagLayout());
+        menu.setLayout(new GridBagLayout());
         GridBagConstraints constraints = new GridBagConstraints();
         constraints.anchor = GridBagConstraints.WEST;
         constraints.insets = new Insets(10, 10, 10, 10);
         Projectlog_area.setEditable(false);
         constraints.gridx = 0;
         constraints.gridy = 0;
+        projectLog.setForeground(Color.white);
         menu.add(projectLog, constraints);
 
         constraints.gridx = 1;
         Projectlog_area.setLineWrap(true);
         Projectlog_area.setText(final_log);
-        Projectlog_area.setSize(500, 500);
+        Projectlog_area.setForeground(Color.WHITE);
+        Projectlog_area.setCaretColor(Color.WHITE);
+        Projectlog_area.setBackground(Color.DARK_GRAY);
+        Projectlog_area.setBorder(new LineBorder(Color.DARK_GRAY));
         menu.add(Projectlog_area, constraints);
 
         /*
@@ -70,10 +82,15 @@ public class suggestionGui extends JFrame {
 
         constraints.gridx = 0;
         constraints.gridy = 2;
+        suggestionLabel.setForeground(Color.white);
         menu.add(suggestionLabel, constraints);
 
         constraints.gridx = 1;
         Suggestion_area.setLineWrap(true);
+        Suggestion_area.setForeground(Color.WHITE);
+        Suggestion_area.setCaretColor(Color.WHITE);
+        Suggestion_area.setBackground(Color.DARK_GRAY);
+        Suggestion_area.setBorder(new LineBorder(Color.DARK_GRAY));
         menu.add(Suggestion_area, constraints);
 
         constraints.gridx = 0;
@@ -83,18 +100,27 @@ public class suggestionGui extends JFrame {
         if (pro.getProjectStatus().equals("CHANGES REQUESTED")) {
             requestButton.setEnabled(false);
         }
+        requestButton.setOpaque(false);
+        requestButton.setContentAreaFilled(false);
+        requestButton.setBorderPainted(false);
         menu.add(requestButton, constraints);
 
         constraints.gridx = 1;
         constraints.gridy = 4;
         constraints.gridwidth = 4;
         constraints.anchor = GridBagConstraints.CENTER;
+        resetButton.setOpaque(false);
+        resetButton.setContentAreaFilled(false);
+        resetButton.setBorderPainted(false);
         menu.add(resetButton, constraints);
 
         constraints.gridx = 2;
         constraints.gridy = 4;
         constraints.gridwidth = 4;
         constraints.anchor = GridBagConstraints.CENTER;
+        backButton.setOpaque(false);
+        backButton.setContentAreaFilled(false);
+        backButton.setBorderPainted(false);
         menu.add(backButton, constraints);
 
         add(menu);
