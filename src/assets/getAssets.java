@@ -13,6 +13,7 @@ public class getAssets {
     public String request_btn = prefix + "req_button.png";
     public String disabled_request_btn = prefix + "disabled_req_button.png";
     public String reset_btn = prefix + "reset_button.png";
+    public String login_btn = prefix + "login_button.png";
     public String back_btn = prefix + "back_button.png";
     public String suggest_btn = prefix + "suggest_button.png";
 

@@ -1,6 +1,8 @@
 package gui;
 
 import javax.swing.*;
+import javax.swing.border.LineBorder;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -9,17 +11,19 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import assets.getAssets;
 
 public class login extends JFrame implements ActionListener {
     //Container container = getContentPane();
+    getAssets path = new getAssets();
     JLabel userLabel = new JLabel("USERNAME");
     JLabel passwordLabel = new JLabel("PASSWORD");
-    JTextField userTextField = new JTextField();
-    JPasswordField passwordField = new JPasswordField();
-    JButton loginButton = new JButton("LOGIN");
-    JButton resetButton = new JButton("RESET");
+    JTextField userTextField = new JTextField("",20);
+    JPasswordField passwordField = new JPasswordField("", 20);
+    JButton loginButton = new JButton(new ImageIcon(path.login_btn));
+    JButton resetButton = new JButton(new ImageIcon(path.reset_btn));
     JCheckBox showPassword = new JCheckBox("Show Password");
-    JPanel panel = new JPanel();
+    JLabel panel = new JLabel(new ImageIcon(path.frame_bg));
 
     login() {
         setLayoutManager();
@@ -46,29 +50,54 @@ public class login extends JFrame implements ActionListener {
 
     public void addComponentsToContainer() {
         GridBagConstraints gbc = new GridBagConstraints();
+        gbc.anchor = GridBagConstraints.WEST;
         gbc.gridx = 0;
         gbc.gridy = 0;
         gbc.ipady = 10;
-        gbc.insets = new Insets(20,20,20,20);
+        gbc.insets = new Insets(10,10,10,10);
+        userLabel.setForeground(Color.WHITE);
         panel.add(userLabel,gbc);
+        
         gbc.gridx = 0;
         gbc.gridy = 1;
+        passwordLabel.setForeground(Color.WHITE);
         panel.add(passwordLabel,gbc);
+
         gbc.gridx = 1;
         gbc.gridy = 0;
-        gbc.fill = GridBagConstraints.HORIZONTAL;
+        userTextField.setForeground(Color.WHITE);
+        userTextField.setCaretColor(Color.WHITE);
+        userTextField.setBackground(Color.DARK_GRAY);
+        userTextField.setBorder(new LineBorder(Color.DARK_GRAY));
         panel.add(userTextField,gbc);
+
         gbc.gridx = 1;
         gbc.gridy = 1;
+        passwordField.setForeground(Color.WHITE);
+        passwordField.setCaretColor(Color.WHITE);
+        passwordField.setBackground(Color.DARK_GRAY);
+        passwordField.setBorder(new LineBorder(Color.DARK_GRAY));
         panel.add(passwordField,gbc);
+
         gbc.gridx = 0;
         gbc.gridy = 2;
+        showPassword.setForeground(Color.white);
+        showPassword.setOpaque(false);
+
         panel.add(showPassword,gbc);
+
         gbc.gridx = 0;
         gbc.gridy = 3;
+        loginButton.setOpaque(false);
+        loginButton.setContentAreaFilled(false);
+        loginButton.setBorderPainted(false);
         panel.add(loginButton,gbc);
+
         gbc.gridx = 1;
         gbc.gridy = 3;
+        resetButton.setOpaque(false);
+        resetButton.setContentAreaFilled(false);
+        resetButton.setBorderPainted(false);
         panel.add(resetButton,gbc);
     }
 
@@ -149,7 +178,7 @@ public class login extends JFrame implements ActionListener {
 
     public static void main(String[] a) {
         login frame = new login();
-        frame.setSize(new Dimension(960, 640));
+        frame.setSize(1280, 1024);
         frame.setTitle("Login Form");
         frame.setVisible(true);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
