@@ -37,5 +37,8 @@ public class getAssets {
     public String add_client = prefix + "add_client.png";
     public String remove_client = prefix + "remove_client.png";
     public String stats_client = prefix + "stats_client.png";
+
+    public String pending_changes = prefix + "pending_approval.png";
+    public String change_status = prefix + "change_status.png";
     
 }

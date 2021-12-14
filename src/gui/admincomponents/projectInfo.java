@@ -134,7 +134,7 @@ public class projectInfo {
         approve.addActionListener(new handleApproveChanges());
         allID.addActionListener(new handleShowDetails());
         reject.addActionListener(new handleRejectChanges());
-        frame.setSize(960, 640);
+        frame.setSize(1280, 1024);
         frame.add(viewProject);
         frame.setVisible(true);
 

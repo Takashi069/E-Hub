@@ -125,7 +125,7 @@ public class suggestionGui extends JFrame {
         menu.add(backButton, constraints);
 
         add(menu);
-        setSize(960, 640);
+        setSize(1280, 1024);
         setVisible(true);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setButtonActions();

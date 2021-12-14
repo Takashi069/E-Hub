@@ -75,8 +75,9 @@ public class admingui{
     JButton addCliButton = new JButton(new ImageIcon(path.add_client));
     JButton addEmplButton = new JButton(new ImageIcon(path.add_emp));
     JButton viewClientReport = new JButton(new ImageIcon(path.stats_client));
-    JButton viewNonApprovedProjects = new JButton("View Non-Approved Projects");
-    JButton changeProjectStatus = new JButton("Change Project Status");
+    JButton viewNonApprovedProjects = new JButton(new ImageIcon(path.pending_changes));
+    JButton changeProjectStatus = new JButton(new ImageIcon(path.change_status));
+    JButton viewProjects = new JButton(new ImageIcon(path.view_bg));
     JButton submit1 = new JButton(new ImageIcon(path.submit_button));
     JButton submit2 = new JButton(new ImageIcon(path.submit_button));
     JButton change1 = new JButton(new ImageIcon(path.change_button));
@@ -367,7 +368,7 @@ public class admingui{
             public void actionPerformed(ActionEvent a){
                 frame.dispose();
                 login frame = new login();
-                frame.setSize(new Dimension(960, 640));
+                frame.setSize(new Dimension(1280, 1024));
                 frame.setTitle("Login Form");
                 frame.setVisible(true);
                 frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -464,13 +465,33 @@ public class admingui{
     }
 
     private void projectMenuGUI(){
-        project.setLayout(new GridLayout(3,0,20,20));
-        project.setBorder(new EmptyBorder(new Insets(20,20,20,20)));
+        project.setLayout(new GridLayout(2,2,0,50));
+        project.setBorder(new EmptyBorder(new Insets(50,50,50,50)));
+
+        viewNonApprovedProjects.setOpaque(false);
+        viewNonApprovedProjects.setContentAreaFilled(false);
+        viewNonApprovedProjects.setBorderPainted(false);
+
+        changeProjectStatus.setOpaque(false);
+        changeProjectStatus.setContentAreaFilled(false);
+        changeProjectStatus.setBorderPainted(false);
+
+        viewProjects.setOpaque(false);
+        viewProjects.setContentAreaFilled(false);
+        viewProjects.setBorderPainted(false);
+
+        backButton.setOpaque(false);
+        backButton.setContentAreaFilled(false);
+        backButton.setBorderPainted(false);
+
         project.add(viewNonApprovedProjects);
         project.add(changeProjectStatus);
+        project.add(viewProjects);
         project.add(backButton);
+
         changeProjectStatus.addActionListener(new goToChangeStatus());
         viewNonApprovedProjects.addActionListener(new handleApproveProjects());
+        viewProjects.addActionListener(new handleViewProjects());
         backButton.addActionListener(new goToMainMenu());
         backSmallButton.addActionListener(new goToMainMenu());
 
@@ -1471,6 +1492,13 @@ public class admingui{
             }catch(noData nd){
                 nd.displaYError(frame);
             }
+        }
+    }
+
+    class handleViewProjects implements ActionListener{
+        public void actionPerformed(ActionEvent a){
+            frame.dispose();
+            new ProjectReportGui();
         }
     }
     

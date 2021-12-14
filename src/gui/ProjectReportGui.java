@@ -1,4 +1,5 @@
 package gui;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
@@ -6,6 +7,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.border.LineBorder;
 
 import Project.project;
 
@@ -15,12 +17,12 @@ import java.awt.*;
 
 import client.client;
 import admin.admin;
+import assets.getAssets;
 
 public class ProjectReportGui {
     JFrame frame = new JFrame();
-    JPanel display = new JPanel();
-    JPanel projectApprove = new JPanel();
-    JPanel projectUpdateStatus = new JPanel();
+    getAssets path = new getAssets();
+    JLabel projectApprove = new JLabel(new ImageIcon(path.frame_bg));
     JLabel id = new JLabel("ID");
     JLabel projectName = new JLabel("Project Name");
     JTextField dynamicProjectNameTextField = new JTextField();
@@ -30,7 +32,7 @@ public class ProjectReportGui {
     JTextField dynamicClientIDTextField = new JTextField();
     JLabel deadline = new JLabel("Deadline Date(YYYY-MM-DD)");
     JTextField dynamicDeadlineTextField = new JTextField();
-    JButton backButton = new JButton("Back");
+    JButton backButton = new JButton(new ImageIcon(path.back_btn));
     String[] emptyArray = { "null" };
     final String[] statusChoices = { "APPROVED", "REJECTED", "DEADLINE DATE CHANGED", "CHANGES REJECTED",
             "CHANGES APPROVED", "WORK IN PROGRESS", "TESTING", "COMPLETED", "PAID" };
@@ -38,16 +40,13 @@ public class ProjectReportGui {
             JTextField dynamicStatusTextField = new JTextField();
     JLabel descriptionLabel = new JLabel("Project Log");
     JTextArea descriptionTextField = new JTextArea(10, 50);
-    JComboBox<String> allID2 = new JComboBox<String>(emptyArray);
     JComboBox<String> allID3 = new JComboBox<String>(emptyArray);
-    JComboBox<String> statusComboBox = new JComboBox<String>(statusChoices);
 
     public ProjectReportGui() {
-        frame.setSize(960, 640);
-        frame.add(display);
+        frame.setSize(1280, 1024);
+        frame.add(projectApprove);
         
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        display.add(projectApprove, "projectApproveMenu");
         admin a = new admin();
         String[] projectList = a.ProjectListNotApproved();
         projectApprove.setLayout(new GridBagLayout());
@@ -63,72 +62,104 @@ public class ProjectReportGui {
         gbc.gridy = 0;
         gbc.insets = new Insets(20, 20, 20, 0);
         gbc.fill = GridBagConstraints.HORIZONTAL;
+        id.setForeground(Color.WHITE);
         projectApprove.add(id, gbc);
 
         gbc.gridx = 1;
         gbc.gridy = 0;
         gbc.fill = GridBagConstraints.HORIZONTAL;
-        allID2.setBackground(Color.white);
+        allID3.setForeground(Color.WHITE);
+        allID3.setBackground(Color.DARK_GRAY);
+        allID3.setBorder(new LineBorder(Color.DARK_GRAY));
         projectApprove.add(allID3, gbc);
 
         gbc.gridx = 0;
         gbc.gridy = 1;
         gbc.fill = GridBagConstraints.HORIZONTAL;
+        projectName.setForeground(Color.white);
         projectApprove.add(projectName, gbc);
 
         gbc.gridx = 1;
         gbc.gridy = 1;
         gbc.fill = GridBagConstraints.HORIZONTAL;
         projectApprove.add(dynamicProjectNameTextField, gbc);
+        dynamicProjectNameTextField.setForeground(Color.WHITE);
+        dynamicProjectNameTextField.setBackground(Color.DARK_GRAY);
+        dynamicProjectNameTextField.setBorder(new LineBorder(Color.DARK_GRAY));
+        dynamicProjectNameTextField.setCaretColor(Color.WHITE);
         dynamicProjectNameTextField.setEditable(false);
-        dynamicProjectNameTextField.setBackground(Color.WHITE);
 
         gbc.gridx = 0;
         gbc.gridy = 2;
         gbc.fill = GridBagConstraints.HORIZONTAL;
+        clientID.setForeground(Color.white);
         projectApprove.add(clientID, gbc);
 
         gbc.gridx = 1;
         gbc.gridy = 2;
         gbc.fill = GridBagConstraints.HORIZONTAL;
-        projectApprove.add(dynamicClientIDTextField, gbc);
+        dynamicClientIDTextField.setForeground(Color.WHITE);
+        dynamicClientIDTextField.setBackground(Color.DARK_GRAY);
+        dynamicClientIDTextField.setBorder(new LineBorder(Color.DARK_GRAY));
+        dynamicClientIDTextField.setCaretColor(Color.WHITE);
         dynamicClientIDTextField.setEditable(false);
-        dynamicClientIDTextField.setBackground(Color.WHITE);
+        projectApprove.add(dynamicClientIDTextField, gbc);
+        
 
         gbc.gridx = 0;
         gbc.gridy = 3;
         gbc.fill = GridBagConstraints.HORIZONTAL;
+        deadline.setForeground(Color.white);
         projectApprove.add(deadline, gbc);
 
         gbc.gridx = 1;
         gbc.gridy = 3;
         gbc.fill = GridBagConstraints.HORIZONTAL;
+        dynamicDeadlineTextField.setForeground(Color.WHITE);
+        dynamicDeadlineTextField.setBackground(Color.DARK_GRAY);
+        dynamicDeadlineTextField.setBorder(new LineBorder(Color.DARK_GRAY));
+        dynamicDeadlineTextField.setCaretColor(Color.WHITE);
+        dynamicDeadlineTextField.setEditable(false);
         projectApprove.add(dynamicDeadlineTextField, gbc);
         
         gbc.gridx = 0;
         gbc.gridy = 4;
         gbc.fill = GridBagConstraints.HORIZONTAL;
+        Status.setForeground(Color.white);
         projectApprove.add(Status, gbc);
 
         gbc.gridx = 1;
         gbc.gridy = 4;
         gbc.fill = GridBagConstraints.HORIZONTAL;
+        dynamicStatusTextField.setForeground(Color.WHITE);
+        dynamicStatusTextField.setBackground(Color.DARK_GRAY);
+        dynamicStatusTextField.setBorder(new LineBorder(Color.DARK_GRAY));
+        dynamicStatusTextField.setCaretColor(Color.WHITE);
+        dynamicStatusTextField.setEditable(false);
         projectApprove.add(dynamicStatusTextField, gbc);
 
         gbc.gridx = 0;
         gbc.gridy = 5;
         gbc.fill = GridBagConstraints.HORIZONTAL;
+        descriptionLabel.setForeground(Color.white);
         projectApprove.add(descriptionLabel, gbc);
 
         gbc.gridx = 1;
         gbc.gridy = 5;
         gbc.fill = GridBagConstraints.HORIZONTAL;
+        descriptionTextField.setForeground(Color.WHITE);
+        descriptionTextField.setBackground(Color.DARK_GRAY);
+        descriptionTextField.setBorder(new LineBorder(Color.DARK_GRAY));
+        descriptionTextField.setCaretColor(Color.WHITE);
         descriptionTextField.setLineWrap(true);
         descriptionTextField.setEditable(false);
         projectApprove.add(descriptionTextField, gbc);
 
         gbc.gridx = 0;
         gbc.gridy = 6;
+        backButton.setOpaque(false);
+        backButton.setContentAreaFilled(false);
+        backButton.setBorderPainted(false);
         projectApprove.add(backButton, gbc);
 
         /* gbc.gridx = 1;
@@ -165,9 +196,8 @@ public class ProjectReportGui {
         dynamicDeadlineTextField.setText(P.getProjectDeadline());
         String full_log = P.getProjectLog();
         String description = full_log.replaceAll("\\\\n", System.getProperty("line.separator"));
+        description = full_log.replaceAll("#", System.getProperty("line.separator"));
         descriptionTextField.setText(description);
-        statusComboBox.setSelectedIndex(index);
-        projectUpdateStatus.repaint();
     }
 
     class handleShowProjectDetails implements ActionListener {
