@@ -2,6 +2,7 @@ package gui;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
+import javax.swing.border.LineBorder;
 
 import java.awt.*;
 import java.awt.GridBagLayout;
@@ -9,6 +10,7 @@ import java.awt.GridBagConstraints;
 import java.awt.event.*;
 
 import admin.admin;
+import assets.getAssets;
 import employee.employee;
 import exceptions.noData;
 import client.client;
@@ -18,19 +20,19 @@ import Project.project;
 public class admingui{
     
     JFrame frame = new JFrame("Admin Menu");
-    
+    getAssets path = new getAssets();
     JPanel display = new JPanel();
-    JPanel mainMenu = new JPanel();
+    JLabel mainMenu = new JLabel(new ImageIcon(path.frame_bg));
     JPanel menuHeadingPanel = new JPanel();
-    JPanel cliMenu = new JPanel();
-    JPanel empMenu = new JPanel();
-    JPanel addClient = new JPanel();
-    JPanel addEmp = new JPanel();
-    JPanel remEmp = new JPanel();
-    JPanel remClient = new JPanel();
-    JPanel project = new JPanel();
-    JPanel projectApprove = new JPanel();
-    JPanel projectUpdateStatus = new JPanel();
+    JLabel cliMenu = new JLabel(new ImageIcon(path.frame_bg));
+    JLabel empMenu = new JLabel(new ImageIcon(path.frame_bg));
+    JLabel addClient = new JLabel(new ImageIcon(path.frame_bg));
+    JLabel addEmp = new JLabel(new ImageIcon(path.frame_bg));
+    JLabel remEmp = new JLabel(new ImageIcon(path.frame_bg));
+    JLabel remClient = new JLabel(new ImageIcon(path.frame_bg));
+    JLabel project = new JLabel(new ImageIcon(path.frame_bg));
+    JLabel projectApprove = new JLabel(new ImageIcon(path.frame_bg));
+    JLabel projectUpdateStatus = new JLabel(new ImageIcon(path.frame_bg));
 
     JLabel heading = new JLabel("Welcome Administrator");
     JLabel id = new JLabel("ID");
@@ -67,28 +69,29 @@ public class admingui{
     JTextField dynamicStatusTextField = new JTextField();
     JTextField dynamicDeadlineTextField = new JTextField();
 
-    JButton empButton = new JButton("Manage Employees");
-    JButton cliButton = new JButton("Manage Clients");
-    JButton projectButton = new JButton("Manage Projects");
-    JButton addCliButton = new JButton("Add New Clients");
-    JButton addEmplButton = new JButton("Add New Employees");
-    JButton viewClientReport = new JButton("View Client Statistics");
+    JButton empButton = new JButton(new ImageIcon(path.manage_emp));
+    JButton cliButton = new JButton(new ImageIcon(path.manage_client));
+    JButton projectButton = new JButton(new ImageIcon(path.manage_projects));
+    JButton addCliButton = new JButton(new ImageIcon(path.add_client));
+    JButton addEmplButton = new JButton(new ImageIcon(path.add_emp));
+    JButton viewClientReport = new JButton(new ImageIcon(path.stats_client));
     JButton viewNonApprovedProjects = new JButton("View Non-Approved Projects");
     JButton changeProjectStatus = new JButton("Change Project Status");
-    JButton submit1 = new JButton("Submit");
-    JButton submit2 = new JButton("Submit");
-    JButton change1 = new JButton("Change");
-    JButton Approve = new JButton("Approve");
-    JButton remove1 = new JButton("Remove");
-    JButton remove2 = new JButton("Remove");
-    JButton backButton = new JButton("Back");
-    JButton viewChanges = new JButton("View Projects with Changes Suggested");
-    JButton logout = new JButton("Log Out");
+    JButton submit1 = new JButton(new ImageIcon(path.submit_button));
+    JButton submit2 = new JButton(new ImageIcon(path.submit_button));
+    JButton change1 = new JButton(new ImageIcon(path.change_button));
+    JButton Approve = new JButton(new ImageIcon(path.approve_button));
+    JButton remove1 = new JButton(new ImageIcon(path.remove_button));
+    JButton remove2 = new JButton(new ImageIcon(path.remove_button));
+    JButton backButton = new JButton(new ImageIcon(path.back_arrow_btn));
+    JButton backSmallButton = new JButton(new ImageIcon(path.back_btn));
+    JButton viewChanges = new JButton(new ImageIcon(path.project_change_requested));
+    JButton logout = new JButton(new ImageIcon(path.logout_button));
 
-    JButton removeCliButton = new JButton("Remove Clients");
-    JButton removeEmpButton = new JButton("Remove Employee");
+    JButton removeCliButton = new JButton(new ImageIcon(path.remove_emp));
+    JButton removeEmpButton = new JButton(new ImageIcon(path.remove_emp));
 
-    JButton viewEmpButton = new JButton("View Employee Statistics");
+    JButton viewEmpButton = new JButton(new ImageIcon(path.stats_emp));
 
     JTextField idTextField = new JTextField();
     JTextField nameTextField = new JTextField("");
@@ -120,23 +123,207 @@ public class admingui{
     
     CardLayout card;
 
-    
+    public void setTheme(){
+        id.setForeground(Color.WHITE);
+        name.setForeground(Color.WHITE);
+        streetName.setForeground(Color.WHITE);
+        locality.setForeground(Color.WHITE);
+        District.setForeground(Color.WHITE);
+        state.setForeground(Color.WHITE);
+        pincode.setForeground(Color.WHITE);
+        nationality.setForeground(Color.WHITE);
+        dob.setForeground(Color.WHITE);
+        experience.setForeground(Color.WHITE);
+        domain.setForeground(Color.WHITE);
+        Company.setForeground(Color.WHITE);
+        totalOrders.setForeground(Color.WHITE);
+        projectName.setForeground(Color.WHITE);
+        clientID.setForeground(Color.WHITE);
+        status.setForeground(Color.WHITE);
+        deadline.setForeground(Color.WHITE);
+        projectsWorked.setForeground(Color.WHITE);
+        projectsLed.setForeground(Color.WHITE);
+
+        dynamicID.setForeground(Color.WHITE);
+        dynamicID.setBackground(Color.DARK_GRAY);
+        dynamicID.setBorder(new LineBorder(Color.DARK_GRAY));
+        dynamicID.setCaretColor(Color.WHITE);
+
+        dynamicName.setForeground(Color.WHITE);
+        dynamicName.setBackground(Color.DARK_GRAY);
+        dynamicName.setBorder(new LineBorder(Color.DARK_GRAY));
+        dynamicName.setCaretColor(Color.WHITE);
+
+        dynamicDOB.setForeground(Color.WHITE);
+        dynamicDOB.setBackground(Color.DARK_GRAY);
+        dynamicDOB.setBorder(new LineBorder(Color.DARK_GRAY));
+        dynamicDOB.setCaretColor(Color.WHITE);
+
+        dynamicCompany.setForeground(Color.WHITE);
+        dynamicCompany.setBackground(Color.DARK_GRAY);
+        dynamicCompany.setBorder(new LineBorder(Color.DARK_GRAY));
+        dynamicCompany.setCaretColor(Color.WHITE);
+
+        dynamicTotalOrder.setForeground(Color.WHITE);
+        dynamicTotalOrder.setBackground(Color.DARK_GRAY);
+        dynamicTotalOrder.setBorder(new LineBorder(Color.DARK_GRAY));
+        dynamicTotalOrder.setCaretColor(Color.WHITE);
+
+        dynamicDomain.setForeground(Color.WHITE);
+        dynamicDomain.setBackground(Color.DARK_GRAY);
+        dynamicDomain.setBorder(new LineBorder(Color.DARK_GRAY));
+        dynamicDomain.setCaretColor(Color.WHITE);
+
+        dynamicExperience.setForeground(Color.WHITE);
+        dynamicExperience.setBackground(Color.DARK_GRAY);
+        dynamicExperience.setBorder(new LineBorder(Color.DARK_GRAY));
+        dynamicExperience.setCaretColor(Color.WHITE);
+
+        dynamicProjectsWorked.setForeground(Color.WHITE);
+        dynamicProjectsWorked.setBackground(Color.DARK_GRAY);
+        dynamicProjectsWorked.setBorder(new LineBorder(Color.DARK_GRAY));
+        dynamicProjectsWorked.setCaretColor(Color.WHITE);
+
+        dynamicProjectsLed.setForeground(Color.WHITE);
+        dynamicProjectsLed.setBackground(Color.DARK_GRAY);
+        dynamicProjectsLed.setBorder(new LineBorder(Color.DARK_GRAY));
+        dynamicProjectsLed.setCaretColor(Color.WHITE);
+
+
+        dynamicProjectNameTextField.setForeground(Color.WHITE);
+        dynamicProjectNameTextField.setBackground(Color.DARK_GRAY);
+        dynamicProjectNameTextField.setBorder(new LineBorder(Color.DARK_GRAY));
+        dynamicProjectNameTextField.setCaretColor(Color.WHITE);
+
+        dynamicClientIDTextField.setForeground(Color.WHITE);
+        dynamicClientIDTextField.setBackground(Color.DARK_GRAY);
+        dynamicClientIDTextField.setBorder(new LineBorder(Color.DARK_GRAY));
+        dynamicClientIDTextField.setCaretColor(Color.WHITE);
+
+        dynamicStatusTextField.setForeground(Color.WHITE);
+        dynamicStatusTextField.setBackground(Color.DARK_GRAY);
+        dynamicStatusTextField.setBorder(new LineBorder(Color.DARK_GRAY));
+        dynamicStatusTextField.setCaretColor(Color.WHITE);
+
+        dynamicDeadlineTextField.setForeground(Color.WHITE);
+        dynamicDeadlineTextField.setBackground(Color.DARK_GRAY);
+        dynamicDeadlineTextField.setBorder(new LineBorder(Color.DARK_GRAY));
+        dynamicDeadlineTextField.setCaretColor(Color.WHITE);
+
+        backSmallButton.setOpaque(false);
+        backSmallButton.setContentAreaFilled(false);
+        backSmallButton.setBorderPainted(false);
+
+        idTextField.setForeground(Color.WHITE);
+        idTextField.setBackground(Color.DARK_GRAY);
+        idTextField.setBorder(new LineBorder(Color.DARK_GRAY));
+        idTextField.setCaretColor(Color.WHITE);
+
+        nameTextField.setForeground(Color.WHITE);
+        nameTextField.setBackground(Color.DARK_GRAY);
+        nameTextField.setBorder(new LineBorder(Color.DARK_GRAY));
+        nameTextField.setCaretColor(Color.WHITE);
+
+        streetNameTextField.setForeground(Color.WHITE);
+        streetNameTextField.setBackground(Color.DARK_GRAY);
+        streetNameTextField.setBorder(new LineBorder(Color.DARK_GRAY));
+        streetNameTextField.setCaretColor(Color.WHITE);
+
+        localityTextField.setForeground(Color.WHITE);
+        localityTextField.setBackground(Color.DARK_GRAY);
+        localityTextField.setBorder(new LineBorder(Color.DARK_GRAY));
+        localityTextField.setCaretColor(Color.WHITE);
+
+        DistrictTextField.setForeground(Color.WHITE);
+        DistrictTextField.setBackground(Color.DARK_GRAY);
+        DistrictTextField.setBorder(new LineBorder(Color.DARK_GRAY));
+        DistrictTextField.setCaretColor(Color.WHITE);
+
+        stateTextField.setForeground(Color.WHITE);
+        stateTextField.setBackground(Color.DARK_GRAY);
+        stateTextField.setBorder(new LineBorder(Color.DARK_GRAY));
+        stateTextField.setCaretColor(Color.WHITE);
+
+        pincodeTextField.setForeground(Color.WHITE);
+        pincodeTextField.setBackground(Color.DARK_GRAY);
+        pincodeTextField.setBorder(new LineBorder(Color.DARK_GRAY));
+        pincodeTextField.setCaretColor(Color.WHITE);
+
+        nationalityTextField.setForeground(Color.WHITE);
+        nationalityTextField.setBackground(Color.DARK_GRAY);
+        nationalityTextField.setBorder(new LineBorder(Color.DARK_GRAY));
+        nationalityTextField.setCaretColor(Color.WHITE);
+
+        dobTextField.setForeground(Color.WHITE);
+        dobTextField.setBackground(Color.DARK_GRAY);
+        dobTextField.setBorder(new LineBorder(Color.DARK_GRAY));
+        dobTextField.setCaretColor(Color.WHITE);
+
+        experienceTextField.setForeground(Color.WHITE);
+        experienceTextField.setBackground(Color.DARK_GRAY);
+        experienceTextField.setBorder(new LineBorder(Color.DARK_GRAY));
+        experienceTextField.setCaretColor(Color.WHITE);
+        
+        companyTextField.setForeground(Color.WHITE);
+        companyTextField.setBackground(Color.DARK_GRAY);
+        companyTextField.setBorder(new LineBorder(Color.DARK_GRAY));
+        companyTextField.setCaretColor(Color.WHITE);
+
+        domainComboBox.setForeground(Color.WHITE);
+        domainComboBox.setBackground(Color.DARK_GRAY);
+        domainComboBox.setBorder(new LineBorder(Color.DARK_GRAY));
+        
+        allID1.setForeground(Color.WHITE);
+        allID1.setBackground(Color.DARK_GRAY);
+        allID1.setBorder(new LineBorder(Color.DARK_GRAY));
+
+        allID2.setForeground(Color.WHITE);
+        allID2.setBackground(Color.DARK_GRAY);
+        allID2.setBorder(new LineBorder(Color.DARK_GRAY));
+
+        allID3.setForeground(Color.WHITE);
+        allID3.setBackground(Color.DARK_GRAY);
+        allID3.setBorder(new LineBorder(Color.DARK_GRAY));
+
+        statusComboBox.setForeground(Color.WHITE);
+        statusComboBox.setBackground(Color.DARK_GRAY);
+        statusComboBox.setBorder(new LineBorder(Color.DARK_GRAY));
+    }
 
     //frame has BORDERLAYOUT by default
     public admingui(){
+        setTheme();
         card = new CardLayout();
         display.setLayout(card);
-        frame.setSize(960,640);
+        frame.setSize(1280, 1024);
         frame.setVisible(true);
         /*
          * testing.setSize(1280,1024);
          * testing.setVisible(true);
          */
         // GridLayout(rows, columns, horizontal gap, vertical gap)
-        mainMenu.setLayout(new GridLayout(4, 0, 0, 50));
+        mainMenu.setLayout(new GridLayout(2, 2, 0, 50));
         // To add paddings inside the panel I used EmptyBorder along with Insets->
         // Reason: To make the buttons more centralised
-        mainMenu.setBorder(new EmptyBorder(new Insets(20, 20, 20, 20)));
+        mainMenu.setBorder(new EmptyBorder(new Insets(50, 50, 50, 50)));
+
+    
+        cliButton.setOpaque(false);
+        cliButton.setContentAreaFilled(false);
+        cliButton.setBorderPainted(false);
+        
+        empButton.setOpaque(false);
+        empButton.setContentAreaFilled(false);
+        empButton.setBorderPainted(false);
+
+        projectButton.setOpaque(false);
+        projectButton.setContentAreaFilled(false);
+        projectButton.setBorderPainted(false);
+
+        logout.setOpaque(false);
+        logout.setContentAreaFilled(false);
+        logout.setBorderPainted(false);
+
         mainMenu.add(empButton);
         mainMenu.add(cliButton);
         mainMenu.add(projectButton);
@@ -145,7 +332,6 @@ public class admingui{
 
         //menuHeadingPanel.setBorder(new EmptyBorder(new Insets(50,50,50,50)));
         heading.setFont(new Font("Verdana", Font.PLAIN, 35)); //to set the font-style and font-size of a Label
-        menuHeadingPanel.add(heading);
         
         //menuHeadingPanel.setBackground(Color.BLUE);
      
@@ -202,7 +388,6 @@ public class admingui{
 
 
         frame.add(display,BorderLayout.CENTER);
-        frame.add(menuHeadingPanel,BorderLayout.NORTH);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         /*
          * testing.add(addClient,BorderLayout.CENTER);
@@ -224,19 +409,53 @@ public class admingui{
     }
 
     private void clientMenuGUI(){
-        cliMenu.setLayout(new GridLayout(4,0,0,50));
-        cliMenu.setBorder(new EmptyBorder(new Insets(20,20,20,20)));
+        cliMenu.setLayout(new GridLayout(2,2,0,50));
+        cliMenu.setBorder(new EmptyBorder(new Insets(50,50,50,50)));
+
+        addCliButton.setOpaque(false);
+        addCliButton.setContentAreaFilled(false);
+        addCliButton.setBorderPainted(false);
+
         cliMenu.add(addCliButton);
+
+        removeCliButton.setOpaque(false);
+        removeCliButton.setContentAreaFilled(false);
+        removeCliButton.setBorderPainted(false);
+
         cliMenu.add(removeCliButton);
+
+        viewClientReport.setOpaque(false);
+        viewClientReport.setContentAreaFilled(false);
+        viewClientReport.setBorderPainted(false);
+
         cliMenu.add(viewClientReport);
+
+        backButton.setOpaque(false);
+        backButton.setContentAreaFilled(false);
+        backButton.setBorderPainted(false);
         cliMenu.add(backButton);
-
-
     }
 
     private void empMenuGUI(){
-        empMenu.setLayout(new GridLayout(4,0,0,50));
-        empMenu.setBorder(new EmptyBorder(new Insets(20,20,20,20)));
+        empMenu.setLayout(new GridLayout(2,2,0,50));
+        empMenu.setBorder(new EmptyBorder(new Insets(50,50,50,50)));
+
+        addEmplButton.setOpaque(false);
+        addEmplButton.setContentAreaFilled(false);
+        addEmplButton.setBorderPainted(false);
+
+        removeEmpButton.setOpaque(false);
+        removeEmpButton.setContentAreaFilled(false);
+        removeEmpButton.setBorderPainted(false);
+
+        viewEmpButton.setOpaque(false);
+        viewEmpButton.setContentAreaFilled(false);
+        viewEmpButton.setBorderPainted(false);
+
+        backButton.setOpaque(false);
+        backButton.setContentAreaFilled(false);
+        backButton.setBorderPainted(false);
+
         empMenu.add(addEmplButton);
         empMenu.add(removeEmpButton);
         empMenu.add(viewEmpButton);
@@ -253,6 +472,7 @@ public class admingui{
         changeProjectStatus.addActionListener(new goToChangeStatus());
         viewNonApprovedProjects.addActionListener(new handleApproveProjects());
         backButton.addActionListener(new goToMainMenu());
+        backSmallButton.addActionListener(new goToMainMenu());
 
     }
         
@@ -263,6 +483,7 @@ public class admingui{
 
         gbc.gridx = 0;// column
         gbc.gridy = 0;// row
+        gbc.insets = new Insets(20,20,20,20);
         gbc.fill = GridBagConstraints.HORIZONTAL;
         gbc.ipady = 10; // height of the grid
         addClient.add(name, gbc);
@@ -356,12 +577,15 @@ public class admingui{
         gbc.insets = new Insets(20, 0, 0, 20);
         gbc.gridx = 0;
         gbc.gridy = 9;
-        addClient.add(backButton,gbc);
+        addClient.add(backSmallButton,gbc);
 
         gbc.gridx = 1;
         gbc.gridy = 9;
         gbc.insets = new Insets(20, 0, 0, 0);
         gbc.fill = GridBagConstraints.HORIZONTAL;
+        submit2.setOpaque(false);
+        submit2.setContentAreaFilled(false);
+        submit2.setBorderPainted(false);
         addClient.add(submit2, gbc);
     }
 
@@ -372,8 +596,8 @@ public class admingui{
 
         gbc.gridx = 0;// column
         gbc.gridy = 0;// row
+        gbc.insets = new Insets(20, 20, 20, 0);
         gbc.fill = GridBagConstraints.HORIZONTAL;
-        gbc.ipady = 10; // height of the grid
         addEmp.add(name, gbc);
 
         gbc.gridx = 1;
@@ -465,20 +689,23 @@ public class admingui{
         gbc.gridy = 9;
         addEmp.add(domain,gbc);
         
-        domainComboBox.setBackground(Color.WHITE);
         gbc.gridx = 1;
         gbc.gridy = 9;
         addEmp.add(domainComboBox, gbc);
 
-        gbc.insets = new Insets(40, 0, 20, 10);
         gbc.gridx = 0;
         gbc.gridy = 10;
-        addEmp.add(backButton,gbc);
-
-        gbc.insets = new Insets(20, 0, 0, 0);
+        backSmallButton.setOpaque(false);
+        backSmallButton.setContentAreaFilled(false);
+        backSmallButton.setBorderPainted(false);
+        addEmp.add(backSmallButton,gbc);
+;
         gbc.gridx = 1;
         gbc.gridy = 10;
         gbc.fill = GridBagConstraints.HORIZONTAL;
+        submit1.setOpaque(false);
+        submit1.setContentAreaFilled(false);
+        submit1.setBorderPainted(false);
         addEmp.add(submit1, gbc);
     }
 
@@ -503,7 +730,6 @@ public class admingui{
         gbc.gridx = 1;
         gbc.gridy = 0;
         gbc.fill = GridBagConstraints.HORIZONTAL;
-        allID2.setBackground(Color.white);
         remClient.add(allID2, gbc);
 
         gbc.gridx = 0;
@@ -516,7 +742,6 @@ public class admingui{
         gbc.fill = GridBagConstraints.HORIZONTAL;
         remClient.add(dynamicName, gbc);
         dynamicName.setEditable(false);
-        dynamicName.setBackground(Color.WHITE);
 
         gbc.gridx = 0;
         gbc.gridy = 2;
@@ -528,7 +753,6 @@ public class admingui{
         gbc.fill = GridBagConstraints.HORIZONTAL;
         remClient.add(dynamicDOB, gbc);
         dynamicDOB.setEditable(false);
-        dynamicDOB.setBackground(Color.WHITE);
 
         gbc.gridx = 0;
         gbc.gridy = 3;
@@ -540,7 +764,6 @@ public class admingui{
         gbc.fill = GridBagConstraints.HORIZONTAL;
         remClient.add(dynamicCompany, gbc);
         dynamicCompany.setEditable(false);
-        dynamicCompany.setBackground(Color.WHITE);
 
         gbc.gridx = 0;
         gbc.gridy = 4;
@@ -552,15 +775,20 @@ public class admingui{
         gbc.fill = GridBagConstraints.HORIZONTAL;
         remClient.add(dynamicTotalOrder, gbc);
         dynamicCompany.setEditable(false);
-        dynamicCompany.setBackground(Color.WHITE);
 
         gbc.gridx = 0;
         gbc.gridy = 5;
-        remClient.add(backButton,gbc);
+        backSmallButton.setOpaque(false);
+        backSmallButton.setContentAreaFilled(false);
+        backSmallButton.setBorderPainted(false);
+        remClient.add(backSmallButton,gbc);
         
         gbc.gridx = 1;
         gbc.gridy = 5;
         gbc.fill = GridBagConstraints.HORIZONTAL;
+        remove1.setOpaque(false);
+        remove1.setContentAreaFilled(false);
+        remove1.setBorderPainted(false);
         remClient.add(remove1,gbc);
         allID2.addActionListener(new handleShowCliDetails());
 
@@ -634,7 +862,6 @@ public class admingui{
         gbc.gridx = 1;
         gbc.gridy = 0;
         gbc.fill = GridBagConstraints.HORIZONTAL;
-        allID1.setBackground(Color.white);
         remEmp.add(allID1, gbc);
 
         gbc.gridx = 0;
@@ -647,7 +874,6 @@ public class admingui{
         gbc.fill = GridBagConstraints.HORIZONTAL;
         remEmp.add(dynamicName, gbc);
         dynamicName.setEditable(false);
-        dynamicName.setBackground(Color.WHITE);
 
         gbc.gridx = 0;
         gbc.gridy = 2;
@@ -659,7 +885,6 @@ public class admingui{
         gbc.fill = GridBagConstraints.HORIZONTAL;
         remEmp.add(dynamicDOB, gbc);
         dynamicDOB.setEditable(false);
-        dynamicDOB.setBackground(Color.WHITE);
 
         gbc.gridx = 0;
         gbc.gridy = 3;
@@ -671,7 +896,6 @@ public class admingui{
         gbc.fill = GridBagConstraints.HORIZONTAL;
         remEmp.add(dynamicExperience, gbc);
         dynamicExperience.setEditable(false);
-        dynamicExperience.setBackground(Color.WHITE);
 
         gbc.gridx = 0;
         gbc.gridy = 4;
@@ -683,15 +907,21 @@ public class admingui{
         gbc.fill = GridBagConstraints.HORIZONTAL;
         remEmp.add(dynamicDomain, gbc);
         dynamicDomain.setEditable(false);
-        dynamicDomain.setBackground(Color.WHITE);
 
         gbc.gridx = 0;
         gbc.gridy = 5;
-        remEmp.add(backButton,gbc);
+        backSmallButton.setOpaque(false);
+        backSmallButton.setContentAreaFilled(false);
+        backSmallButton.setBorderPainted(false);
+        remEmp.add(backSmallButton,gbc);
 
         gbc.gridx = 1;
         gbc.gridy = 5;
+        
         gbc.fill = GridBagConstraints.HORIZONTAL;
+        remove2.setOpaque(false);
+        remove2.setContentAreaFilled(false);
+        remove2.setBorderPainted(false);
         remEmp.add(remove2,gbc);
         
         allID1.addActionListener(new handleShowEmpDetails());
@@ -720,7 +950,6 @@ public class admingui{
         gbc.gridx = 1;
         gbc.gridy = 0;
         gbc.fill = GridBagConstraints.HORIZONTAL;
-        allID1.setBackground(Color.white);
         remEmp.add(allID1, gbc);
 
         gbc.gridx = 0;
@@ -733,7 +962,6 @@ public class admingui{
         gbc.fill = GridBagConstraints.HORIZONTAL;
         remEmp.add(dynamicName, gbc);
         dynamicName.setEditable(false);
-        dynamicName.setBackground(Color.WHITE);
 
         gbc.gridx = 0;
         gbc.gridy = 2;
@@ -745,7 +973,6 @@ public class admingui{
         gbc.fill = GridBagConstraints.HORIZONTAL;
         remEmp.add(dynamicDOB, gbc);
         dynamicDOB.setEditable(false);
-        dynamicDOB.setBackground(Color.WHITE);
 
         gbc.gridx = 0;
         gbc.gridy = 3;
@@ -757,7 +984,6 @@ public class admingui{
         gbc.fill = GridBagConstraints.HORIZONTAL;
         remEmp.add(dynamicExperience, gbc);
         dynamicExperience.setEditable(false);
-        dynamicExperience.setBackground(Color.WHITE);
 
         gbc.gridx = 0;
         gbc.gridy = 4;
@@ -769,7 +995,6 @@ public class admingui{
         gbc.fill = GridBagConstraints.HORIZONTAL;
         remEmp.add(dynamicDomain, gbc);
         dynamicDomain.setEditable(false);
-        dynamicDomain.setBackground(Color.WHITE);
 
         gbc.gridx = 0;
         gbc.gridy = 5;
@@ -781,7 +1006,6 @@ public class admingui{
         gbc.fill = GridBagConstraints.HORIZONTAL;
         remEmp.add(dynamicProjectsWorked, gbc);
         dynamicProjectsWorked.setEditable(false);
-        dynamicProjectsWorked.setBackground(Color.WHITE);
 
         gbc.gridx = 0;
         gbc.gridy = 6;
@@ -793,11 +1017,13 @@ public class admingui{
         gbc.fill = GridBagConstraints.HORIZONTAL;
         remEmp.add(dynamicProjectsLed, gbc);
         dynamicProjectsLed.setEditable(false);
-        dynamicProjectsLed.setBackground(Color.WHITE);
 
         gbc.gridx = 0;
         gbc.gridy = 7;
-        remEmp.add(backButton,gbc);
+        backSmallButton.setOpaque(false);
+        backSmallButton.setContentAreaFilled(false);
+        backSmallButton.setBorderPainted(false);
+        remEmp.add(backSmallButton,gbc);
         allID1.addActionListener(new handleShowEmpDetails());
 
     }
@@ -807,8 +1033,6 @@ public class admingui{
         String[] projectList = a.ProjectList();
         projectUpdateStatus.setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
-        allID3.setBackground(Color.WHITE);
-        statusComboBox.setBackground(Color.WHITE);
 
         allID3.removeAllItems();
         for (String id : projectList) {
@@ -823,7 +1047,9 @@ public class admingui{
         gbc.gridx = 1;
         gbc.gridy = 0;
         gbc.fill = GridBagConstraints.HORIZONTAL;
-        allID2.setBackground(Color.white);
+        allID2.setForeground(Color.WHITE);
+        allID2.setBackground(Color.DARK_GRAY);
+        allID2.setBorder(new LineBorder(Color.DARK_GRAY));
         projectUpdateStatus.add(allID3, gbc);
 
         gbc.gridx = 0;
@@ -836,7 +1062,6 @@ public class admingui{
         gbc.fill = GridBagConstraints.HORIZONTAL;
         projectUpdateStatus.add(dynamicProjectNameTextField, gbc);
         dynamicProjectNameTextField.setEditable(false);
-        dynamicProjectNameTextField.setBackground(Color.WHITE);
 
         gbc.gridx = 0;
         gbc.gridy = 2;
@@ -848,7 +1073,6 @@ public class admingui{
         gbc.fill = GridBagConstraints.HORIZONTAL;
         projectUpdateStatus.add(dynamicClientIDTextField, gbc);
         dynamicClientIDTextField.setEditable(false);
-        dynamicClientIDTextField.setBackground(Color.WHITE);
 
         gbc.gridx = 0;
         gbc.gridy = 3;
@@ -873,16 +1097,25 @@ public class admingui{
 
         gbc.gridx = 0;
         gbc.gridy = 5;
-        projectUpdateStatus.add(backButton,gbc);
+        backSmallButton.setOpaque(false);
+        backSmallButton.setContentAreaFilled(false);
+        backSmallButton.setBorderPainted(false);
+        projectUpdateStatus.add(backSmallButton,gbc);
         
         gbc.gridx = 1;
         gbc.gridy = 5;
         gbc.fill = GridBagConstraints.HORIZONTAL;
+        change1.setOpaque(false);
+        change1.setContentAreaFilled(false);
+        change1.setBorderPainted(false);
         projectUpdateStatus.add(change1,gbc);
 
         gbc.gridx = 0;
         gbc.gridy = 7;
         gbc.gridwidth = 2;
+        viewChanges.setOpaque(false);
+        viewChanges.setContentAreaFilled(false);
+        viewChanges.setBorderPainted(false);
         projectUpdateStatus.add(viewChanges,gbc);
 
         allID3.addActionListener(new handleShowProjectDetails());
@@ -898,7 +1131,6 @@ public class admingui{
         }
         projectApprove.setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
-        allID3.setBackground(Color.WHITE);
         allID3.removeAllItems();
         for (String id : projectList) {
             allID3.addItem(id);
@@ -914,7 +1146,6 @@ public class admingui{
         gbc.gridx = 1;
         gbc.gridy = 0;
         gbc.fill = GridBagConstraints.HORIZONTAL;
-        allID2.setBackground(Color.white);
         projectApprove.add(allID3, gbc);
 
         gbc.gridx = 0;
@@ -927,7 +1158,6 @@ public class admingui{
         gbc.fill = GridBagConstraints.HORIZONTAL;
         projectApprove.add(dynamicProjectNameTextField, gbc);
         dynamicProjectNameTextField.setEditable(false);
-        dynamicProjectNameTextField.setBackground(Color.WHITE);
 
         gbc.gridx = 0;
         gbc.gridy = 2;
@@ -939,7 +1169,6 @@ public class admingui{
         gbc.fill = GridBagConstraints.HORIZONTAL;
         projectApprove.add(dynamicClientIDTextField, gbc);
         dynamicClientIDTextField.setEditable(false);
-        dynamicClientIDTextField.setBackground(Color.WHITE);
 
         gbc.gridx = 0;
         gbc.gridy = 3;
@@ -954,11 +1183,14 @@ public class admingui{
 
         gbc.gridx = 0;
         gbc.gridy = 5;
-        projectApprove.add(backButton,gbc);
+        projectApprove.add(backSmallButton,gbc);
         
         gbc.gridx = 1;
         gbc.gridy = 5;
         gbc.fill = GridBagConstraints.HORIZONTAL;
+        Approve.setOpaque(false);
+        Approve.setContentAreaFilled(false);
+        Approve.setBorderPainted(false);
         projectApprove.add(Approve,gbc);
         allID3.addActionListener(new handleShowProjectDetails());
         Approve.addActionListener(new handleStatusChange());
@@ -973,6 +1205,7 @@ public class admingui{
             card.show(display, "clientMenu");
             heading.setText("Client Management Menu");
             backButton.addActionListener(new goToMainMenu());
+            backSmallButton.addActionListener(new goToMainMenu());
         }
     }
 
@@ -983,6 +1216,7 @@ public class admingui{
             card.show(display,"employeeMenu");
             heading.setText("Employee Management Menu");
             backButton.addActionListener(new goToMainMenu());
+            backSmallButton.addActionListener(new goToMainMenu());
         }
     }
 

@@ -1,5 +1,6 @@
 package gui.admincomponents;
 import javax.swing.*;
+import javax.swing.border.LineBorder;
 
 import java.awt.*;
 import java.awt.GridBagLayout;
@@ -7,6 +8,7 @@ import java.awt.GridBagConstraints;
 import java.awt.event.*;
 
 import admin.admin;
+import assets.getAssets;
 import exceptions.noData;
 import gui.admingui;
 import Project.project;
@@ -15,17 +17,17 @@ public class projectInfo {
 
     JFrame frame = new JFrame("Modification Approval Menu");
     JPanel cliMenu = new JPanel();
-    JPanel viewProject = new JPanel();
-    JLabel heading = new JLabel("Welcome Admin");
+    getAssets path = new getAssets();
+    JLabel viewProject= new JLabel(new ImageIcon(path.frame_bg));
     String[] emptyArray = { "null" };
     JLabel id = new JLabel("Project ID: ");
     JLabel name = new JLabel("Project Name: ");
     JLabel dynamicName = new JLabel();
     JLabel status = new JLabel("Status of the Project");
     JLabel statusLabel = new JLabel();
-    JButton approve = new JButton("Approve Modifications");
-    JButton reject = new JButton("Reject Modifications");
-    JButton backButton = new JButton("Go Back");
+    JButton approve = new JButton(new ImageIcon(path.approve_button));
+    JButton reject = new JButton(new ImageIcon(path.reject_button));
+    JButton backButton = new JButton(new ImageIcon(path.back_btn));
     JLabel descriptionLabel = new JLabel("Project Log");
     JTextArea descriptionTextField = new JTextArea(10, 50);
     String project_status;
@@ -48,27 +50,35 @@ public class projectInfo {
         gbc.gridy = 0;
         gbc.insets = new Insets(20, 20, 20, 0);
         gbc.fill = GridBagConstraints.HORIZONTAL;
+        id.setForeground(Color.WHITE);
         viewProject.add(id, gbc);
 
         gbc.gridx = 1;
         gbc.gridy = 0;
         gbc.fill = GridBagConstraints.HORIZONTAL;
-        allID.setBackground(Color.white);
+        allID.setForeground(Color.WHITE);
+        allID.setBackground(Color.DARK_GRAY);
+        allID.setBorder(new LineBorder(Color.DARK_GRAY));
         viewProject.add(allID, gbc);
 
         gbc.gridx = 0;
         gbc.gridy = 1;
         gbc.fill = GridBagConstraints.HORIZONTAL;
+        name.setForeground(Color.WHITE);
         viewProject.add(name, gbc);
 
         gbc.gridx = 1;
         gbc.gridy = 1;
         gbc.fill = GridBagConstraints.HORIZONTAL;
+        dynamicName.setForeground(Color.WHITE);
+        dynamicName.setBackground(Color.DARK_GRAY);
+        dynamicName.setBorder(new LineBorder(Color.DARK_GRAY));
         viewProject.add(dynamicName, gbc);
 
         gbc.gridx = 0;
         gbc.gridy = 3;
         gbc.fill = GridBagConstraints.HORIZONTAL;
+        descriptionLabel.setForeground(Color.WHITE);
         viewProject.add(descriptionLabel, gbc);
 
         gbc.gridx = 1;
@@ -76,32 +86,49 @@ public class projectInfo {
         gbc.fill = GridBagConstraints.HORIZONTAL;
         descriptionTextField.setLineWrap(true);
         descriptionTextField.setEditable(false);
+        descriptionTextField.setForeground(Color.WHITE);
+        descriptionTextField.setBackground(Color.DARK_GRAY);
+        descriptionTextField.setBorder(new LineBorder(Color.DARK_GRAY));
+        descriptionTextField.setCaretColor(Color.WHITE);
         viewProject.add(descriptionTextField, gbc);
 
         gbc.gridx = 0;
         gbc.gridy = 5;
         gbc.fill = GridBagConstraints.HORIZONTAL;
+        status.setForeground(Color.WHITE);
         viewProject.add(status, gbc);
 
         gbc.gridx = 1;
         gbc.gridy = 5;
         gbc.fill = GridBagConstraints.HORIZONTAL;
+        statusLabel.setForeground(Color.WHITE);
+        statusLabel.setBackground(Color.DARK_GRAY);
+        statusLabel.setBorder(new LineBorder(Color.DARK_GRAY));
         viewProject.add(statusLabel, gbc);
 
         gbc.gridx = 0;
         gbc.gridy = 7;
         gbc.fill = GridBagConstraints.HORIZONTAL;
+        approve.setOpaque(false);
+        approve.setContentAreaFilled(false);
+        approve.setBorderPainted(false);
         viewProject.add(approve, gbc);
 
         gbc.gridx = 1;
         gbc.gridy = 7;
         gbc.fill = GridBagConstraints.CENTER;
+        reject.setOpaque(false);
+        reject.setContentAreaFilled(false);
+        reject.setBorderPainted(false);
         viewProject.add(reject,gbc);
 
         gbc.gridx = 2;
         gbc.gridy = 7;
         gbc.gridwidth = 4;
         gbc.anchor = GridBagConstraints.CENTER;
+        backButton.setOpaque(false);
+        backButton.setContentAreaFilled(false);
+        backButton.setBorderPainted(false);
         viewProject.add(backButton, gbc);
 
         approve.addActionListener(new handleApproveChanges());

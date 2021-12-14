@@ -124,7 +124,7 @@ public class viewProjGui {
 
         suggest.addActionListener(new handleSuggestChanges());
         allID.addActionListener(new handleShowDetails());
-        frame.setSize(960, 640);
+        frame.setSize(1280, 1024);
         frame.add(viewProject);
         frame.setVisible(true);
 

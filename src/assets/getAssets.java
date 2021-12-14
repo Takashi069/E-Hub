@@ -15,5 +15,26 @@ public class getAssets {
     public String reset_btn = prefix + "reset_button.png";
     public String back_btn = prefix + "back_button.png";
     public String suggest_btn = prefix + "suggest_button.png";
+
+    public String manage_emp = prefix + "manage_emp.png";
+    public String manage_client = prefix + "manage_client.png";
+    public String manage_projects = prefix + "manage_projects.png";
+    public String project_change_requested = prefix + "project_change_requested.png";
+    public String logout_button = prefix + "logout_button.png";
+    public String back_arrow_btn = prefix + "back_arrow_btn.png";
+
+    public String submit_button = prefix + "submit_button.png";
+    public String change_button = prefix + "change_button.png";
+    public String approve_button = prefix + "approve_button.png";
+    public String reject_button = prefix + "reject_button.png";
+    public String remove_button = prefix + "remove_button.png";
+
+    public String add_emp = prefix + "add_emp.png";
+    public String remove_emp = prefix + "remove_emp.png";
+    public String stats_emp = prefix + "stats_emp.png";
+
+    public String add_client = prefix + "add_client.png";
+    public String remove_client = prefix + "remove_client.png";
+    public String stats_client = prefix + "stats_client.png";
     
 }

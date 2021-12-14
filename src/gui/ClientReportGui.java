@@ -1,10 +1,12 @@
 package gui;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.border.LineBorder;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -12,10 +14,12 @@ import java.awt.*;
 
 import client.client;
 import admin.admin;
+import assets.getAssets;
 
 public class ClientReportGui {
+    getAssets path = new getAssets();
     JFrame frame = new JFrame();
-    JPanel remClient = new JPanel();
+    JLabel remClient = new JLabel(new ImageIcon(path.frame_bg));
     JPanel display = new JPanel();
     JLabel id = new JLabel("ID");
     JLabel name = new JLabel("Name: ");
@@ -29,7 +33,7 @@ public class ClientReportGui {
     JTextField dynamicCompany = new JTextField();
     JTextField dynamicTotalOrder = new JTextField();
 
-    JButton backButton = new JButton("Back");
+    JButton backSmallButton = new JButton(new ImageIcon(path.back_btn));
 
     String[] emptyArray = { "null" };
     JComboBox<String> allID2 = new JComboBox<String>(emptyArray);
@@ -51,7 +55,7 @@ public class ClientReportGui {
 public ClientReportGui() {
         card = new CardLayout();
         display.setLayout(card);
-        frame.setSize(960,640);
+        frame.setSize(1280, 1024);
         display.add(remClient, "removeClientMenu");
         frame.add(display);
      //   frame.add(remClient);
@@ -70,72 +74,90 @@ public ClientReportGui() {
         gbc.gridy = 0;
         gbc.insets = new Insets(20, 20, 20, 0);
         gbc.fill = GridBagConstraints.HORIZONTAL;
+        id.setForeground(Color.WHITE);
         remClient.add(id, gbc);
 
         gbc.gridx = 1;
         gbc.gridy = 0;
         gbc.fill = GridBagConstraints.HORIZONTAL;
-        allID2.setBackground(Color.white);
+        allID2.setForeground(Color.WHITE);
+        allID2.setBackground(Color.DARK_GRAY);
+        allID2.setBorder(new LineBorder(Color.DARK_GRAY));
         remClient.add(allID2, gbc);
 
         gbc.gridx = 0;
         gbc.gridy = 1;
         gbc.fill = GridBagConstraints.HORIZONTAL;
+        name.setForeground(Color.WHITE);
         remClient.add(name, gbc);
 
         gbc.gridx = 1;
         gbc.gridy = 1;
         gbc.fill = GridBagConstraints.HORIZONTAL;
-        remClient.add(dynamicName, gbc);
         dynamicName.setEditable(false);
-        dynamicName.setBackground(Color.WHITE);
-
+        dynamicName.setForeground(Color.WHITE);
+        dynamicName.setBackground(Color.DARK_GRAY);
+        dynamicName.setBorder(new LineBorder(Color.DARK_GRAY));
+        remClient.add(dynamicName, gbc);
+        
         gbc.gridx = 0;
         gbc.gridy = 2;
         gbc.fill = GridBagConstraints.HORIZONTAL;
+        dob.setForeground(Color.WHITE);
         remClient.add(dob, gbc);
 
         gbc.gridx = 1;
         gbc.gridy = 2;
         gbc.fill = GridBagConstraints.HORIZONTAL;
-        remClient.add(dynamicDOB, gbc);
         dynamicDOB.setEditable(false);
-        dynamicDOB.setBackground(Color.WHITE);
+        dynamicDOB.setForeground(Color.WHITE);
+        dynamicDOB.setBackground(Color.DARK_GRAY);
+        dynamicDOB.setBorder(new LineBorder(Color.DARK_GRAY));
+        remClient.add(dynamicDOB, gbc);
+        
 
         gbc.gridx = 0;
         gbc.gridy = 3;
         gbc.fill = GridBagConstraints.HORIZONTAL;
+        Company.setForeground(Color.WHITE);
         remClient.add(Company, gbc);
 
         gbc.gridx = 1;
         gbc.gridy = 3;
         gbc.fill = GridBagConstraints.HORIZONTAL;
-        remClient.add(dynamicCompany, gbc);
         dynamicCompany.setEditable(false);
-        dynamicCompany.setBackground(Color.WHITE);
+        dynamicCompany.setForeground(Color.WHITE);
+        dynamicCompany.setBackground(Color.DARK_GRAY);
+        dynamicCompany.setBorder(new LineBorder(Color.DARK_GRAY));
+        remClient.add(dynamicCompany, gbc);
 
         gbc.gridx = 0;
         gbc.gridy = 4;
         gbc.fill = GridBagConstraints.HORIZONTAL;
+        totalOrders.setForeground(Color.WHITE);
         remClient.add(totalOrders, gbc);
 
         gbc.gridx = 1;
         gbc.gridy = 4;
         gbc.fill = GridBagConstraints.HORIZONTAL;
+        dynamicTotalOrder.setForeground(Color.WHITE);
+        dynamicTotalOrder.setBackground(Color.DARK_GRAY);
+        dynamicTotalOrder.setBorder(new LineBorder(Color.DARK_GRAY));
         remClient.add(dynamicTotalOrder, gbc);
-        dynamicCompany.setEditable(false);
-        dynamicCompany.setBackground(Color.WHITE);
 
         gbc.gridx = 0;
         gbc.gridy = 5;
-        remClient.add(backButton, gbc);
+        backSmallButton.setOpaque(false);
+        backSmallButton.setContentAreaFilled(false);
+        backSmallButton.setBorderPainted(false);
+        remClient.add(backSmallButton, gbc);
 
         gbc.gridx = 1;
         gbc.gridy = 5;
         gbc.fill = GridBagConstraints.HORIZONTAL;
         //  remClient.add(remove1,gbc);
         allID2.addActionListener(new handleShowCliDetails());
-        backButton.addActionListener(new goToMainMenu());
+        backSmallButton.addActionListener(new goToMainMenu());
         frame.setVisible(true);
 
     }
