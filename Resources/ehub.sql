@@ -127,11 +127,12 @@ create table Project
 	Project_ID varchar(6),
 	Client_ID varchar(20),
 	Project_Name varchar(20),
-	Date_of_Commencement varchar(20),
+	project_log varchar(10000),
 	Date_of_Release varchar(20),
 	Status_of_Software varchar(30),
 	Domain varchar(20),
-	Project_leader varchar(6),
+	Date_of_Commencement varchar(20),
+	Project_leader varchar(6), 
 	FOREIGN KEY (Project_leader) references Employee(Emp_ID),
 	primary key(Project_ID)
 );
