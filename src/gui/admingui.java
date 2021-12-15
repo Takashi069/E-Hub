@@ -302,7 +302,7 @@ public class admingui{
         card = new CardLayout();
         display.setLayout(card);
         frame.setSize(1280, 1024);
-        frame.setVisible(true);
+        
         /*
          * testing.setSize(1280,1024);
          * testing.setVisible(true);
@@ -401,6 +401,7 @@ public class admingui{
          * testing.add(menuHeadingPanel,BorderLayout.NORTH);
          * testing.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
          */
+        frame.setVisible(true);
     }
     
     private int logPrompt(project P){
