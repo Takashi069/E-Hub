@@ -140,6 +140,39 @@ public class client extends Person {
         return finalID;
     }
 
+public void retrieve_TotalOrders(project p) {
+        Connection c = null;
+        Statement stmt = null;
+        try {
+            Class.forName("org.postgresql.Driver");
+            secret obj = new secret();
+            c = DriverManager.getConnection(obj.url, obj.dbUser, obj.dbPass);
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.err.println(e.getClass().getName() + ": " + e.getMessage());
+            System.exit(0);
+        }
+        try {
+            System.out.println("Opened database successfully for retrieving total orders");
+            stmt = c.createStatement();
+            String sql = String.format(
+                    "select Total_Orders from Client where Client_id = '%s';",
+                    p.getClientID());
+            ResultSet rs = stmt.executeQuery(sql);
+            System.out.println("Before WHILE");
+            if (rs.next()) {
+                this.Total_Orders = rs.getInt(1);
+                System.out.println("Total Orders inside func="+rs.getInt(1));
+            }
+            
+            rs.close();
+            stmt.close();
+        } catch (Exception e) {
+            System.out.println("Error in retrieving total orders");
+            System.out.println(e.toString());
+        }
+    }
+
     public void AddProject(project p) {
         Connection c = null;
         Statement stmt = null;
@@ -188,7 +221,9 @@ public class client extends Person {
             System.out.println(output + " Row(s) Updated");
             stmt.close();
             // Total Orders try
-            Total_Orders += 1;
+            retrieve_TotalOrders(p);
+            System.out.println("Total Orders="+Total_Orders);
+            this.Total_Orders += 1;
             PreparedStatement ps2 = c.prepareStatement("update Client set Total_Orders=? where client_id=?");
             ps2.setInt(1, Total_Orders);// 1 specifies the first parameter in the query i.e. name
             ps2.setString(2, p.getClientID());

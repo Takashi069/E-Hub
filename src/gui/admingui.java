@@ -130,6 +130,7 @@ public class admingui{
     CardLayout card;
 
     public void setTheme(){
+        empButton.setFocusPainted(false);
         id.setForeground(Color.WHITE);
         name.setForeground(Color.WHITE);
         streetName.setForeground(Color.WHITE);
