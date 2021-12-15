@@ -30,6 +30,7 @@ public class projectInfo {
     JButton backButton = new JButton(new ImageIcon(path.back_btn));
     JLabel descriptionLabel = new JLabel("Project Log");
     JTextArea descriptionTextField = new JTextArea(10, 50);
+    JScrollPane scroll = new JScrollPane(descriptionTextField,JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
     String project_status;
 
     JComboBox<String> allID = new JComboBox<String>(emptyArray);
@@ -90,7 +91,8 @@ public class projectInfo {
         descriptionTextField.setBackground(Color.DARK_GRAY);
         descriptionTextField.setBorder(new LineBorder(Color.DARK_GRAY));
         descriptionTextField.setCaretColor(Color.WHITE);
-        viewProject.add(descriptionTextField, gbc);
+        //viewProject.add(descriptionTextField, gbc);
+        viewProject.add(scroll, gbc);
 
         gbc.gridx = 0;
         gbc.gridy = 5;
@@ -217,6 +219,11 @@ public class projectInfo {
 
 class Driver123 {
     public static void main(String[] args) {
-        //new projectInfo();
+        
+        try {
+            new projectInfo();
+        } catch (noData nd) {
+            nd.displaYError(new JFrame());
+        }
     }
 }

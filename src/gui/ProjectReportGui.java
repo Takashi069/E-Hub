@@ -5,9 +5,11 @@ import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollBar;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.border.LineBorder;
+import javax.swing.JScrollPane;
 
 import Project.project;
 
@@ -16,6 +18,7 @@ import java.awt.event.ActionListener;
 import java.awt.*;
 
 import client.client;
+import exceptions.noData;
 import admin.admin;
 import assets.getAssets;
 
@@ -39,16 +42,24 @@ public class ProjectReportGui {
             JLabel Status = new JLabel("Project Status");
             JTextField dynamicStatusTextField = new JTextField();
     JLabel descriptionLabel = new JLabel("Project Log");
+
     JTextArea descriptionTextField = new JTextArea(10, 50);
+    JScrollPane scroll = new JScrollPane(descriptionTextField,JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+
     JComboBox<String> allID3 = new JComboBox<String>(emptyArray);
 
-    public ProjectReportGui() {
+    public ProjectReportGui() throws noData {
         frame.setSize(1280, 1024);
         frame.add(projectApprove);
         
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         admin a = new admin();
-        String[] projectList = a.ProjectListNotApproved();
+        String[] projectList = null;
+        projectList = a.ProjectListAll();
+        System.out.println("projectList: " + projectList.length);
+        if(projectList.length == 0){
+            throw new noData();
+        }
         projectApprove.setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
         allID3.setBackground(Color.WHITE);
@@ -153,7 +164,7 @@ public class ProjectReportGui {
         descriptionTextField.setCaretColor(Color.WHITE);
         descriptionTextField.setLineWrap(true);
         descriptionTextField.setEditable(false);
-        projectApprove.add(descriptionTextField, gbc);
+        projectApprove.add(scroll, gbc);
 
         gbc.gridx = 0;
         gbc.gridy = 6;
@@ -222,7 +233,11 @@ public class ProjectReportGui {
 }
 class newDrissssssssverclass {
         public static void main(String[] args) {
-            new ProjectReportGui();
+            try{
+                new ProjectReportGui();
+            }catch(noData nd){
+                nd.displaYError(new JFrame());
+            }
             //adg.logPrompt();
         }
     }

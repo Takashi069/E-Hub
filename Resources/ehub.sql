@@ -113,6 +113,7 @@ drop table client;
 drop table employee ;
 DROP TABLE person;
 drop table login;
+drop table project;
 
 insert into person values
 ('ADM001','Akash Harikumar','Gokulam','Edavanassery', 'Kollam','Kerala','690519','Indian','07/08/2001');
@@ -120,6 +121,7 @@ insert into person values
 
 
 select project_log, project_id from project p;
+delete from person where id = 'EMP003';
 
 /*=====================Mohak=============================*/
 create table Project
@@ -133,6 +135,7 @@ create table Project
 	Domain varchar(20),
 	Date_of_Commencement varchar(20),
 	Project_leader varchar(6), 
+	foreign key (Client_ID) references Client on delete cascade,
 	FOREIGN KEY (Project_leader) references Employee(Emp_ID),
 	primary key(Project_ID)
 );

@@ -54,6 +54,8 @@ public class admingui{
     JLabel deadline = new JLabel("Deadline Date(YYYY-MM-DD)");
     JLabel projectsWorked = new JLabel("Total Projects Worked");
     JLabel projectsLed = new JLabel("Total Projects Led");
+    JLabel descriptionLabel = new JLabel("Project Description");
+
 
     JTextField dynamicID = new JTextField();
     JTextField dynamicName = new JTextField();
@@ -89,22 +91,24 @@ public class admingui{
     JButton viewChanges = new JButton(new ImageIcon(path.project_change_requested));
     JButton logout = new JButton(new ImageIcon(path.logout_button));
 
-    JButton removeCliButton = new JButton(new ImageIcon(path.remove_emp));
+    JButton removeCliButton = new JButton(new ImageIcon(path.remove_client));
     JButton removeEmpButton = new JButton(new ImageIcon(path.remove_emp));
 
     JButton viewEmpButton = new JButton(new ImageIcon(path.stats_emp));
 
     JTextField idTextField = new JTextField();
-    JTextField nameTextField = new JTextField("");
-    JTextField streetNameTextField = new JTextField("");
-    JTextField localityTextField = new JTextField("");
-    JTextField DistrictTextField = new JTextField("");
-    JTextField stateTextField = new JTextField("");
-    JTextField pincodeTextField = new JTextField("");
-    JTextField nationalityTextField = new JTextField("");
-    JTextField dobTextField = new JTextField("");
-    JTextField experienceTextField = new JTextField("");
-    JTextField companyTextField = new JTextField("");
+    JTextField nameTextField = new JTextField("TestName");
+    JTextField streetNameTextField = new JTextField("TestStreetName");
+    JTextField localityTextField = new JTextField("TestLocality");
+    JTextField DistrictTextField = new JTextField("TestDistrict");
+    JTextField stateTextField = new JTextField("TestState");
+    JTextField pincodeTextField = new JTextField("123456");
+    JTextField nationalityTextField = new JTextField("TestNationality");
+    JTextField dobTextField = new JTextField("2001-07-08");
+    JTextField experienceTextField = new JTextField("12");
+    JTextField companyTextField = new JTextField("TestCompany");
+    JTextArea descriptionTextField = new JTextArea(10, 50);
+    JScrollPane scroll = new JScrollPane(descriptionTextField,JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
     
     
     String[] emptyArray = {"null"};
@@ -348,6 +352,7 @@ public class admingui{
         submit2.addActionListener(new handleClientData());
         remove1.addActionListener(new handleRemovePerson("client"));
         remove2.addActionListener(new handleRemovePerson("employee"));
+        backSmallButton.addActionListener(new goToMainMenu()); //since the backSmallButton is always listening to the goToMainMenu
         viewClientReport.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent a){
                 frame.dispose();
@@ -409,6 +414,7 @@ public class admingui{
         }
     }
 
+    //no Problem with the Backbutton in ClientMenuGUI
     private void clientMenuGUI(){
         cliMenu.setLayout(new GridLayout(2,2,0,50));
         cliMenu.setBorder(new EmptyBorder(new Insets(50,50,50,50)));
@@ -437,6 +443,7 @@ public class admingui{
         cliMenu.add(backButton);
     }
 
+    //no Problem with the Backbutton in empMenuGUI
     private void empMenuGUI(){
         empMenu.setLayout(new GridLayout(2,2,0,50));
         empMenu.setBorder(new EmptyBorder(new Insets(50,50,50,50)));
@@ -464,6 +471,7 @@ public class admingui{
         
     }
 
+    //commented out backSmallButton in projectMenuGUI
     private void projectMenuGUI(){
         project.setLayout(new GridLayout(2,2,0,50));
         project.setBorder(new EmptyBorder(new Insets(50,50,50,50)));
@@ -493,10 +501,11 @@ public class admingui{
         viewNonApprovedProjects.addActionListener(new handleApproveProjects());
         viewProjects.addActionListener(new handleViewProjects());
         backButton.addActionListener(new goToMainMenu());
-        backSmallButton.addActionListener(new goToMainMenu());
+        //backSmallButton.addActionListener(new goToMainMenu());
 
     }
         
+    //no changes in backSmallButton
     private void addClientGUI() {
 
         addClient.setLayout(new GridBagLayout());
@@ -610,6 +619,7 @@ public class admingui{
         addClient.add(submit2, gbc);
     }
 
+    //no changes in backSmallButton
     private void addEmpGUI(){
 
         addEmp.setLayout(new GridBagLayout());
@@ -730,6 +740,7 @@ public class admingui{
         addEmp.add(submit1, gbc);
     }
 
+    //no changes in backSmallButton
     private void remClientGUI() {
         admin ad = new admin();
         client cli = new client();
@@ -855,12 +866,17 @@ public class admingui{
             dynamicStatusTextField.setText(P.getProjectStatus());
             dynamicDeadlineTextField.setText(P.getProjectDeadline());
             statusComboBox.setSelectedIndex(index);
+
+            String full_log = P.getProjectLog();
+            String description = full_log.split("#")[0].replaceAll("\\\\n", System.getProperty("line.separator"));
+            descriptionTextField.setText(description);
             projectUpdateStatus.repaint();
         }catch(noData nd){
             nd.displaYError(frame);
         }
     }
 
+    //no changes in backSmallButton
     private void remEmpGUI() {
         admin ad = new admin();
         employee emp = new employee();
@@ -949,6 +965,7 @@ public class admingui{
 
     }
 
+    //no changes in backSmallButton
     private void viewEmpGUI() {
         admin ad = new admin();
         employee emp = new employee();
@@ -1049,6 +1066,7 @@ public class admingui{
 
     }
     
+    //no changes in backSmallButton
     private void changeProjectStatus(){
         admin a = new admin();
         String[] projectList = a.ProjectList();
@@ -1143,6 +1161,7 @@ public class admingui{
         change1.addActionListener(new handleStatusChange());
     }
 
+    //no changes in backSmallButton
     private void approveProjectGUI() throws noData{
         admin a = new admin();
         String[] projectList = a.ProjectListNotApproved();
@@ -1201,13 +1220,30 @@ public class admingui{
         gbc.fill = GridBagConstraints.HORIZONTAL;
         projectApprove.add(dynamicDeadlineTextField, gbc);
 
+        gbc.gridx = 0;
+        gbc.gridy = 4;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        descriptionLabel.setForeground(Color.WHITE);
+        projectApprove.add(descriptionLabel, gbc);
+
+        gbc.gridx = 1;
+        gbc.gridy = 4;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        descriptionTextField.setLineWrap(true);
+        descriptionTextField.setEditable(false);
+        descriptionTextField.setForeground(Color.WHITE);
+        descriptionTextField.setCaretColor(Color.WHITE);
+        descriptionTextField.setBackground(Color.DARK_GRAY);
+        descriptionTextField.setBorder(new LineBorder(Color.DARK_GRAY));
+        //viewProject.add(descriptionTextField, gbc);
+        projectApprove.add(scroll, gbc);
 
         gbc.gridx = 0;
-        gbc.gridy = 5;
+        gbc.gridy = 6;
         projectApprove.add(backSmallButton,gbc);
         
         gbc.gridx = 1;
-        gbc.gridy = 5;
+        gbc.gridy = 6;
         gbc.fill = GridBagConstraints.HORIZONTAL;
         Approve.setOpaque(false);
         Approve.setContentAreaFilled(false);
@@ -1216,6 +1252,8 @@ public class admingui{
         allID3.addActionListener(new handleShowProjectDetails());
         Approve.addActionListener(new handleStatusChange());
     }
+    
+    
     //Event Handlers from this point 
     
 
@@ -1226,7 +1264,6 @@ public class admingui{
             card.show(display, "clientMenu");
             heading.setText("Client Management Menu");
             backButton.addActionListener(new goToMainMenu());
-            backSmallButton.addActionListener(new goToMainMenu());
         }
     }
 
@@ -1237,7 +1274,6 @@ public class admingui{
             card.show(display,"employeeMenu");
             heading.setText("Employee Management Menu");
             backButton.addActionListener(new goToMainMenu());
-            backSmallButton.addActionListener(new goToMainMenu());
         }
     }
 
@@ -1289,6 +1325,7 @@ public class admingui{
         }
     }
 
+    //changes made here , card no longer goes to the mainMenu but stays in the same menu
     class handleEmployeeData implements ActionListener {
 
         public void actionPerformed(ActionEvent a) {
@@ -1319,7 +1356,7 @@ public class admingui{
                 System.out.println("Entered here");
                 if(failure == 0){
                     JOptionPane.showMessageDialog(frame, "Data Entry Successfull", "Success", JOptionPane.INFORMATION_MESSAGE);
-                    card.show(display, "mainMenu");
+                    card.show(display, "addEmployeeMenu");
 
 
                 }else if(failure == 1){
@@ -1327,13 +1364,14 @@ public class admingui{
                     JOptionPane.showMessageDialog(frame, "Data Entry Failed", "Failed", JOptionPane.ERROR_MESSAGE);
                     //disposing the current frame and invoking the admingui to create a new frame which
                     //will technically redirect the admin to the home screen
-                    card.show(display, "mainMenu");
+                    card.show(display, "addEmployeeMenu");
                 }
             }
 
         }
     }
 
+    //changes made here , card no longer goes to the mainMenu but stays in the same menu
     class handleClientData implements ActionListener {
         public void actionPerformed(ActionEvent a) {
             admin ad = new admin();
@@ -1362,14 +1400,14 @@ public class admingui{
                 //System.out.println("Entered here");
                 if(failure == 0){
                     JOptionPane.showMessageDialog(frame, "Data Entry Successfull", "Success", JOptionPane.INFORMATION_MESSAGE);
-                    card.show(display,"mainMenu");
+                    card.show(display,"addClientMenu");
                     
                 }else if(failure == 1){
                     System.out.println("Failed");
                     JOptionPane.showMessageDialog(frame, "Data Entry Failed", "Failed", JOptionPane.ERROR_MESSAGE);
                     //disposing the current frame and invoking the admingui to create a new frame which
                     //will technically redirect the admin to the home screen
-                    card.show(display,"mainMenu");
+                    card.show(display,"addClientMenu");
                 }
             }
 
@@ -1427,9 +1465,12 @@ public class admingui{
                 ad.removePerson(emp);
                 JOptionPane.showMessageDialog(frame, "Data Deleted", "Info", JOptionPane.PLAIN_MESSAGE);
             }
-            if(input == 0){
-                heading.setText("Administrator Menu");
-                card.show(display,"mainMenu");
+            if(input == 0 && type.compareToIgnoreCase("employee") == 0){
+                heading.setText("Employee Menu");
+                card.show(display,"employeeMenu");
+            }else if(input == 0 && type.compareToIgnoreCase("client") == 0){
+                heading.setText("Client Menu");
+                card.show(display,"cliMenu");
             }else if(type.compareToIgnoreCase("employee") == 0){
                 card.show(display,"removeEmployeeMenu");
             }else if(type.compareToIgnoreCase("client") == 0){//the else is to prevent the duplication of the ID's when the user clicks on No in the Pop-Up Dialog box
@@ -1448,9 +1489,6 @@ public class admingui{
             cli = ad.showPrimaryDetails(cli);
             //System.out.println("\nClient GUI Details called\n");
             updateRemGUI(cli);
-          
-    
-
         }
     }
 
@@ -1497,8 +1535,13 @@ public class admingui{
 
     class handleViewProjects implements ActionListener{
         public void actionPerformed(ActionEvent a){
-            frame.dispose();
-            new ProjectReportGui();
+            try{
+                new ProjectReportGui();
+                frame.dispose();
+            }catch(noData nd){
+                nd.displaYError(frame);
+
+            }
         }
     }
     

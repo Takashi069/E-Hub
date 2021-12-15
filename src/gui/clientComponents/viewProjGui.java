@@ -32,6 +32,7 @@ public class viewProjGui {
     JButton backButton = new JButton(new ImageIcon(path.back_btn));
     JLabel descriptionLabel = new JLabel("Description");
     JTextArea descriptionTextField = new JTextArea(10, 50);
+    JScrollPane scroll = new JScrollPane(descriptionTextField,JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
     String project_status;
 
     JComboBox<String> allID = new JComboBox<String>(emptyArray);
@@ -91,7 +92,8 @@ public class viewProjGui {
         descriptionTextField.setCaretColor(Color.WHITE);
         descriptionTextField.setBackground(Color.DARK_GRAY);
         descriptionTextField.setBorder(new LineBorder(Color.DARK_GRAY));
-        viewProject.add(descriptionTextField, gbc);
+        //viewProject.add(descriptionTextField, gbc);
+        viewProject.add(scroll, gbc);
 
         gbc.gridx = 0;
         gbc.gridy = 5;

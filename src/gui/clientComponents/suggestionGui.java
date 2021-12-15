@@ -20,6 +20,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.*;
 import javax.swing.*;
+import javax.swing.JScrollPane;
 
 public class suggestionGui extends JFrame {
     getAssets path = new getAssets();
@@ -32,6 +33,9 @@ public class suggestionGui extends JFrame {
     JTextArea Projectlog_area = new JTextArea(10, 40);
 
     JTextArea Suggestion_area = new JTextArea(10, 40);
+    JScrollPane scroll = new JScrollPane(Suggestion_area, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+    JScrollPane scroll2 = new JScrollPane(Projectlog_area, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+
     // JTextField startTextField = new JTextField(20);
     // JComboBox<String> domainOptions;
 
@@ -70,7 +74,8 @@ public class suggestionGui extends JFrame {
         Projectlog_area.setCaretColor(Color.WHITE);
         Projectlog_area.setBackground(Color.DARK_GRAY);
         Projectlog_area.setBorder(new LineBorder(Color.DARK_GRAY));
-        menu.add(Projectlog_area, constraints);
+        //menu.add(Projectlog_area, constraints);
+        menu.add(scroll2, constraints);
 
         /*
          * constraints.gridx = 0;
@@ -92,7 +97,8 @@ public class suggestionGui extends JFrame {
         Suggestion_area.setCaretColor(Color.WHITE);
         Suggestion_area.setBackground(Color.DARK_GRAY);
         Suggestion_area.setBorder(new LineBorder(Color.DARK_GRAY));
-        menu.add(Suggestion_area, constraints);
+        //menu.add(Suggestion_area, constraints);
+        menu.add(scroll,constraints);
 
         constraints.gridx = 0;
         constraints.gridy = 4;

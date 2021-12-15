@@ -238,15 +238,18 @@ public class admin extends Person {
         
         String Cliquery = "insert into client values" + 
         "(?, ?, 0)";
+
+        String loginQuery = "insert into login values (?,?,'ehub','ehub is the password')";
         
         try{
             Class.forName("org.postgresql.Driver");
             c = DriverManager.getConnection(s.url, s.dbUser, s.dbPass);
             stmt = c.createStatement();
-
+            String ID = C.assignID();
+            
             //Add the information in the Person table
             PreparedStatement ps = c.prepareStatement(personQuery);
-            ps.setString(1, C.assignID());;
+            ps.setString(1, ID);
             ps.setString(2, C.getName());
             ps.setString(3, C.getAddress()[0]);
             ps.setString(4, C.getAddress()[1]);
@@ -260,8 +263,15 @@ public class admin extends Person {
             System.out.println(output + " Rows Updated");
             
             ps = c.prepareStatement(Cliquery);
-            ps.setString(1, C.assignID());
+            System.out.println("Assigning Client in Client Database: ");
+            ps.setString(1, ID);
             ps.setString(2, C.getCompany());
+            output = ps.executeUpdate();
+            System.out.println(output + " Row(s) Updated");
+
+            ps = c.prepareStatement(loginQuery);
+            ps.setString(1, ID);
+            ps.setString(2, C.getName());
             output = ps.executeUpdate();
             System.out.println(output + " Row(s) Updated");
             stmt.close();
@@ -386,12 +396,43 @@ public class admin extends Person {
         }
     }
 //This function below will list out all the projects
-     public String[] ProjectList(){
+    public String[] ProjectList(){
         String[] list = null;
         Connection con = null;
         Statement stmt = null;
         ResultSet rs = null;
         String query  = "select project_id from project where status_of_software !='NOT APPROVED' order by project_id";
+        String query2 = "select count(project_id) from project";
+        try{
+            Class.forName("org.postgresql.Driver");
+            con = DriverManager.getConnection(s.url, s.dbUser, s.dbPass);
+            stmt = con.createStatement();
+            rs = stmt.executeQuery(query2);
+            if(rs.next())
+                list = new String[rs.getInt(1)];
+            rs = stmt.executeQuery(query);
+            
+            int i = 0;
+            while(rs.next()){
+                /* test = rs.getString(1);
+                System.out.println(test); */
+                list[i] = rs.getString(1);
+                i++;
+            }
+            
+        }catch(Exception e){
+            e.printStackTrace();
+            System.out.println("Error");
+        }
+        return list;
+    }
+
+    public String[] ProjectListAll(){
+        String[] list = null;
+        Connection con = null;
+        Statement stmt = null;
+        ResultSet rs = null;
+        String query  = "select project_id from project";
         String query2 = "select count(project_id) from project";
         try{
             Class.forName("org.postgresql.Driver");
