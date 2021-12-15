@@ -13,6 +13,7 @@ import admin.admin;
 import assets.getAssets;
 import employee.employee;
 import exceptions.noData;
+import exceptions.noEmployeeAvailable;
 import client.client;
 import Project.project;
 
@@ -113,7 +114,7 @@ public class admingui{
     
     String[] emptyArray = {"null"};
     //Reference for the domain: https://www.quora.com/What-are-the-different-domains-in-software-development
-    final String[] domainChoices = {"WEB","ANDROID","SCIENTIFIC","BUSINESS", "MEDICAL","INDUSTRIAL & PROCESS CONTROL","SYSTEMS SOFTWARE", "TOOL DEVELOPMENT(COMPILERS, ASSEMBLERS)"};
+    final String[] domainChoices = {"WEB","ANDROID","SCIENTIFIC","BUSINESS", "MEDICAL","INDUSTRIAL & PROCESS CONTROL","SYSTEMS SOFTWARE", "TOOL DEVELOPMENT"};
     final String[] statusChoices = {"APPROVED","REJECTED","DEADLINE DATE CHANGED","CHANGES REJECTED","CHANGES APPROVED","WORK IN PROGRESS","TESTING","COMPLETED","PAID"};
     //It is used to create a drop down menu of the various domains
     JComboBox<String> domainComboBox = new JComboBox<String>(domainChoices);
@@ -964,107 +965,6 @@ public class admingui{
         allID1.addActionListener(new handleShowEmpDetails());
 
     }
-
-    //no changes in backSmallButton
-    private void viewEmpGUI() {
-        admin ad = new admin();
-        employee emp = new employee();
-        remEmp.setLayout(new GridBagLayout());
-        GridBagConstraints gbc = new GridBagConstraints();
-        String[] ID = ad.PersonList(emp);
-        allID1.removeAllItems();
-        
-        for (String id : ID) {
-            allID1.addItem(id);
-        }
-        gbc.ipadx = 100;
-        gbc.ipady = 10;
-        gbc.gridx = 0;
-        gbc.gridy = 0;
-        gbc.insets = new Insets(20, 20, 20, 0);
-        gbc.fill = GridBagConstraints.HORIZONTAL;
-        remEmp.add(id, gbc);
-
-        gbc.gridx = 1;
-        gbc.gridy = 0;
-        gbc.fill = GridBagConstraints.HORIZONTAL;
-        remEmp.add(allID1, gbc);
-
-        gbc.gridx = 0;
-        gbc.gridy = 1;
-        gbc.fill = GridBagConstraints.HORIZONTAL;
-        remEmp.add(name, gbc);
-
-        gbc.gridx = 1;
-        gbc.gridy = 1;
-        gbc.fill = GridBagConstraints.HORIZONTAL;
-        remEmp.add(dynamicName, gbc);
-        dynamicName.setEditable(false);
-
-        gbc.gridx = 0;
-        gbc.gridy = 2;
-        gbc.fill = GridBagConstraints.HORIZONTAL;
-        remEmp.add(dob, gbc);
-
-        gbc.gridx = 1;
-        gbc.gridy = 2;
-        gbc.fill = GridBagConstraints.HORIZONTAL;
-        remEmp.add(dynamicDOB, gbc);
-        dynamicDOB.setEditable(false);
-
-        gbc.gridx = 0;
-        gbc.gridy = 3;
-        gbc.fill = GridBagConstraints.HORIZONTAL;
-        remEmp.add(experience, gbc);
-
-        gbc.gridx = 1;
-        gbc.gridy = 3;
-        gbc.fill = GridBagConstraints.HORIZONTAL;
-        remEmp.add(dynamicExperience, gbc);
-        dynamicExperience.setEditable(false);
-
-        gbc.gridx = 0;
-        gbc.gridy = 4;
-        gbc.fill = GridBagConstraints.HORIZONTAL;
-        remEmp.add(domain, gbc);
-
-        gbc.gridx = 1;
-        gbc.gridy = 4;
-        gbc.fill = GridBagConstraints.HORIZONTAL;
-        remEmp.add(dynamicDomain, gbc);
-        dynamicDomain.setEditable(false);
-
-        gbc.gridx = 0;
-        gbc.gridy = 5;
-        gbc.fill = GridBagConstraints.HORIZONTAL;
-        remEmp.add(projectsWorked, gbc);
-
-        gbc.gridx = 1;
-        gbc.gridy = 5;
-        gbc.fill = GridBagConstraints.HORIZONTAL;
-        remEmp.add(dynamicProjectsWorked, gbc);
-        dynamicProjectsWorked.setEditable(false);
-
-        gbc.gridx = 0;
-        gbc.gridy = 6;
-        gbc.fill = GridBagConstraints.HORIZONTAL;
-        remEmp.add(projectsLed, gbc);
-
-        gbc.gridx = 1;
-        gbc.gridy = 6;
-        gbc.fill = GridBagConstraints.HORIZONTAL;
-        remEmp.add(dynamicProjectsLed, gbc);
-        dynamicProjectsLed.setEditable(false);
-
-        gbc.gridx = 0;
-        gbc.gridy = 7;
-        backSmallButton.setOpaque(false);
-        backSmallButton.setContentAreaFilled(false);
-        backSmallButton.setBorderPainted(false);
-        remEmp.add(backSmallButton,gbc);
-        allID1.addActionListener(new handleShowEmpDetails());
-
-    }
     
     //no changes in backSmallButton
     private void changeProjectStatus(){
@@ -1250,7 +1150,7 @@ public class admingui{
         Approve.setBorderPainted(false);
         projectApprove.add(Approve,gbc);
         allID3.addActionListener(new handleShowProjectDetails());
-        Approve.addActionListener(new handleStatusChange());
+        Approve.addActionListener(new handleApproval());
     }
     
     
@@ -1550,9 +1450,30 @@ public class admingui{
             admin ad = new admin();
             project p = new project();
             p.setProjectID((String)allID3.getSelectedItem());
-            ad.approveProject(p);
-            logPrompt(p);
-            JOptionPane.showMessageDialog(frame, "Status Updated", "Info", JOptionPane.PLAIN_MESSAGE);
+            p.autoAssignProjectType();
+            try {
+                p.setProjectMembers();
+                int output = logPrompt(p);
+                if(output==1){
+                    p.assignProjectHead();   
+                    p.updateEmpStatus(p.getProjectMembers(), "Y");
+                    ad.approveProject(p);
+                    JOptionPane.showMessageDialog(frame, "Status Updated", "Info", JOptionPane.PLAIN_MESSAGE);
+                }else if(output == 0){
+                    JOptionPane.showMessageDialog(frame, "Status Not Updated: Provide Log to Update Status", "Info", JOptionPane.PLAIN_MESSAGE);
+                }
+            } catch (noEmployeeAvailable nea) {
+                System.out.println("Error in assigning employees to the project");
+                nea.displayError(frame);
+                int output = logPrompt(p);
+                if(output==1){
+                    JOptionPane.showMessageDialog(frame, "Status Updated", "Info", JOptionPane.PLAIN_MESSAGE);
+                }else if(output == 0){
+                    JOptionPane.showMessageDialog(frame, "Status Not Updated: Provide Log to Update Status", "Info", JOptionPane.PLAIN_MESSAGE);
+                }
+                
+            }
+            
         }
     }
 
@@ -1564,12 +1485,17 @@ public class admingui{
             project p = new project();
             p.setProjectID((String)allID3.getSelectedItem());
             int output = logPrompt(p);
-            if(output == 1){
+            if(output == 1 && status.compareToIgnoreCase("Complete")==1){
+                System.out.println("Project Completed");
+                p.updateEmpStatus(p.autoRetrieveProjectMembers(), "N");
+                ad.updateProjectStatus(p, status);
+                JOptionPane.showMessageDialog(frame, "Status Updated", "Info", JOptionPane.PLAIN_MESSAGE);
+            }else if(output == 1 && status.compareToIgnoreCase("Complete")==0){
+                System.out.println("Project Not Completed");
                 ad.updateProjectStatus(p, status);
                 JOptionPane.showMessageDialog(frame, "Status Updated", "Info", JOptionPane.PLAIN_MESSAGE);
             }else{
                 JOptionPane.showMessageDialog(frame, "Status Not Updated: Provide Log to update", "Info", JOptionPane.PLAIN_MESSAGE);
-
             }
 
         }

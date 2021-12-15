@@ -70,8 +70,16 @@ select * from project;
 select * from login l ;
 select * from project;
 select * from login l ;
+select * from project_team pt ;
 
 delete from project;
+delete from project_team;
+
+update project set project_leader = null where project_id = 'PRO002';
+
+update employee set engaged_in_project = 'N';
+update project set status_of_software = 'NOT APPROVED' ;
+
 
 select p.id, p.name, p.dob, c.company ,c.total_orders 
 from person p, client c
@@ -122,7 +130,13 @@ insert into person values
 
 select project_log, project_id from project p;
 delete from person where id = 'EMP003';
+select Emp_ID,experience from employee where Specialisation_ID = 'WEB' and Engaged_In_Project = 'N' order by experience asc;
 
+update project_team set project_id = 'PRO001',emp_id='EMP001';
+insert into project_team(project_id,emp_id) values('PRO001','EMP001');
+select count(Emp_ID) from employee where Specialisation_ID = 'WEB' and Engaged_In_Project = 'N'
+
+select e.emp_id, e.experience from employee e , project_team pt where pt.emp_id  = e.emp_id ;
 /*=====================Mohak=============================*/
 create table Project
 (

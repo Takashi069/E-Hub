@@ -564,7 +564,7 @@ public class admin extends Person {
     public void approveProject(project P){
         Connection con = null;
         Statement stmt = null;
-        String query  = "update project set status_of_software = 'APPROVED' where project_id = " + P.getProjectID();
+        String query  = "update project set status_of_software = 'APPROVED' where project_id = '" + P.getProjectID()+"'";
         try{
             Class.forName("org.postgresql.Driver");
             con = DriverManager.getConnection(s.url, s.dbUser, s.dbPass);
