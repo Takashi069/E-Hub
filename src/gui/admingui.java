@@ -1425,8 +1425,8 @@ public class admingui{
     class handleViewEmployee implements ActionListener{
         public void actionPerformed(ActionEvent a){
             heading.setText("View Employee");
-            viewEmpGUI();
-            card.show(display,"removeEmployeeMenu");
+            frame.dispose();
+            new EmpReportGui();
         }
     }
 
