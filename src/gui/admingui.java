@@ -85,6 +85,7 @@ public class admingui{
     JButton submit2 = new JButton(new ImageIcon(path.submit_button));
     JButton change1 = new JButton(new ImageIcon(path.change_button));
     JButton Approve = new JButton(new ImageIcon(path.approve_button));
+    JButton reject = new JButton(new ImageIcon(path.reject_button));
     JButton remove1 = new JButton(new ImageIcon(path.remove_button));
     JButton remove2 = new JButton(new ImageIcon(path.remove_button));
     JButton backButton = new JButton(new ImageIcon(path.back_arrow_btn));
@@ -1140,19 +1141,29 @@ public class admingui{
         //viewProject.add(descriptionTextField, gbc);
         projectApprove.add(scroll, gbc);
 
-        gbc.gridx = 0;
+        gbc.gridx = 2;
         gbc.gridy = 6;
         projectApprove.add(backSmallButton,gbc);
         
-        gbc.gridx = 1;
+        gbc.gridx = 0;
         gbc.gridy = 6;
         gbc.fill = GridBagConstraints.HORIZONTAL;
         Approve.setOpaque(false);
         Approve.setContentAreaFilled(false);
         Approve.setBorderPainted(false);
         projectApprove.add(Approve,gbc);
+
+        gbc.gridx = 1;
+        gbc.gridy = 6;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        reject.setOpaque(false);
+        reject.setContentAreaFilled(false);
+        reject.setBorderPainted(false);
+        projectApprove.add(reject,gbc);
+
         allID3.addActionListener(new handleShowProjectDetails());
         Approve.addActionListener(new handleApproval());
+        reject.addActionListener(new handleReject());
     }
     
     
@@ -1476,6 +1487,23 @@ public class admingui{
                 
             }
             
+        }
+    }
+
+    class handleReject implements ActionListener {
+        public void actionPerformed(ActionEvent a) {
+            project pro = new project();
+            admin ad = new admin();
+            pro.setProjectID((String)allID3.getSelectedItem());
+            int output = logPrompt(pro);
+            if(output == 1){
+                ad.ProjectChanges(pro,"REJECTED");
+                JOptionPane.showMessageDialog(frame, "Status Updated", "Info", JOptionPane.PLAIN_MESSAGE);
+            }else{
+                JOptionPane.showMessageDialog(frame, "Status Not Updated: Provide Log to update", "Info", JOptionPane.PLAIN_MESSAGE);
+
+            }
+            frame.repaint();
         }
     }
 
