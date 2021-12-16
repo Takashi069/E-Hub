@@ -1163,13 +1163,14 @@ public class admingui{
 
         gbc.gridx = 1;
         gbc.gridy = 5;
+        dynamicPriority.setEditable(false);
         projectApprove.add(dynamicPriority,gbc);
 
         gbc.gridx = 0;
         gbc.gridy = 6;
         projectApprove.add(backSmallButton,gbc);
         
-        gbc.gridx = 0;
+        gbc.gridx = 1;
         gbc.gridy = 6;
         gbc.fill = GridBagConstraints.HORIZONTAL;
         Approve.setOpaque(false);
@@ -1177,7 +1178,7 @@ public class admingui{
         Approve.setBorderPainted(false);
         projectApprove.add(Approve,gbc);
 
-        gbc.gridx = 1;
+        gbc.gridx = 2;
         gbc.gridy = 6;
         gbc.fill = GridBagConstraints.HORIZONTAL;
         reject.setOpaque(false);
