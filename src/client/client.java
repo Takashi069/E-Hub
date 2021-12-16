@@ -19,7 +19,6 @@ public class client extends Person {
     }
 
     private String clientID;
-    private String password;
     private int totalProjectsRequested;
     private int priority;
     private int Total_Orders;
@@ -33,14 +32,6 @@ public class client extends Person {
 
     public void setID(String clientID) {
         this.clientID = clientID;
-    }
-
-    public String getPassword() {
-        return this.password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
     }
 
     public int getTotalProjectsRequested() {

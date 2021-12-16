@@ -126,7 +126,8 @@ drop table project;
 insert into person values
 ('ADM001','Akash Harikumar','Gokulam','Edavanassery', 'Kollam','Kerala','690519','Indian','07/08/2001');
 
-
+insert into Project(Project_ID, Client_ID, Project_Name,Project_Log ,Date_of_Release, Status_of_software, Domain) values('PRO008','CLI002','John Memoir','A website to display all of Sir Arthur's novel for the whole world to read about
+#','2022-05-06','NOT APPROVED','WEB')
 
 select project_log, project_id from project p;
 delete from person where id = 'EMP003';
@@ -137,6 +138,10 @@ insert into project_team(project_id,emp_id) values('PRO001','EMP001');
 select count(Emp_ID) from employee where Specialisation_ID = 'WEB' and Engaged_In_Project = 'N'
 
 select e.emp_id, e.experience from employee e , project_team pt where pt.emp_id  = e.emp_id ;
+
+select client_id,count(Project_ID) as Totalprojcount from Project where Status_of_Software='PAID' group by client_id order by Totalprojcount desc;
+
+
 /*=====================Mohak=============================*/
 create table Project
 (
