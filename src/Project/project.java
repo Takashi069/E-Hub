@@ -6,7 +6,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 
-import javax.swing.JFrame;
 
 import gui.secret;
 import exceptions.*;
@@ -68,7 +67,7 @@ public class project {
             System.exit(0);
         }
         try {
-            System.out.println("Opened database successfully for assigning Project Head");
+            System.out.println("Opened database successfully for getting the project Type");
             stmt = c.createStatement();
             String sql = String.format(
                     "select domain from project where project_id = '%s';",

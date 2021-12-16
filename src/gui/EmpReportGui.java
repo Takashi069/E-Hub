@@ -1,6 +1,5 @@
 package gui;
 import javax.swing.*;
-import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 
 import java.awt.*;
@@ -11,9 +10,7 @@ import java.awt.event.*;
 import admin.admin;
 import assets.getAssets;
 import employee.employee;
-import exceptions.noData;
-import client.client;
-import Project.project;
+
 
 public class EmpReportGui {
     JFrame frame = new JFrame();

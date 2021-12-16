@@ -8,10 +8,8 @@ import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import java.awt.event.*;
 
-import admin.admin;
 import assets.getAssets;
 import client.client;
-import gui.secret;
 import Project.project;
 
 public class viewProjGui {

@@ -56,6 +56,7 @@ public class admingui{
     JLabel projectsWorked = new JLabel("Total Projects Worked");
     JLabel projectsLed = new JLabel("Total Projects Led");
     JLabel descriptionLabel = new JLabel("Project Description");
+    JLabel priorityLabel = new JLabel("Priority");
 
 
     JTextField dynamicID = new JTextField();
@@ -71,6 +72,7 @@ public class admingui{
     JTextField dynamicClientIDTextField = new JTextField();
     JTextField dynamicStatusTextField = new JTextField();
     JTextField dynamicDeadlineTextField = new JTextField();
+    JTextField dynamicPriority = new JTextField();
 
     JButton empButton = new JButton(new ImageIcon(path.manage_emp));
     JButton cliButton = new JButton(new ImageIcon(path.manage_client));
@@ -217,6 +219,11 @@ public class admingui{
         dynamicDeadlineTextField.setBackground(Color.DARK_GRAY);
         dynamicDeadlineTextField.setBorder(new LineBorder(Color.DARK_GRAY));
         dynamicDeadlineTextField.setCaretColor(Color.WHITE);
+
+        dynamicPriority.setForeground(Color.WHITE);
+        dynamicPriority.setBackground(Color.DARK_GRAY);
+        dynamicPriority.setBorder(new LineBorder(Color.DARK_GRAY));
+        dynamicPriority.setCaretColor(Color.WHITE);
 
         backSmallButton.setOpaque(false);
         backSmallButton.setContentAreaFilled(false);
@@ -862,6 +869,9 @@ public class admingui{
                     break;
                 }
             }
+            client c = new client();
+            c.setID(P.getClientID());
+            c.ClientPriority();
             System.out.println(index);
             dynamicProjectNameTextField.setText(P.getProjectName());
             System.out.println(P.getClientID()); //--> Shows NULL here
@@ -869,8 +879,14 @@ public class admingui{
             //System.out.println("UpdateRemEmpGUI: " + p.getName());
             dynamicStatusTextField.setText(P.getProjectStatus());
             dynamicDeadlineTextField.setText(P.getProjectDeadline());
+            System.out.println("Client ID: " + c.getID() + "Priority: " + c.getPriority());
+            
+            if(c.getPriority() == 0)
+                dynamicPriority.setText("No Projects Paid Yet");
+            else
+                dynamicPriority.setText(String.format("%d", c.getPriority()));
+            
             statusComboBox.setSelectedIndex(index);
-
             String full_log = P.getProjectLog();
             String description = full_log.split("#")[0].replaceAll("\\\\n", System.getProperty("line.separator"));
             descriptionTextField.setText(description);
@@ -958,7 +974,6 @@ public class admingui{
 
         gbc.gridx = 1;
         gbc.gridy = 5;
-        
         gbc.fill = GridBagConstraints.HORIZONTAL;
         remove2.setOpaque(false);
         remove2.setContentAreaFilled(false);
@@ -1141,7 +1156,16 @@ public class admingui{
         //viewProject.add(descriptionTextField, gbc);
         projectApprove.add(scroll, gbc);
 
-        gbc.gridx = 2;
+        gbc.gridx = 0;
+        gbc.gridy = 5;
+        priorityLabel.setForeground(Color.WHITE);
+        projectApprove.add(priorityLabel,gbc);
+
+        gbc.gridx = 1;
+        gbc.gridy = 5;
+        projectApprove.add(dynamicPriority,gbc);
+
+        gbc.gridx = 0;
         gbc.gridy = 6;
         projectApprove.add(backSmallButton,gbc);
         

@@ -140,7 +140,7 @@ public class client extends Person {
         return finalID;
     }
 
-public void retrieve_TotalOrders(project p) {
+    public void retrieve_TotalOrders(project p) {
         Connection c = null;
         Statement stmt = null;
         try {
@@ -259,27 +259,7 @@ public void retrieve_TotalOrders(project p) {
             e.printStackTrace();
         }
     }
-    /*
-     * public void removeProject(project P) {
-     * Connection c = null;
-     * String query = "delete from Project where Project_ID = ?";
-     * // The following lines of code are temporary:
-     * 
-     * // String project_id = P.getProjectID;
-     * 
-     * try {
-     * Class.forName("org.postgresql.Driver");
-     * c = DriverManager.getConnection(s.url, s.dbUser, s.dbPass);
-     * PreparedStatement ps = c.prepareStatement(query);
-     * ps.setString(1, P.getProjectID());
-     * int output = ps.executeUpdate();
-     * System.out.println(output + " Row(s) Removed");
-     * } catch (Exception e) {
-     * e.printStackTrace();
-     * }
-     * }
-     */
-
+    
     public project showPrimaryDetails(project p) {
         Connection c = null;
         project retreiveproject = new project();
@@ -339,6 +319,7 @@ public void retrieve_TotalOrders(project p) {
     }
 
     public void ClientPriority() {
+        System.out.println("Entered Client Priority");
         Connection c = null;
         String query = "select client_id,count(Project_ID) as Totalprojcount from Project where Status_of_Software='PAID' group by client_id order by Totalprojcount desc;";
         Statement ps = null;
@@ -354,6 +335,7 @@ public void retrieve_TotalOrders(project p) {
 
             // ps.setString(1, client_id);
             ResultSet rs = ps.executeQuery(query);
+            System.out.println("Before While Loop");
             while (rs.next()) {
                 x = rs.getString("client_id");
                 y = rs.getInt("Totalprojcount");

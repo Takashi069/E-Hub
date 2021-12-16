@@ -10,11 +10,6 @@ import assets.getAssets;
 import client.client;
 import javax.swing.border.LineBorder;
 
-import Project.project;
-import client.client;
-import gui.secret;
-import gui.clientComponents.requestProjGui;
-import gui.clientComponents.viewProjGui;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;

@@ -13,8 +13,7 @@ import javax.swing.border.LineBorder;
 import Project.project;
 import assets.getAssets;
 import client.client;
-import gui.clientgui;
-import gui.secret;
+
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -34,7 +33,7 @@ public class requestProjGui extends JFrame {
     JTextArea descriptionTextField = new JTextArea(10, 50);
 
     String[] domainChoices = { "WEB", "ANDROID", "SCIENTIFIC", "BUSINESS", "MEDICAL",
-            "INDUSTRIAL & PROCESS CONTROL", "SYSTEMS SOFTWARE", "TOOL DEVELOPMENT(COMPILERS, ASSEMBLERS)" };
+            "INDUSTRIAL & PROCESS CONTROL", "SYSTEMS SOFTWARE", "TOOL DEVELOPMENT" };
     JComboBox<String> domainOptions;
 
     JPanel title = new JPanel();
