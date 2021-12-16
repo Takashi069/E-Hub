@@ -27,12 +27,13 @@ public class ClientReportGui {
     JLabel Company = new JLabel("Company");
     JLabel totalOrders = new JLabel("Total Orders");
     JLabel heading = new JLabel("something");
+JLabel priority = new JLabel("Client Priority");
     JTextField dynamicID = new JTextField();
     JTextField dynamicName = new JTextField();
     JTextField dynamicDOB = new JTextField();
     JTextField dynamicCompany = new JTextField();
     JTextField dynamicTotalOrder = new JTextField();
-
+JTextField dynamicPriority = new JTextField();
     JButton backSmallButton = new JButton(new ImageIcon(path.back_btn));
 
     String[] emptyArray = { "null" };
@@ -141,12 +142,28 @@ public ClientReportGui() {
         gbc.gridy = 4;
         gbc.fill = GridBagConstraints.HORIZONTAL;
         dynamicTotalOrder.setForeground(Color.WHITE);
+        dynamicTotalOrder.setEditable(false);
         dynamicTotalOrder.setBackground(Color.DARK_GRAY);
         dynamicTotalOrder.setBorder(new LineBorder(Color.DARK_GRAY));
         remClient.add(dynamicTotalOrder, gbc);
 
         gbc.gridx = 0;
         gbc.gridy = 5;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        priority.setForeground(Color.WHITE);
+        remClient.add(priority, gbc);
+
+        gbc.gridx = 1;
+        gbc.gridy = 5;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        dynamicPriority.setForeground(Color.WHITE);
+        dynamicPriority.setEditable(false);
+        dynamicPriority.setBackground(Color.DARK_GRAY);
+        dynamicPriority.setBorder(new LineBorder(Color.DARK_GRAY));
+        remClient.add(dynamicPriority, gbc);
+
+        gbc.gridx = 0;
+        gbc.gridy = 6;
         backSmallButton.setOpaque(false);
         backSmallButton.setContentAreaFilled(false);
         backSmallButton.setBorderPainted(false);
@@ -172,8 +189,14 @@ public ClientReportGui() {
         dynamicName.setText(C.getName());
         dynamicDOB.setText(C.getDOB());
         dynamicCompany.setText(C.getCompany());
-        //System.out.println("UpdateRemCliGUI: " + C.getName());
         dynamicTotalOrder.setText((String.format("%d", C.getTotal_Orders())));
+        C.ClientPriority();
+        if (C.getPriority() == 0)
+            dynamicPriority.setText("No paid projects yet");
+        else
+            dynamicPriority.setText((String.format("%d", C.getPriority())));
+       
+
     }
 
     class handleShowCliDetails implements ActionListener {

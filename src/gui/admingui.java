@@ -1487,12 +1487,12 @@ public class admingui{
             project p = new project();
             p.setProjectID((String)allID3.getSelectedItem());
             int output = logPrompt(p);
-            if(output == 1 && status.compareToIgnoreCase("Complete")==1){
+            if(output == 1 && status.compareToIgnoreCase("Complete")==0){
                 System.out.println("Project Completed");
                 p.updateEmpStatus(p.autoRetrieveProjectMembers(), "N");
                 ad.updateProjectStatus(p, status);
                 JOptionPane.showMessageDialog(frame, "Status Updated", "Info", JOptionPane.PLAIN_MESSAGE);
-            }else if(output == 1 && status.compareToIgnoreCase("Complete")==0){
+            }else if(output == 1 && status.compareToIgnoreCase("Complete")!=0){
                 System.out.println("Project Not Completed");
                 ad.updateProjectStatus(p, status);
                 JOptionPane.showMessageDialog(frame, "Status Updated", "Info", JOptionPane.PLAIN_MESSAGE);

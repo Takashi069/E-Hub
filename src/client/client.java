@@ -64,7 +64,7 @@ public class client extends Person {
     }
 
     public void setTotal_Orders(int Total_Orders) {
-        this.Total_Orders = 0;
+        this.Total_Orders = Total_Orders;
     }
 
     public String getCompany() {
@@ -367,7 +367,10 @@ public void retrieve_TotalOrders(project p) {
                 // System.out.println(y);
             }
             // priority= Clientvec.indexOf(x);
-            setPriority(Clientvec.indexOf(x) + 1);
+          //  int val = Clientvec.indexOf(x);
+          x = this.getID();
+            this.setPriority(Clientvec.indexOf(x) + 1);
+            System.out.println("Priority:"+Clientvec.indexOf(x) + 1);
             // System.out.print(Clientvec);
             // System.out.print(Tprojvec);
             // For prioirity thingy
