@@ -10,6 +10,7 @@ import java.awt.event.*;
 import admin.admin;
 import assets.getAssets;
 import employee.employee;
+import report.employeeReport;
 
 
 public class EmpReportGui {
@@ -178,7 +179,7 @@ public class EmpReportGui {
 backSmallButton.addActionListener(new goToMainMenu());
     }
 
-    private void updateRemGUI(employee E) {
+    private void updateEmployeGui(employee E) {
         dynamicName.setText(E.getName());
         dynamicDOB.setText(E.getDOB());
         //System.out.println("UpdateRemEmpGUI: " + E.getName());
@@ -190,12 +191,12 @@ backSmallButton.addActionListener(new goToMainMenu());
 
     class handleShowEmpDetails implements ActionListener {
         public void actionPerformed(ActionEvent a) {
-            admin ad = new admin();
+            employeeReport empRep = new employeeReport();
             employee emp = new employee();
             emp.setID((String) allID1.getSelectedItem());
-            emp = ad.showPrimaryDetails(emp);
+            emp = empRep.displayReport(emp);
             //System.out.println("\nEmployee GUI Details called\n");
-            updateRemGUI(emp);
+            updateEmployeGui(emp);
         }
     }
     class goToMainMenu implements ActionListener{

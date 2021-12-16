@@ -1,87 +1,45 @@
 package report;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import client.client;
+import gui.secret;
 
-public class clientReport extends client {
-    private int totalProjectsCompleted;
-    private int totalProjectsPaid;
+public class clientReport  {
 
-    public int getTotalProjectsCompleted() {
-        return this.totalProjectsCompleted;
-    }
 
-    public void setTotalProjectsCompleted(int totalProjectsCompleted) {
-        this.totalProjectsCompleted = totalProjectsCompleted;
-    }
-
-    public int getTotalProjectsPaid() {
-        return this.totalProjectsPaid;
-    }
-
-    public void setTotalProjectsPaid(int totalProjectsPaid) {
-        this.totalProjectsPaid = totalProjectsPaid;
-    }
-
-    /* public void TotalProjectsCompleted() {
+    public client displayReport(client C){
         Connection c = null;
-        String query = "select count(Project_ID) as Totalprojcount from Project where Client_ID = ? and Status_of_Software='COMPLETED'";
-        // The following lines of code are temporary:
-    
-        String client_id = "CLI001";
-        try {
-            int x = 0;
+        secret s = new secret();
+        client retreiveClient = new client();
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        java.sql.Date date;
+        String query1 = "select p.id, p.name, p.dob, c.company ,c.total_orders" + 
+                         " from person p, client c " +
+                         "where p.id = c.client_id and c.client_id = ?";
+        try{
             Class.forName("org.postgresql.Driver");
             c = DriverManager.getConnection(s.url, s.dbUser, s.dbPass);
-            PreparedStatement ps = c.prepareStatement(query);
-            ps.setString(1, client_id);
-            ResultSet rs = ps.executeQuery();
-            if (rs.next()) {
-                x = rs.getInt("Totalprojcount");
+            ps = c.prepareStatement(query1);
+            ps.setString(1, C.getID());
+            rs = ps.executeQuery();
+            if(rs.next()){
+                retreiveClient.setID(rs.getString(1));
+                retreiveClient.setName(rs.getString(2));
+                // System.out.println(rs.getString(2));
+                date  = rs.getDate(3);
+                retreiveClient.setDOB(date.toString());
+                retreiveClient.setCompany(rs.getString(4));
+                retreiveClient.setTotal_Orders(rs.getInt(5));
             }
-            rs.close();
-            System.out.println(x + " is the count");
-        } catch (Exception e) {
+        }catch(Exception e){
             e.printStackTrace();
+            //System.out.println("Is it here\n\n");
         }
-    } */
-
-    /* public void TotalProjectsPaid() {
-        Connection c = null;
-        String query = "select count(Project_ID) as Totalprojcount from Project where Client_ID = ? and Status_of_Software='PAID'";
-        // The following lines of code are temporary:
-    
-        String client_id = "CLI001";
-        try {
-            int x = 0;
-            Class.forName("org.postgresql.Driver");
-            c = DriverManager.getConnection(s.url, s.dbUser, s.dbPass);
-            PreparedStatement ps = c.prepareStatement(query);
-            ps.setString(1, client_id);
-            ResultSet rs = ps.executeQuery();
-            if (rs.next()) {
-                x = rs.getInt("Totalprojcount");
-            }
-            rs.close();
-            System.out.println(x + " is the count");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    } */
-
-    /* public String displayReport() { //right now it does nothing
-        return "{" +
-                " clientID='" + getID() + "'" +
-                ", totalProjectsRequested='" + getTotalProjectsRequested() + "'" +
-                ", priority='" + getPriority() + "'" +
-                " totalProjectsCompleted='" + getTotalProjectsCompleted() + "'" +
-                ", totalProjectsPaid='" + getTotalProjectsPaid() + "'" +
-                "}";
-    } */
-
-    public String[] setDisplayReport() {
-        
-        String[] displayReport = { getID(), getCompany(), Integer.toString(getPriority()),
-                Integer.toString(getTotal_Orders()) };
-        return displayReport;
+        return retreiveClient;
     }
+
 }

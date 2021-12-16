@@ -284,7 +284,7 @@ public class admin extends Person {
         }
     }
 
-    public client showPrimaryDetails(client C){
+    /* public client showPrimaryDetails(client C){
         Connection c = null;
         client retreiveClient = new client();
         PreparedStatement ps = null;
@@ -313,9 +313,9 @@ public class admin extends Person {
             //System.out.println("Is it here\n\n");
         }
         return retreiveClient;
-    }
+    } */
 
-    public employee showPrimaryDetails(employee E){
+    /* public employee showPrimaryDetails(employee E){
         Connection c = null;
         employee retreiveEmployee = new employee();
         PreparedStatement ps = null;
@@ -359,7 +359,7 @@ public class admin extends Person {
             e.printStackTrace();
         }
         return retreiveEmployee;
-    }
+    } */
 
     public void removePerson(client C){
         Connection c = null;
@@ -458,7 +458,7 @@ public class admin extends Person {
         return list;
     }
 
-    public project showPrimaryDetails(project p){
+    /* public project showPrimaryDetails(project p){
         Connection c = null;
         project retrieveProject = new project();
         PreparedStatement ps = null;
@@ -484,7 +484,7 @@ public class admin extends Person {
             e.printStackTrace();
         }
         return retrieveProject;
-    }
+    } */
 
     public String[] ProjectListNotApproved(){
         System.out.println("Project List Not Approved");

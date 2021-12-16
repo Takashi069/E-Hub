@@ -13,6 +13,7 @@ import java.awt.event.ActionListener;
 import java.awt.*;
 
 import client.client;
+import report.clientReport;
 import admin.admin;
 import assets.getAssets;
 
@@ -202,10 +203,10 @@ public ClientReportGui() {
     class handleShowCliDetails implements ActionListener {
 
         public void actionPerformed(ActionEvent a) {
-            admin ad = new admin();
+            clientReport cliRep = new clientReport();
             client cli = new client();
             cli.setID((String) allID2.getSelectedItem());
-            cli = ad.showPrimaryDetails(cli);
+            cli = cliRep.displayReport(cli);
             //System.out.println("\nClient GUI Details called\n");
             updateRemGUI(cli);
         }

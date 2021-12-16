@@ -11,6 +11,7 @@ import admin.admin;
 import assets.getAssets;
 import exceptions.noData;
 import gui.admingui;
+import report.projectReport;
 import Project.project;
 
 public class projectInfo {
@@ -174,9 +175,9 @@ public class projectInfo {
     class handleShowDetails implements ActionListener {
         public void actionPerformed(ActionEvent a) {
             project pro = new project();
-            admin ad = new admin();
+            projectReport proRep = new projectReport();
             pro.setProjectID((String)allID.getSelectedItem());
-            pro = ad.showPrimaryDetails(pro);
+            pro = proRep.displayReport(pro);
             updateviewProjectGUI(pro);
             // System.out.println(pro.getProjectName());
 

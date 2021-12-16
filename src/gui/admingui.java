@@ -14,6 +14,9 @@ import assets.getAssets;
 import employee.employee;
 import exceptions.noData;
 import exceptions.noEmployeeAvailable;
+import report.clientReport;
+import report.employeeReport;
+import report.projectReport;
 import client.client;
 import Project.project;
 
@@ -1421,10 +1424,10 @@ public class admingui{
     class handleShowCliDetails implements ActionListener {
         
         public void actionPerformed(ActionEvent a) {
-            admin ad = new admin();
             client cli = new client();
+            clientReport cliRep = new clientReport();
             cli.setID((String) allID2.getSelectedItem());
-            cli = ad.showPrimaryDetails(cli);
+            cli = cliRep.displayReport(cli);
             //System.out.println("\nClient GUI Details called\n");
             updateRemGUI(cli);
         }
@@ -1432,10 +1435,10 @@ public class admingui{
 
     class handleShowEmpDetails implements ActionListener{
         public void actionPerformed(ActionEvent a){
-            admin ad = new admin();
+            employeeReport empRep = new employeeReport();
             employee emp = new employee();
             emp.setID((String) allID1.getSelectedItem());
-            emp = ad.showPrimaryDetails(emp);
+            emp = empRep.displayReport(emp);
             //System.out.println("\nEmployee GUI Details called\n");
             updateRemGUI(emp);
         }
@@ -1443,12 +1446,12 @@ public class admingui{
 
     class handleShowProjectDetails implements ActionListener{
         public void actionPerformed(ActionEvent a){
-            admin ad = new admin();
             project p = new project();
+            projectReport proRep = new projectReport();
             System.out.println("In handleShowProjectDetails");
             p.setProjectID((String)allID3.getSelectedItem());
             System.out.println("Project ID: " + p.getProjectID());
-            p = ad.showPrimaryDetails(p);
+            p = proRep.displayReport(p);
             updateProjectGUI(p);
 
             

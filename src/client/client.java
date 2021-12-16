@@ -260,29 +260,6 @@ public class client extends Person {
         }
     }
     
-    public project showPrimaryDetails(project p) {
-        Connection c = null;
-        project retreiveproject = new project();
-        PreparedStatement ps = null;
-        ResultSet rs = null;
-        String query1 = "select project_id,project_name,project_log,status_of_software from project where project_id=?";
-        try {
-            Class.forName("org.postgresql.Driver");
-            c = DriverManager.getConnection(s.url, s.dbUser, s.dbPass);
-            ps = c.prepareStatement(query1);
-            ps.setString(1, p.getProjectID());
-            rs = ps.executeQuery();
-            rs.next();
-            retreiveproject.setProjectID(rs.getString(1));
-            retreiveproject.setProjectName(rs.getString(2));
-            retreiveproject.setProjectLog(rs.getString(3));
-            retreiveproject.setProjectStatus(rs.getString(4));
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return retreiveproject; // Returning it so you can display it
-    }
-
     public void ProjectList(project P, String client_id) {
         Connection con = null;
         Statement stmt = null;

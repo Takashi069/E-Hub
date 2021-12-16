@@ -10,6 +10,7 @@ import java.awt.event.*;
 
 import assets.getAssets;
 import client.client;
+import report.projectReport;
 import Project.project;
 
 public class viewProjGui {
@@ -149,12 +150,15 @@ public class viewProjGui {
     class handleShowDetails implements ActionListener {
         public void actionPerformed(ActionEvent a) {
             project pro = new project();
-            client cli = new client();
+            projectReport proRep = new projectReport();
             pro.setProjectID((String) id_list[allID.getSelectedIndex()]);
-            pro = cli.showPrimaryDetails(pro);
+            pro = proRep.displayReport(pro);
             updateviewProjectGUI(pro);
             // System.out.println(pro.getProjectName());
-
+            if(pro.getProjectStatus().equals("NOT APPROVED"))
+                suggest.setEnabled(false);
+            else
+                suggest.setEnabled(true);    
         }
     }
 

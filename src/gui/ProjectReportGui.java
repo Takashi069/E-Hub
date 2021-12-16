@@ -16,6 +16,7 @@ import java.awt.event.ActionListener;
 import java.awt.*;
 
 import exceptions.noData;
+import report.projectReport;
 import admin.admin;
 import assets.getAssets;
 
@@ -210,12 +211,12 @@ public class ProjectReportGui {
 
     class handleShowProjectDetails implements ActionListener {
         public void actionPerformed(ActionEvent a) {
-            admin ad = new admin();
             project p = new project();
+            projectReport proRep = new projectReport();
             System.out.println("In handleShowProjectDetails");
             p.setProjectID((String) allID3.getSelectedItem());
             System.out.println("Project ID: " + p.getProjectID());
-            p = ad.showPrimaryDetails(p);
+            p = proRep.displayReport(p);
             updateProjectGUI(p);
 
         }
@@ -228,7 +229,7 @@ public class ProjectReportGui {
         }
     }
 }
-class newDrissssssssverclass {
+class DriverProRep {
         public static void main(String[] args) {
             try{
                 new ProjectReportGui();
