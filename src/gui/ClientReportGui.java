@@ -17,7 +17,7 @@ import report.clientReport;
 import admin.admin;
 import assets.getAssets;
 
-public class ClientReportGui {
+public class ClientReportGui implements GUIInterface {
     getAssets path = new getAssets();
     JFrame frame = new JFrame();
     JLabel remClient = new JLabel(new ImageIcon(path.frame_bg));
@@ -28,13 +28,13 @@ public class ClientReportGui {
     JLabel Company = new JLabel("Company");
     JLabel totalOrders = new JLabel("Total Orders");
     JLabel heading = new JLabel("something");
-JLabel priority = new JLabel("Client Priority");
+    JLabel priority = new JLabel("Client Priority");
     JTextField dynamicID = new JTextField();
     JTextField dynamicName = new JTextField();
     JTextField dynamicDOB = new JTextField();
     JTextField dynamicCompany = new JTextField();
     JTextField dynamicTotalOrder = new JTextField();
-JTextField dynamicPriority = new JTextField();
+    JTextField dynamicPriority = new JTextField();
     JButton backSmallButton = new JButton(new ImageIcon(path.back_btn));
 
     String[] emptyArray = { "null" };
@@ -54,8 +54,9 @@ JTextField dynamicPriority = new JTextField();
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 } */
 
-public ClientReportGui() {
+    public ClientReportGui() {
         card = new CardLayout();
+        resetTextFields();
         display.setLayout(card);
         frame.setSize(1280, 1024);
         display.add(remClient, "removeClientMenu");
@@ -178,6 +179,15 @@ public ClientReportGui() {
         backSmallButton.addActionListener(new goToMainMenu());
         frame.setVisible(true);
 
+    }
+
+    public void resetTextFields(){
+         dynamicID.setText("Select Data from Drop Down List");
+         dynamicName.setText("Select Data from Drop Down List");
+         dynamicDOB.setText("Select Data from Drop Down List");
+         dynamicCompany.setText("Select Data from Drop Down List");
+         dynamicTotalOrder.setText("Select Data from Drop Down List");
+         dynamicPriority.setText("Select Data from Drop Down List");
     }
     class goToMainMenu implements ActionListener{
         public void actionPerformed(ActionEvent a){

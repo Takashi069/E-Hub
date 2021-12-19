@@ -155,6 +155,7 @@ public class admin extends Person {
             con = DriverManager.getConnection(s.url, s.dbUser, s.dbPass);
             stmt = con.createStatement();
             rs = stmt.executeQuery(query2);
+            
             if(rs.next())
                 list = new String[rs.getInt(1)];
             rs = stmt.executeQuery(query);

@@ -21,7 +21,7 @@ import client.client;
 import Project.project;
 
 
-public class admingui{
+public class admingui implements GUIInterface{
     
     JFrame frame = new JFrame("Admin Menu");
     getAssets path = new getAssets();
@@ -311,6 +311,7 @@ public class admingui{
     //frame has BORDERLAYOUT by default
     public admingui(){
         setTheme();
+        resetTextFields();
         card = new CardLayout();
         display.setLayout(card);
         frame.setSize(1280, 1024);
@@ -416,6 +417,34 @@ public class admingui{
         frame.setVisible(true);
     }
     
+    public void resetTextFields(){
+        dynamicID.setText("Select Data From the Drop Down Box");;
+        dynamicName.setText("Select Data From the Drop Down Box");;
+        dynamicDOB.setText("Select Data From the Drop Down Box");;
+        dynamicCompany.setText("Select Data From the Drop Down Box");;
+        dynamicTotalOrder.setText("Select Data From the Drop Down Box");;
+        dynamicDomain.setText("Select Data From the Drop Down Box");;
+        dynamicExperience.setText("Select Data From the Drop Down Box");;
+        dynamicProjectsWorked.setText("Select Data From the Drop Down Box");;
+        dynamicProjectsLed.setText("Select Data From the Drop Down Box");;
+        dynamicProjectNameTextField.setText("Select Data From the Drop Down Box");;
+        dynamicClientIDTextField.setText("Select Data From the Drop Down Box");;
+        dynamicStatusTextField.setText("Select Data From the Drop Down Box");;
+        dynamicDeadlineTextField.setText("Select Data From the Drop Down Box");;
+        dynamicPriority.setText("Select Data From the Drop Down Box");;
+        idTextField.setText("");;
+        nameTextField.setText("");
+        streetNameTextField.setText("");
+        localityTextField.setText("");
+        DistrictTextField.setText("");
+        stateTextField.setText("");
+        pincodeTextField.setText("");
+        nationalityTextField.setText("");
+        dobTextField.setText("");
+        experienceTextField.setText("");
+        companyTextField.setText("");
+    }
+
     private int logPrompt(project P){
         admin adm = new admin();
         String message = JOptionPane.showInputDialog(frame, "Admin Log Message", "", JOptionPane.INFORMATION_MESSAGE);
@@ -893,7 +922,7 @@ public class admingui{
             String full_log = P.getProjectLog();
             String description = full_log.split("#")[0].replaceAll("\\\\n", System.getProperty("line.separator"));
             descriptionTextField.setText(description);
-            projectUpdateStatus.repaint();
+            //projectUpdateStatus.repaint();
         }catch(noData nd){
             nd.displaYError(frame);
         }
@@ -1239,8 +1268,8 @@ public class admingui{
             heading.setText("Update Project Status");
             changeProjectStatus();
             card.show(display,"projectStatusMenu");
-            frame.repaint();
-            frame.revalidate();
+            /* frame.repaint();
+            frame.revalidate(); */
         }
     }
 
@@ -1298,13 +1327,13 @@ public class admingui{
                 if(failure == 0){
                     JOptionPane.showMessageDialog(frame, "Data Entry Successfull", "Success", JOptionPane.INFORMATION_MESSAGE);
                     card.show(display, "addEmployeeMenu");
-
-
+                    resetTextFields();
                 }else if(failure == 1){
                     System.out.println("Failed");
                     JOptionPane.showMessageDialog(frame, "Data Entry Failed", "Failed", JOptionPane.ERROR_MESSAGE);
                     //disposing the current frame and invoking the admingui to create a new frame which
                     //will technically redirect the admin to the home screen
+                    resetTextFields();
                     card.show(display, "addEmployeeMenu");
                 }
             }
@@ -1341,6 +1370,7 @@ public class admingui{
                 //System.out.println("Entered here");
                 if(failure == 0){
                     JOptionPane.showMessageDialog(frame, "Data Entry Successfull", "Success", JOptionPane.INFORMATION_MESSAGE);
+                    resetTextFields();
                     card.show(display,"addClientMenu");
                     
                 }else if(failure == 1){
@@ -1348,6 +1378,7 @@ public class admingui{
                     JOptionPane.showMessageDialog(frame, "Data Entry Failed", "Failed", JOptionPane.ERROR_MESSAGE);
                     //disposing the current frame and invoking the admingui to create a new frame which
                     //will technically redirect the admin to the home screen
+                    resetTextFields();
                     card.show(display,"addClientMenu");
                 }
             }
@@ -1407,11 +1438,13 @@ public class admingui{
                 JOptionPane.showMessageDialog(frame, "Data Deleted", "Info", JOptionPane.PLAIN_MESSAGE);
             }
             if(input == 0 && type.compareToIgnoreCase("employee") == 0){
-                heading.setText("Employee Menu");
-                card.show(display,"employeeMenu");
+                heading.setText("Remove Employee Menu");
+                remEmpGUI();
+                card.show(display,"removeEmployeeMenu");
             }else if(input == 0 && type.compareToIgnoreCase("client") == 0){
-                heading.setText("Client Menu");
-                card.show(display,"cliMenu");
+                heading.setText("Remove Client Menu");
+                remClientGUI();
+                card.show(display,"removeClientMenu");
             }else if(type.compareToIgnoreCase("employee") == 0){
                 card.show(display,"removeEmployeeMenu");
             }else if(type.compareToIgnoreCase("client") == 0){//the else is to prevent the duplication of the ID's when the user clicks on No in the Pop-Up Dialog box
@@ -1465,8 +1498,8 @@ public class admingui{
                 approveProjectGUI();
                 card.show(display,"projectApproveMenu");
                 //allID3.addItemListener(new handleShowProjectDetails());
-                frame.repaint();
-                frame.revalidate();
+                /* frame.repaint();
+                frame.revalidate(); */
                 
             }catch(noData nd){
                 nd.displaYError(frame);
@@ -1531,7 +1564,7 @@ public class admingui{
                 JOptionPane.showMessageDialog(frame, "Status Not Updated: Provide Log to update", "Info", JOptionPane.PLAIN_MESSAGE);
 
             }
-            frame.repaint();
+            //frame.repaint();
         }
     }
 

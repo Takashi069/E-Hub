@@ -126,8 +126,8 @@ drop table project;
 insert into person values
 ('ADM001','Akash Harikumar','Gokulam','Edavanassery', 'Kollam','Kerala','690519','Indian','07/08/2001');
 
-insert into Project(Project_ID, Client_ID, Project_Name,Project_Log ,Date_of_Release, Status_of_software, Domain) values('PRO008','CLI002','John Memoir','A website to display all of Sir Arthur's novel for the whole world to read about
-#','2022-05-06','NOT APPROVED','WEB')
+insert into Project(Project_ID, Client_ID, Project_Name,Project_Log ,Date_of_Release, Status_of_software, Domain) values('PRO008','CLI002','John Memoir','A website to display all of Sir Arthurs novel for the whole world to read about
+#','2022-05-06','NOT APPROVED','WEB');
 
 select project_log, project_id from project p;
 delete from person where id = 'EMP003';
@@ -170,7 +170,7 @@ insert into Login Values ('CLI002','Donald', 'ehub', 'ehub');
 create table Project_Team(Project_id varchar(6),Emp_ID varchar(6), Project_leader varchar(6),
 						 primary key(Project_id, Emp_ID),
 						 foreign key (Project_leader) references Employee(Emp_ID) on delete cascade
-						 )
+						 );
 						 
 select * from project_team;
 

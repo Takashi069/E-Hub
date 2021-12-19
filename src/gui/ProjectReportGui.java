@@ -20,7 +20,7 @@ import report.projectReport;
 import admin.admin;
 import assets.getAssets;
 
-public class ProjectReportGui {
+public class ProjectReportGui implements GUIInterface{
     JFrame frame = new JFrame();
     getAssets path = new getAssets();
     JLabel projectApprove = new JLabel(new ImageIcon(path.frame_bg));
@@ -181,6 +181,12 @@ public class ProjectReportGui {
         backButton.addActionListener(new goToMainMenu());
     }
 
+    public void resetTextFields(){
+        dynamicProjectNameTextField.setText("Select Data From the Drop Down List");
+        dynamicDeadlineTextField.setText("Select Data From the Drop Down List");
+    
+    }
+    
     private void updateProjectGUI(project P) {
 
         int index = 0;

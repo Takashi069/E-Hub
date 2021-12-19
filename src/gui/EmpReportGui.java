@@ -13,7 +13,7 @@ import employee.employee;
 import report.employeeReport;
 
 
-public class EmpReportGui {
+public class EmpReportGui implements GUIInterface {
     JFrame frame = new JFrame();
     JPanel display = new JPanel();
     getAssets path = new getAssets();
@@ -38,6 +38,7 @@ public class EmpReportGui {
 
     public EmpReportGui() {
         card = new CardLayout();
+        resetTextFields();
         display.setLayout(card);
         frame.setSize(1280, 1024);
         display.add(remEmp, "removeClientMenu");
@@ -176,7 +177,17 @@ public class EmpReportGui {
         remEmp.add(backSmallButton, gbc);
         allID1.addActionListener(new handleShowEmpDetails());
         frame.setVisible(true);
-backSmallButton.addActionListener(new goToMainMenu());
+        backSmallButton.addActionListener(new goToMainMenu());
+    }
+
+    public void resetTextFields(){
+        dynamicName.setText("Select Data from the Drop Down List");
+        dynamicDOB.setText("Select Data from the Drop Down List");
+        dynamicExperience.setText("Select Data from the Drop Down List");
+        dynamicDomain.setText("Select Data from the Drop Down List");
+        dynamicProjectsWorked.setText("Select Data from the Drop Down List");
+        dynamicProjectsLed.setText("Select Data from the Drop Down List");
+    
     }
 
     private void updateEmployeGui(employee E) {
