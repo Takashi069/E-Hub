@@ -186,7 +186,7 @@ public class project {
                     System.out.println("Employee Less than 5");
                     throw new noEmployeeAvailable();
                 }else{
-                    size = rs.getInt(1);
+                    size = rs.getInt(1);//for testing purposes
                     System.out.println("Size: " + size);
                 }
             }
@@ -240,6 +240,7 @@ public class project {
     }
 
     public void updateEmpStatus(String[] Emp_IDs,String type) {//type can be Y/N
+        System.out.println("Update Employee Status to " + type);
         Connection c = null;
         Statement stmt = null;
         for (String string : Emp_IDs) {
@@ -307,7 +308,7 @@ public class project {
 
                 this.setProjectHead(Emp_ID); // --> Assign the project Head to the Project Head variable
                 stmt = c.createStatement();
-                this.ProjectMembers[4] = Emp_ID;
+                this.ProjectMembers[4] = Emp_ID; // the project head is the last element in the project members
                 String sql2 = String.format(
                         "update Project set project_leader = '%s' where Project_ID = '%s';", Emp_ID, ProjectID);
                

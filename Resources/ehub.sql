@@ -74,6 +74,7 @@ select * from project_team pt ;
 
 delete from project;
 delete from project_team;
+delete from login where id='CLI001';
 
 update project set project_leader = null where project_id = 'PRO002';
 
@@ -122,6 +123,7 @@ drop table employee ;
 DROP TABLE person;
 drop table login;
 drop table project;
+drop table project_team ;
 
 insert into person values
 ('ADM001','Akash Harikumar','Gokulam','Edavanassery', 'Kollam','Kerala','690519','Indian','07/08/2001');
@@ -140,6 +142,9 @@ select count(Emp_ID) from employee where Specialisation_ID = 'WEB' and Engaged_I
 select e.emp_id, e.experience from employee e , project_team pt where pt.emp_id  = e.emp_id ;
 
 select client_id,count(Project_ID) as Totalprojcount from Project where Status_of_Software='PAID' group by client_id order by Totalprojcount desc;
+
+select project_log from project p ;
+
 
 
 /*=====================Mohak=============================*/

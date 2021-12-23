@@ -27,12 +27,12 @@ public class clientgui extends JFrame {
     ImageIcon viewProjectsIcon= new ImageIcon(path.view_bg);
     ImageIcon requestProjectsIcon = new ImageIcon(path.req_bg);
    // JButton logout = new JButton(new ImageIcon(path.logout_button));
-ImageIcon logoutIcon = new ImageIcon(path.logout_button);
+    ImageIcon logoutIcon = new ImageIcon(path.logout_button);
     
     public clientgui(String id) {
         frame.setSize(1280, 1024);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setLocationRelativeTo(null);
+        //frame.setLocationRelativeTo(null);
         GridLayout layout = new GridLayout(0, 3);
         layout.setHgap(75);
         background.setLayout(layout);

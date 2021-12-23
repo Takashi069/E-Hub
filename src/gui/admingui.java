@@ -137,7 +137,7 @@ public class admingui implements GUIInterface{
 
     public void setTheme(){
         empButton.setFocusPainted(false);
-        id.setForeground(Color.WHITE);
+        id.setForeground(Color.WHITE); //font color to white
         name.setForeground(Color.WHITE);
         streetName.setForeground(Color.WHITE);
         locality.setForeground(Color.WHITE);
@@ -158,9 +158,9 @@ public class admingui implements GUIInterface{
         projectsLed.setForeground(Color.WHITE);
 
         dynamicID.setForeground(Color.WHITE);
-        dynamicID.setBackground(Color.DARK_GRAY);
+        dynamicID.setBackground(Color.DARK_GRAY); //sets the background of the textfield to dark_gray
         dynamicID.setBorder(new LineBorder(Color.DARK_GRAY));
-        dynamicID.setCaretColor(Color.WHITE);
+        dynamicID.setCaretColor(Color.WHITE); //sets the cursor color in the textfield
 
         dynamicName.setForeground(Color.WHITE);
         dynamicName.setBackground(Color.DARK_GRAY);
@@ -920,7 +920,8 @@ public class admingui implements GUIInterface{
             
             statusComboBox.setSelectedIndex(index);
             String full_log = P.getProjectLog();
-            String description = full_log.split("#")[0].replaceAll("\\\\n", System.getProperty("line.separator"));
+            System.out.println(full_log);
+            String description = full_log.split("#")[0].replaceAll("\\n", System.getProperty("line.separator"));
             descriptionTextField.setText(description);
             //projectUpdateStatus.repaint();
         }catch(noData nd){
@@ -1576,12 +1577,12 @@ public class admingui implements GUIInterface{
             project p = new project();
             p.setProjectID((String)allID3.getSelectedItem());
             int output = logPrompt(p);
-            if(output == 1 && status.compareToIgnoreCase("Complete")==0){
+            if(output == 1 && status.compareToIgnoreCase("Completed")==0){
                 System.out.println("Project Completed");
                 p.updateEmpStatus(p.autoRetrieveProjectMembers(), "N");
                 ad.updateProjectStatus(p, status);
                 JOptionPane.showMessageDialog(frame, "Status Updated", "Info", JOptionPane.PLAIN_MESSAGE);
-            }else if(output == 1 && status.compareToIgnoreCase("Complete")!=0){
+            }else if(output == 1 && status.compareToIgnoreCase("Completed")!=0){
                 System.out.println("Project Not Completed");
                 ad.updateProjectStatus(p, status);
                 JOptionPane.showMessageDialog(frame, "Status Updated", "Info", JOptionPane.PLAIN_MESSAGE);
