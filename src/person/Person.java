@@ -7,7 +7,6 @@ public abstract class Person {
     private String Nationality;
     private String PhoneNumber;
 
-    //Why does this work ?
     public Person(){
 
         name = "John Doe";

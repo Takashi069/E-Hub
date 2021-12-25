@@ -135,10 +135,6 @@ public class login extends JFrame implements ActionListener {
                                 new admingui();
                                 dispose();
                             }
-                            if (rs.getString("id").equals("EMP")) {
-                                System.out.println("Welcome employee");
-                                // redirect to employee dashboard
-                            }
                             if (rs.getString("id").equals("CLI")) {
                                 System.out.println("Welcome Client");
                                 new clientgui(rs.getString("full_id"));
