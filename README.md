@@ -111,7 +111,7 @@ insert into person values
 insert into Login Values ('ADM001','Admin Username', 'A password of your choice', 'A password hint');
 
 ```
-> ### <b>Note</b> : Once a Client has been created by the Admin, the Client can login with the username as the Client's name and the password as E-Hub.<br>Feel Free to modify the source-code to include your own password generators and username generators after forking the project  
+> ### <b>Note</b> : Once a Client has been created by the Admin, the Client can login with the username as the Client's name and the password as `ehub`.<br>Feel Free to modify the source-code to include your own password generators and username generators after forking the project  
 <br>
 
 # OOPS Concepts used: 
