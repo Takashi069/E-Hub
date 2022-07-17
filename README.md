@@ -114,30 +114,7 @@ insert into Login Values ('ADM001','Admin Username', 'A password of your choice'
 > ### <b>Note</b> : Once a Client has been created by the Admin, the Client can login with the username as the Client's name and the password as `ehub`.<br>Feel Free to modify the source-code to include your own password generators and username generators after forking the project  
 <br>
 
-# OOPS Concepts used: 
-* Inheritance &rarr; Heirarchical Inheritance
-* Polymorphism &rarr; Function Overloading
-*  Abstraction &rarr; Person class is abstract and there is an interface in the GUI  
-# Contributions: 
 
-## Akash: (AM.EN.U4CSE20204)
-
-Admin GUI and working of the admin class, it's functionalities and connections with database using JDBC and the GUI (pertaining to admin), handled exceptions within Project Allocation.
-<br>
-## Mohak: (AM.EN.U4CSE20247)
-
-Login GUI, Project class implementation, connections using JDBC pertaining to project class
-
-## Adithya (AM.EN.U4CSE20258)
-
-Login JDBC connections, Client Dashboard GUI, Request project GUI and connection using JDBC and view projects connection to the DB using JDBC, responsible for the GUI design overhaul.
-
-## Uday (AM.EN.U4CSE20273)
-
-Employee Class, View Project GUI and functions, Client GUI, implementation and connection using JDBC, Client and Employee Report.
-all the Report GUIs.
-<br>
-<br>
 <br>
 
 > #### <b>Note</b>: The Project is no Longer being maintained by the contributers as it was a University Semester Project to familiarise with the Java Programming Language.
