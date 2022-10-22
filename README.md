@@ -115,6 +115,3 @@ insert into Login Values ('ADM001','Admin Username', 'A password of your choice'
 <br>
 
 
-<br>
-
-> #### <b>Note</b>: The Project is no Longer being maintained by the contributers as it was a University Semester Project to familiarise with the Java Programming Language.
