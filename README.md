@@ -111,7 +111,9 @@ insert into person values
 insert into Login Values ('ADM001','Admin Username', 'A password of your choice', 'A password hint');
 
 ```
-> ### <b>Note</b> : Once a Client has been created by the Admin, the Client can login with the username as the Client's name and the password as `ehub`.<br>Feel Free to modify the source-code to include your own password generators and username generators after forking the project  
-<br>
+> ### <b>Note</b> : Once a Client has been created by the Admin, the Client can login with the username as the Client's name and the password as `ehub`.<br/>Feel Free to modify the source-code to include your own password generators and username generators after forking the project 
 
+<br/>
+
+> ### <b>Disclaimer</b>: The Project is no Longer being maintained by the contributers as it was a University Semester Project to familiarise with the Java Programming Language.
 
